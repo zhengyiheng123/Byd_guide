@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="@dimen/actionbarSize"
+    android:background="@color/tool_bar_color"
+    android:weightSum="1"
+    android:gravity="center_vertical"
+
+    >
+    <LinearLayout
+        android:id="@+id/ll_location"
+        android:gravity="center"
+        android:layout_weight="0.1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_zhongcan_back"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:background="@drawable/shape_search"
+        android:layout_width="0dp"
+        android:layout_weight="0.7"
+        android:layout_height="30dp">
+        <ImageView
+            android:layout_marginLeft="4dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/icon_search"/>
+        <AutoCompleteTextView
+            android:layout_toRightOf="@+id/iv_search"
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            android:cursorVisible="false"
+            android:hint="城市名"
+            android:textSize="14sp"
+            android:textColorHint="@color/material_grey_400"
+            android:background="@null"
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_clear"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_clean_edit_text"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:padding="8dp"
+        android:gravity="center"
+        android:layout_weight="0.2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            />
+    </RelativeLayout>
+
+</LinearLayout>

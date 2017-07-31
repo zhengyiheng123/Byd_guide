@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingLeft="8dp"
+    android:id="@+id/rl_title"
+    android:paddingRight="8dp"
+    android:background="@color/tool_bar_color"
+    android:layout_height="@dimen/actionbarSize">
+<ImageView
+    android:id="@+id/iv_back"
+    android:layout_centerVertical="true"
+    android:src="@mipmap/icon_zhongcan_back"
+    android:layout_width="25dp"
+    android:layout_height="wrap_content" />
+    <TextView
+        android:layout_centerInParent="true"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="帮预定"
+        android:id="@+id/tv_title"
+        />
+    <ImageView
+        android:id="@id/iv_img"
+        android:visibility="gone"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_collect"
+        android:layout_alignParentRight="true" />
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_submit"
+        android:textColor="@color/white"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:text="提交"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" />
+</RelativeLayout>

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    >
+<include layout="@layout/include_home_title"
+    />
+        <FrameLayout
+            android:id="@+id/fl_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/refresh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ScrollView
+                    android:id="@+id/scroll_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.recker.flybanner.FlyBanner
+                            android:id="@+id/banner_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp" />
+
+                        <com.example.asus.xyd_order.ui.MyGridView
+                            android:id="@+id/gv_category"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:elevation="1dp"
+                            android:gravity="center"
+                            android:numColumns="3"
+                            android:paddingBottom="16dp"
+                            android:paddingTop="16dp"
+                            android:scrollbars="none"
+                            android:stretchMode="columnWidth"
+                            android:verticalSpacing="16dp" />
+
+                        <include layout="@layout/include_home_myorder" />
+
+                        <!--<com.example.asus.xyd_order.ui.MyListView-->
+                            <!--android:id="@+id/lv_home_myorder"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginBottom="8dp"-->
+                            <!--android:layout_marginLeft="8dp"-->
+                            <!--android:layout_marginRight="8dp"-->
+                            <!--android:layout_marginTop="8dp"-->
+                            <!--android:divider="@color/transparent"-->
+                            <!--android:dividerHeight="8dp"-->
+                            <!--android:paddingBottom="8dp"-->
+                            <!--android:scrollbars="none" />-->
+                        <RelativeLayout
+                            android:id="@+id/rl_mer_order"
+                            android:layout_margin="4dp"
+                            android:elevation="0.5dp"
+                            android:background="@drawable/bg_home_content_item"
+                            android:layout_width="match_parent"
+                            android:paddingBottom="8dp"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:src="@drawable/icon_blue_lingdang"
+                                android:layout_marginLeft="8dp"
+                                android:id="@+id/imageView1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <RelativeLayout
+                                android:layout_marginRight="8dp"
+                                android:layout_marginTop="4dp"
+                                android:id="@+id/rl_content1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_toEndOf="@+id/imageView1"
+                                android:layout_toRightOf="@+id/imageView1">
+                                <TextView
+                                    android:layout_marginLeft="8dp"
+                                    android:id="@+id/tv_mer_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="--"
+                                    android:textColor="@color/material_grey_700"
+                                    />
+                                <TextView
+                                    android:visibility="gone"
+                                    android:gravity="center"
+                                    android:textColor="@color/white"
+                                    android:text="new"
+                                    android:textSize="11sp"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_toRightOf="@+id/tv_mer_name"
+                                    android:layout_centerVertical="true"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/shape_new"
+                                    />
+                                <TextView
+                                    android:id="@+id/tv_mer_time"
+                                    android:layout_alignParentEnd="true"
+                                    android:textSize="13sp"
+                                    android:text="---"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/material_grey_700"
+                                    android:layout_alignParentRight="true" />
+                            </RelativeLayout>
+                            <TextView
+                                android:id="@+id/tv_mer_message"
+                                android:textColor="@color/material_grey_800"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_toRightOf="@+id/imageView1"
+                                android:layout_below="@+id/rl_content1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="--"
+                                />
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/rl_ord"
+                            android:layout_margin="4dp"
+                            android:elevation="0.5dp"
+                            android:background="@drawable/bg_home_content_item"
+                            android:layout_width="match_parent"
+                            android:paddingBottom="8dp"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:src="@drawable/icon_yellow_heart"
+                                android:layout_marginLeft="8dp"
+                                android:id="@+id/imageView2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <RelativeLayout
+                                android:layout_marginRight="8dp"
+                                android:layout_marginTop="4dp"
+                                android:id="@+id/rl_content2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_toEndOf="@+id/imageView2"
+                                android:layout_toRightOf="@+id/imageView2">
+                                <TextView
+                                    android:layout_marginLeft="8dp"
+                                    android:id="@+id/tv_ord_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="--"
+                                    android:textColor="@color/material_grey_700"
+                                    />
+                                <TextView
+                                    android:visibility="gone"
+                                    android:gravity="center"
+                                    android:textColor="@color/white"
+                                    android:text="new"
+                                    android:textSize="11sp"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_toRightOf="@+id/tv_ord_name"
+                                    android:layout_centerVertical="true"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/shape_new"
+                                    />
+                                <TextView
+                                    android:id="@+id/tv_ord_time"
+                                    android:layout_alignParentEnd="true"
+                                    android:textSize="13sp"
+                                    android:text="--"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/material_grey_700"
+                                    android:layout_alignParentRight="true" />
+                            </RelativeLayout>
+                            <TextView
+                                android:id="@+id/tv_ord_message"
+                                android:textColor="@color/material_grey_800"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_toRightOf="@+id/imageView2"
+                                android:layout_below="@+id/rl_content2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="--"
+                                />
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="16dp"
+                            android:paddingTop="8dp">
+
+                            <ImageView
+                                android:id="@+id/iv_laba"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/ic_horn" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="4dp"
+                                android:layout_toRightOf="@+id/iv_laba"
+                                android:text="业内互助消息"
+                                android:textSize="14sp" />
+
+                            <ImageView
+                                android:id="@+id/tv_send"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:elevation="1dp"
+                                android:src="@mipmap/icon_add"
+                                android:layout_alignParentRight="true" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="24dp"
+                            android:clipChildren="false"
+                            android:gravity="center">
+                            <com.example.asus.xyd_order.ui.MyListView
+                                android:id="@+id/lv_home_news"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:divider="@color/transparent"
+                                android:dividerHeight="8dp"
+                                android:paddingBottom="8dp"
+                                android:scrollbars="none" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </ScrollView>
+            </android.support.v4.widget.SwipeRefreshLayout>
+        </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"><TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:elevation="1dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true" /></RelativeLayout>
+</LinearLayout>

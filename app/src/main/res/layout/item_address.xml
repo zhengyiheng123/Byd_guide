@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+<RelativeLayout
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    android:paddingRight="16dp"
+    android:paddingLeft="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_name"
+        android:textColor="@color/material_grey_800"
+        android:text="--"
+        android:textSize="15sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_phoneNum"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/material_grey_800"
+        android:text="----"
+        android:textSize="15sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
+    <TextView
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:paddingRight="16dp"
+        android:paddingLeft="16dp"
+        android:id="@+id/tv_address"
+        android:textSize="15sp"
+        android:text="------"
+        android:textColor="@color/material_grey_800"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background_color"/>
+    <RelativeLayout
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_marginLeft="8dp"
+            android:id="@+id/rl_check"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/shape_circle"
+                />
+            <ImageView
+                android:id="@+id/iv_check"
+                android:layout_centerVertical="true"
+                android:alpha="0"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_choose"/>
+        </RelativeLayout>
+        <TextView
+            android:textColor="@color/material_grey_800"
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            android:textSize="15sp"
+            android:layout_toRightOf="@+id/rl_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="默认地址"/>
+        <LinearLayout
+            android:paddingRight="8dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/ll_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:background="@mipmap/ic_delete"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+        <TextView
+            android:layout_marginLeft="8dp"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/material_grey_800"
+            android:id="@+id/tv_edit"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="删除"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_edit"
+                android:layout_marginLeft="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:background="@mipmap/ic_edit"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+        <TextView
+            android:layout_marginLeft="4dp"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/material_grey_800"
+            android:id="@+id/tv_delete"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="编辑"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

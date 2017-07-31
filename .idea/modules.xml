@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Byd_guide.iml" filepath="$PROJECT_DIR$/Byd_guide.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PhotoPicker/PhotoPicker.iml" filepath="$PROJECT_DIR$/PhotoPicker/PhotoPicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PhotoPickerLib/PhotoPickerLib.iml" filepath="$PROJECT_DIR$/PhotoPickerLib/PhotoPickerLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/promptlibrary/promptlibrary.iml" filepath="$PROJECT_DIR$/promptlibrary/promptlibrary.iml" />
+    </modules>
+  </component>
+</project>

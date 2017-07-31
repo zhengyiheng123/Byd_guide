@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<com.example.asus.xyd_order.ui.CircleImageView
+    android:id="@+id/iv_head"
+    android:layout_width="45dp"
+    android:layout_height="45dp"
+    android:background="@mipmap/icon_head"
+    />
+    <TextView
+        android:id="@+id/tv_name"
+        android:textColor="@color/material_grey_800"
+        android:layout_marginLeft="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="阿纲"
+        />
+</LinearLayout>

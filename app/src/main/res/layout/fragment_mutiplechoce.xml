@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    >
+    <!--<com.lany.msv.MultiStateView-->
+    <!--android:id="@+id/multiStateView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--app:msv_viewState="content">-->
+<com.example.asus.xyd_order.ui.MyListView
+    android:id="@+id/multiple"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:divider="@color/transparent"
+    android:dividerHeight="8dp"
+    android:scrollbars="none"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+</LinearLayout>

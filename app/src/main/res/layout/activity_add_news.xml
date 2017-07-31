@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<include layout="@layout/include_details_title"/>
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="5"
+        android:background="@color/white"
+        android:hint="发送互助消息给伙伴，，会有好运哦"
+        android:textSize="14sp"
+        android:gravity="start"
+        android:padding="8dp"
+        />
+</LinearLayout>

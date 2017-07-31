@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<include layout="@layout/include_details_title"/>
+<RelativeLayout
+    android:background="@color/white"
+    android:padding="12dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_centerVertical="true"
+        android:id="@+id/textview1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="总体"
+        />
+    <RatingBar
+        android:stepSize="0.5"
+        android:id="@+id/ratingbar"
+        android:isIndicator="false"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@+id/textview1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Base.Widget.AppCompat.RatingBar.Indicator"/>
+<TextView
+    android:id="@+id/tv_count"
+    android:layout_centerVertical="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="-分"
+    android:layout_alignParentRight="true"
+    />
+</RelativeLayout>
+    <View
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_color"
+        />
+    <EditText
+        android:id="@+id/et_comment"
+        android:hint="在这里分享您的消费感受吧"
+        android:textSize="14sp"
+        android:gravity="start"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="7"
+        android:background="@color/white"
+        />
+    <TextView
+        android:gravity="center"
+        android:padding="16dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/shape_home_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="将xxx添加至我的导游圈"
+        android:id="@+id/tv_add_friend"
+        />
+</LinearLayout>

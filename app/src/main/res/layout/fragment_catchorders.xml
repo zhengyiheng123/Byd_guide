@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/material_grey_100"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/include_details_title"/>
+    <com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/refresh"
+        >
+        <ListView
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lv_catchorders"
+            android:divider="@color/transparent"
+            android:dividerHeight="8dp"
+            ></ListView>
+    </com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout>
+</LinearLayout>

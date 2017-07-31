@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/shape_home_order"
+    android:layout_height="200dp">
+<TextView
+    android:textSize="16sp"
+    android:textColor="@color/tool_bar_color"
+    android:gravity="center"
+    android:text="够买团体票，票数应在22张以上"
+    android:layout_width="match_parent"
+    android:layout_height="150dp" />
+    <TextView
+        android:layout_gravity="bottom"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:background="@drawable/shape_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@color/white"
+        android:text="继续购票"
+        />
+</FrameLayout>

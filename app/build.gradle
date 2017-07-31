@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+//    lintOptions{
+//        checkReleaseBuilds false
+//        abortOnError false
+//    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "com.example.asus.xyd_order"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.zhy:magic-viewpager:1.0.1'
+    compile project(':PhotoPicker')
+    /**
+     *    网络加载依赖包
+     */
+    compile 'com.squareup.okhttp3:logging-interceptor:3.1.2'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'io.reactivex:rxandroid:0.24.0'
+    compile 'com.google.code.gson:gson:2.4'
+    //图片加载
+    //轮播图控件
+    compile 'com.recker.flybanner:flybanner:1.3'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.google.android:flexbox:0.2.3'
+    //时间选择
+    compile 'cn.qqtheme.framework:WheelPicker:1.4.4'
+    compile 'cn.qqtheme.framework:FilePicker:1.4.4'
+    compile 'com.squareup:otto:1.3.5'
+    compile project(':promptlibrary')
+    /**
+     *    获取验证码倒计时
+     */
+    compile 'com.lucenlee:countdownbutton:1.0.0'
+    compile project(':PhotoPickerLib')
+    compile files('libs/jpush-android-3.0.7.jar')
+    compile files('libs/alipaySdk-20170725.jar')
+}

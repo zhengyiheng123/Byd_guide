@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<include layout="@layout/include_details_title"/>
+    <LinearLayout
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbarSize">
+        <TextView
+            android:gravity="center"
+            android:layout_weight="0.2"
+            android:text="卡号"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <EditText
+            android:inputType="number"
+            android:textSize="14sp"
+            android:id="@+id/et_cardnum"
+            android:background="@null"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_next"
+        android:enabled="false"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbarSize"
+        android:text="下一步"
+        android:background="@drawable/select_next"/>
+</LinearLayout>

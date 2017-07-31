@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_jia" android:state_expanded="true">
+        <shape >
+            <size android:width="20dp" android:height="20dp"></size>
+        </shape>
+    </item>
+
+    <item android:drawable="@drawable/ic_jian" android:state_expanded="false">
+        <shape >
+            <size android:width="20dp" android:height="20dp"></size>
+        </shape>
+    </item>
+</selector>

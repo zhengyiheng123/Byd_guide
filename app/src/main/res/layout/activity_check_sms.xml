@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<include layout="@layout/include_details_title"/>
+    <TextView
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbarSize"
+        android:text="本次操作需要短信验证，请确认\n175****4325收到的短信验证码"
+        />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="@color/white"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:gravity="start|center_vertical"
+            android:layout_weight="0.2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="验证码"
+            />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"
+            />
+        <EditText
+            android:textSize="14sp"
+            android:layout_weight="0.7"
+            android:layout_marginLeft="16dp"
+            android:background="@null"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tv_get_code"
+            android:textColor="@color/tool_bar_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取验证码"
+            />
+    </LinearLayout>
+</LinearLayout>

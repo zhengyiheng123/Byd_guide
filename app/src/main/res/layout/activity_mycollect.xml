@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/include_details_title"/>
+    <!--<com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_marginTop="@dimen/actionbarSize"-->
+        <!--android:id="@+id/refresh"-->
+        <!--android:layout_height="wrap_content">-->
+        <ListView
+            android:layout_marginTop="@dimen/actionBarSize"
+        android:id="@+id/lv_collect"
+        android:dividerHeight="8dp"
+        android:divider="@color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <!--</com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout>-->
+</RelativeLayout>

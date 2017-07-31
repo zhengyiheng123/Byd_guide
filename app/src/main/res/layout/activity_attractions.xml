@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<include layout="@layout/include_details_title"/>
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:background="@color/material_blue_50"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbarSize">
+        <TextView
+            android:id="@+id/tv_travel_time"
+            android:gravity="center"
+            android:text="价格升序"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <View
+            android:background="@color/white"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/tv_price_down"
+            android:gravity="center"
+            android:text="价格降序"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <View
+            android:background="@color/white"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/tv_sort_distance"
+            android:gravity="center"
+            android:text="距离优先"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout
+        android:layout_width="match_parent"
+        android:id="@+id/refresh"
+        android:layout_height="wrap_content">
+        <ListView
+            android:layout_marginTop="16dp"
+            android:dividerHeight="12dp"
+            android:id="@+id/lv_orderbytime"
+            android:divider="@color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout>
+</LinearLayout>

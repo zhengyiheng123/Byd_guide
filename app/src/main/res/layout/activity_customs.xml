@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<include layout="@layout/include_details_title"/>
+    <include layout="@layout/include_city__title"/>
+    <TextView
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/tool_bar_color"
+        android:text="护照遗失后，机场海关放行手续"
+        android:padding="8dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_color"
+        />
+    <TextView
+        android:padding="8dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="中国大使馆补办的新旅行证件，芬兰警察局的遗失护照证明，其他申根国家遗失。"
+        />
+    <TextView
+        android:padding="8dp"
+        android:textColor="@color/tool_bar_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="补办签证地址"
+        />
+    <RelativeLayout
+        android:background="@color/white"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="@color/material_grey_800"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Govanecka 2108/10.paris"
+            />
+        <View
+            android:layout_alignParentEnd="true"
+            android:layout_width="10dp"
+            android:layout_height="15dp"
+            android:background="@mipmap/ic_arrow_rigth_gray"
+            />
+    </RelativeLayout>
+</LinearLayout>

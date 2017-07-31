@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:elevation="1dp"
+    >
+<RelativeLayout
+    android:paddingLeft="8dp"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    android:background="#e9f2ff"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.example.asus.xyd_order.ui.CircleImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@mipmap/icon_head"
+        android:id="@+id/rl_head"
+        />
+    <TextView
+        android:layout_marginLeft="8dp"
+        android:id="@+id/tv_home_name"
+        android:layout_toRightOf="@id/rl_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="张三"
+        android:textColor="#545454"/>
+    <TextView
+        android:id="@+id/tv_home_time"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@+id/rl_head"
+        android:layout_below="@+id/tv_home_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2017.02.20 16:00"
+        android:textColor="#545454"/>
+</RelativeLayout>
+    <TextView
+        android:id="@+id/tv_home_msg"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="53px"
+        android:text="业内互助消息业内互助消息业内互助消息业内互助消息业内互助消息"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

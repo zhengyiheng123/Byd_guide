@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Dialog">
+        <attr name="DialogTitleAppearance" format="reference" />
+        <attr name="DialogTitleText" format="reference|string" />
+        <attr name="DialogSpotColor" format="reference|color"/>
+        <attr name="DialogSpotCount" format="integer"/>
+    </declare-styleable>
+
+    <!-- CircleImageView -->
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+    <declare-styleable name="auto3d1">
+        <attr name="TextSize1" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="TimeView">
+        <attr name="time" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name = "GifView">
+        <attr name = "gif_src" format = "reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="GifMoviewView">
+        <attr name="gif" format="reference" />
+        <attr name="paused" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="CustomTheme">
+        <attr name="gifMoviewViewStyle" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="MultiStateView">
+        <attr name="msv_loadingView" format="reference" />
+        <attr name="msv_errorView" format="reference" />
+        <attr name="msv_emptyView" format="reference" />
+        <attr name="msv_unauthView" format="reference" />
+        <attr name="msv_viewState" format="enum">
+            <enum name="content" value="0" />
+            <enum name="loading" value="1" />
+            <enum name="error" value="2" />
+            <enum name="empty" value="3" />
+            <enum name="unauth" value="4" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="CheckBox_Sample">
+        <attr name="size" format="dimension" />
+        <attr name="color_border" format="color" />
+        <attr name="color_background" format="color" />
+    </declare-styleable>
+</resources>

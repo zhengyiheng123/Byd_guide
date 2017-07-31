@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.asus.xyd_order">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 从sdcard中读取数据的权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 往sdcard中写入数据的权限 -->
+
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <!-- Required -->
+    <permission
+        android:name="com.example.asus.xyd_order.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <!-- Required  一些系统要求的权限，如访问网络等-->
+    <uses-permission android:name="com.example.asus.xyd_order.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
+
+    <!-- Optional for location -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission." />
+    <uses-permission android:name="android.permission.CHANGE_NETWOACCESS_LOCATION_EXTRA_COMMANDSRK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <application
+        android:name=".app.APP"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.SplashActivity"
+            android:theme="@style/ThemeSplash"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.MainActivity"
+            android:launchMode="singleTop"
+            />
+        <activity android:name=".activity.DetailsActivity"/>
+        <activity android:name=".activity.PhotoActivity"/>
+        <activity android:name=".activity.CityActivity"/>
+        <activity android:name=".activity.ZhongCanActivity"/>
+        <activity android:name=".activity.ZhongcanDetailsActivity"/>
+        <activity android:name=".activity.MapWebViewActivity"/>
+        <!--图片预览-->
+        <activity android:name=".activity.ImageViewActivity"
+            android:theme="@style/ThemeSplash"/>
+        <!--预订页面-->
+        <activity android:name=".activity.OrderActivity"/>
+        <!--团餐详情页面-->
+        <activity android:name=".activity.MultipleDetailsActivity"/>
+        <!--发送消息-->
+        <activity android:name=".activity.SendMessageActivity"/>
+        <!--预定结束-->
+        <activity android:name=".activity.ConfirmOrderActivity"/>
+        <!--取消预订页面-->
+        <activity android:name=".activity.CancelOrderActivity"/>
+        <!--单选页面-->
+        <activity android:name=".activity.SingleChooseActivity"/>
+        <!--我接的单-->
+        <activity android:name=".activity.Activity_MyOrdersGeted"/>
+        <!--景点门票-->
+        <activity android:name=".activity.AttractionsActivity"/>
+        <!--景点详情-->
+        <activity android:name=".activity.AttractionsDetailsActivity"/>
+        <!--场景总览-->
+        <activity android:name=".activity.OverViewActivity"/>
+        <!--筛选页面-->
+        <activity android:name=".activity.FilterActivity"/>
+        <!--景点门票座位-->
+        <activity android:name=".activity.SiteDisplayActivity"/>
+        <!--留言-->
+        <activity android:name=".activity.LeaveMessage"/>
+        <!--景点门票预定页面-->
+        <activity android:name=".activity.AttractionsOrderActivity"
+            android:windowSoftInputMode="adjustPan"
+            />
+        <!--添加地址-->
+        <activity android:name=".activity.AddAddressActivity"/>
+
+        <!--我接的单详情-->
+        <activity android:name=".activity.Activity_Geted_Orders_Details"/>
+        <!--地址管理-->
+        <activity android:name=".activity.Activity_address_list"
+            android:launchMode="singleTop"
+            />
+        <!--景点门票预定确定页面-->
+        <activity android:name=".activity.AttractionsOrderConfirm"/>
+        <!--添加银行卡-->
+        <activity android:name=".activity.AddCardActivity"/>
+        <!--银行卡详细信息-->
+        <activity android:name=".activity.CardDetailsActivity"/>
+        <!--短信验证-->
+        <activity android:name=".activity.CheckSmsActivity"/>
+
+        <!--预定成功-->
+        <activity android:name=".activity.AttractionsOrderSuccessActivity"/>
+        <!--场馆预定成功页面-->
+        <activity android:name=".activity.Activity_Attractions_order_Successed"/>
+
+        <activity android:name=".activity.TestWebActivity"
+            android:hardwareAccelerated="true"
+            />
+        <activity
+            android:theme="@style/myTheme"
+            android:name="me.iwf.photopicker.PhotoPickerActivity"
+            />
+        <activity android:name="me.iwf.photopicker.PhotoPagerActivity"/>
+        <!--景点门票选择票数-->
+        <activity android:name=".activity.TicketOrder"/>
+        <!--退税说明页面-->
+        <activity android:name=".activity.DrawBackActivity"/>
+        <!--新增加退税点-->
+        <activity android:name=".activity.AddDrawBackSiteActivity"/>
+        <!--应急通道-->
+        <activity android:name=".activity.EmergencyActivity"/>
+        <!--海关手续-->
+        <activity android:name=".activity.ActivityCustomsActivity"/>
+        <!--抢单页面-->
+        <activity android:name=".activity.CatchOrdersActivity"/>
+        <!--接单留言-->
+        <activity android:name=".activity.CatchLeaveMessageActivity"/>
+        <!--登录界面-->
+        <activity android:name=".activity.LoginActivity"/>
+        <!--注册页面-->
+        <activity android:name=".activity.RegisterActivity"/>
+        <!--需求样本详情-->
+        <activity android:name=".activity.Activity_Sample_Details"
+            android:windowSoftInputMode="adjustPan"/>
+        <!--存为需求样本-->
+        <activity android:name=".activity.Activity_SaveToSample"/>
+
+        <!--取消景点订单-->
+        <activity android:name=".activity.CancelActivity"/>
+        <!--填写注册信息-->
+        <activity android:name=".activity.Activity_Register_confirm"/>
+        <activity android:name=".activity.Activity_ForgetPassword"/>
+        <activity android:name=".activity.Activity_Setting"/>
+        <!--关于我们-->
+        <activity android:name=".activity.Activity_About"/>
+        <!--意见反馈-->
+        <activity android:name=".activity.Activity_Suggestion"/>
+        <!--退款记录-->
+        <activity android:name=".activity.Activity_DrawBackRecord"/>
+        <!--消息提醒设置-->
+        <activity android:name=".activity.Activity_Message_Setting"/>
+        <!--退款成功-->
+        <activity android:name=".activity.Activity_Draw_Success"/>
+        <!--等待卖家同意退款-->
+        <activity android:name=".activity.Activity_Draw_Loading"/>
+        <!--卖家同意等待退款中-->
+        <activity android:name=".activity.Activity_Draw_Waiting"/>
+        <!--意见单记录-->
+        <activity android:name=".activity.Activity_Opinion"/>
+        <!--我的导游圈-->
+        <activity android:name=".activity.Activity_MyCircle"/>
+        <!--我的导游圈详情-->
+        <activity android:name=".activity.Activity_myguide_details"/>
+        <!--个人中心-->
+        <activity android:name=".activity.Activity_UserInfo"/>
+        <!--账户明细-->
+        <activity android:name=".activity.Activity_Account_Details"/>
+        <!--发布需求-->
+        <activity android:name=".activity.Activity_ReleaseDemand"
+            android:windowSoftInputMode="adjustPan"
+            />
+        <!--打折-->
+
+        <!--填写意见单-->
+        <activity android:name=".activity.Activity_write_Opinion"/>
+        <!--折扣详情-->
+        <!--业内互助消息-->
+        <activity android:name=".activity.Activity_Help_News"/>
+        <!--添加业内互助消息-->
+        <activity android:name=".activity.Activity_Add_News"/>
+        <!--我的通知-->
+        <activity android:name=".activity.Activity_News"/>
+        <!--我的需求-->
+        <activity android:name=".activity.Activity_My_Demand"/>
+        <!--我的收藏-->
+        <activity android:name=".activity.MyCollectActivity"/>
+        <!--编辑我的需求-->
+        <activity android:name=".activity.Activity_Edit_Release"
+            android:windowSoftInputMode="adjustPan"
+            />
+        <activity android:name=".activity.AttractionDetailsNomal"/>
+        <!--选择路线-->
+        <activity android:name=".activity.SelectRoutes"/>
+        <!--航站楼详细信息-->
+        <activity android:name=".activity.DrawBackIntroduceActivity"/>
+        <!--我的订单最新通知-->
+        <activity android:name=".activity.MyOrderNews_Activity"/>
+        <activity android:name=".activity.Activity_Order_Nomal"/>
+        <!--行程日历-->
+        <activity android:name=".fragment.Journy_Activity"/>
+        <!---->
+        <activity android:name=".activity.Activity_Route_List"/>
+        <activity android:name=".activity.Attractions_TicketActivity"/>
+        <!--车票列表-->
+        <activity android:name=".activity.Ticket_List_Activity"/>
+        <!--我的预定-->
+        <activity android:name=".fragment.MyOrdersActivity"/>
+        <!--我的预定已完成详情-->
+        <activity android:name=".fragment.MyOrderDetails"/>
+        <!--发表评论-->
+        <activity android:name=".activity.History_Activity" />
+
+        <!-- Rich push 核心功能 since 2.0.6-->
+        <activity
+            android:name="cn.jpush.android.ui.PopWinActivity"
+            android:theme="@style/MyDialog"
+            android:exported="false">
+        </activity>
+
+        <!-- Required SDK核心功能-->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.example.asus.xyd_order" />
+            </intent-filter>
+        </activity>
+
+
+        <!-- Required SDK 核心功能-->
+        <!-- 可配置android:process参数将PushService放在其他进程中 -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:process=":mult"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service>
+
+        <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
+        <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
+        <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+                <category android:name="com.example.asus.xyd_order" />
+            </intent-filter>
+
+        </service>
+
+        <!-- Required SDK核心功能-->
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />   <!--Required  显示通知栏 -->
+                <category android:name="com.example.asus.xyd_order" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Required SDK核心功能-->
+        <receiver android:name="cn.jpush.android.service.AlarmReceiver" android:exported="false"/>
+
+        <!-- User defined.  For test only  用户自定义的广播接收器-->
+        <receiver
+            android:name=".jpush_receiver.MyReceiver"
+            android:exported="false"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.example.asus.xyd_order" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Required  . Enable it you can get statistics data with channel -->
+        <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
+        <meta-data android:name="JPUSH_APPKEY" android:value="d9a8d9c047c0f57200077cf2" /> <!--  </>值来自开发者平台取得的AppKey-->
+
+    </application>
+
+</manifest>

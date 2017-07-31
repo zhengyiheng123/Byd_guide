@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <com.example.asus.xyd_order.ui.CircleImageView
+            android:id="@+id/iv_head"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_head"
+            />
+        <TextView
+            android:textColor="@color/material_black"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/iv_head"
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--"
+            />
+        <RatingBar
+            android:rating="0"
+            android:progressTint="@color/material_red_A400"
+            android:progressBackgroundTint="@color/material_grey_600"
+            android:id="@+id/rb_stars"
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/iv_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            />
+        <TextView
+            android:textColor="@color/material_black"
+            android:layout_below="@+id/rb_stars"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/iv_head"
+            android:text="------"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_content" />
+        <TextView
+            android:id="@+id/tv_time"
+            android:textColor="@color/material_black"
+            android:layout_marginRight="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="----"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+<RelativeLayout
+    android:background="@color/material_blue_50"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:layout_margin="8dp"
+    android:padding="8dp"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="完成时间：----"
+        android:id="@+id/finish_time" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="服务内容：--"
+        android:layout_alignBottom="@+id/view2"
+        android:id="@+id/service_content" />
+    <View
+        android:layout_width="1dp"
+        android:layout_height="20dp"
+        android:background="@color/line_color"
+        android:id="@+id/view2"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/service_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginLeft="9dp"
+        android:layout_toRightOf="@+id/service_content" />
+    <TextView
+        android:layout_marginLeft="9dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="--"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/view2"
+        android:id="@+id/tv_country"
+        android:layout_toRightOf="@+id/view2" />
+</RelativeLayout>
+</LinearLayout>

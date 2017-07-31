@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<include layout="@layout/include_details_title"/>
+    <ListView
+        android:layout_marginTop="@dimen/actionbarSize"
+        android:scrollbars="none"
+        android:id="@+id/lv_address"
+        android:divider="@color/background_color"
+        android:dividerHeight="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/actionbarSize"></ListView>
+    <TextView
+        android:id="@+id/tv_empty"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="没有数据 ! ! !" />
+    <TextView
+        android:layout_marginBottom="-2dp"
+        android:layout_gravity="bottom"
+        android:id="@+id/add_new_address"
+        android:padding="12dp"
+        android:gravity="center"
+        android:background="@color/tool_bar_color"
+        android:textColor="@color/white"
+        android:text="添加新地址"
+        android:textSize="17sp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbarSize" />
+</FrameLayout>

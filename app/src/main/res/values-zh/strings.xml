@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">帮预定</string>
+    <string name="header_hint_refresh_normal">下拉刷新</string>
+    <string name="header_hint_refresh_time">时间:</string>
+    <string name="footer_hint_load_normal"></string>
+    <string name="footer_hint_load_ready">上拉加载更多</string>
+    <string name="header_hint_refresh_ready">松开刷新</string>
+    <string name="header_hint_refresh_loading">刷新中</string>
+    <string name="label_click_button_to_retry">点击按钮重试</string>
+    <string name="nothing_found">没有搜索结果~</string>
+    <string name="located_city">定位城市</string>
+    <string name="locating">正在定位</string>
+    <string name="located_failed">定位失败</string>
+    <string name="hot_city">热门城市</string>
+</resources>

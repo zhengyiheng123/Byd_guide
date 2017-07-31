@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<include layout="@layout/include_details_title"/>
+<include layout="@layout/include_category"/>
+    <!--<com.lany.msv.MultiStateView-->
+        <!--android:id="@+id/multiStateView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:msv_viewState="content">-->
+    <com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout
+        android:layout_width="match_parent"
+        android:id="@+id/refresh"
+        android:layout_height="wrap_content">
+        <ListView
+            android:listSelector="@color/transparent"
+            android:layout_marginTop="16dp"
+            android:dividerHeight="12dp"
+            android:id="@+id/lv_zhongcan"
+            android:divider="@color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout>
+<!--</com.lany.msv.MultiStateView>-->
+</LinearLayout>

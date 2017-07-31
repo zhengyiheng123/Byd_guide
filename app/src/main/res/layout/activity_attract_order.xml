@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<include layout="@layout/include_details_title"/>
+
+    <RelativeLayout
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:elevation="2dp"
+        android:background="@color/white"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbarSize">
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_cart"
+            android:id="@+id/imageView4" />
+        <TextView
+            android:id="@+id/tv_all_money"
+            android:textColor="@color/tool_bar_color"
+            android:textSize="15sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总计:23元"
+            android:layout_toRightOf="@+id/imageView4" />
+        <TextView
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            android:clickable="true"
+            android:id="@+id/btn_order_now"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/material_grey_200"
+            android:background="@drawable/shape_order_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="立即预定"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/actionbarSize"
+        android:layout_marginTop="@dimen/actionbarSize"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_zhongcan_tu" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toEndOf="@+id/imageView5"
+                    android:text="维也纳金色大厅"
+                    android:layout_toRightOf="@+id/imageView5" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/textView9"
+                    android:layout_centerVertical="true"
+                    android:text="2017.02.01 莫扎特乐团交响乐"
+                    android:textSize="12sp"
+                    android:layout_alignLeft="@+id/textView9" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/imageView5"
+                    android:layout_alignStart="@+id/textView9"
+                    android:text="演出时间：09:22"
+                    android:textColor="@color/material_yellow_700"
+                    android:layout_alignLeft="@+id/textView9" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/tv_group_count"
+                    android:layout_alignParentRight="true"
+                    android:textSize="17sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="--张" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="团票"
+                    />
+            </RelativeLayout>
+            <View
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_color"
+                />
+
+            <com.example.asus.xyd_order.ui.MyListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/myly_group"
+                android:background="@color/white"
+                android:divider="@color/transparent"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/tv_nomal_count"
+                    android:textSize="17sp"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="--张" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="单人票"
+                    />
+            </RelativeLayout>
+            <View
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_color"
+                />
+            <com.example.asus.xyd_order.ui.MyListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/myly_nomal"
+                android:background="@color/white"
+                android:divider="@color/transparent"
+                />
+            <View
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_color"
+                />
+            <RelativeLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="团号"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    />
+                <EditText
+                    android:id="@+id/et_group_num"
+                    android:inputType="textEmailAddress"
+                    android:focusable="true"
+                    android:textSize="14sp"
+                    android:textColorHint="@color/material_grey_500"
+                    android:layout_alignParentEnd="true"
+                    android:hint="该填写旅行团团号"
+                    android:background="@null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:gravity="center_vertical"
+                android:paddingRight="8dp"
+                android:paddingLeft="8dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:text="请选择付款方式"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:id="@+id/tv_paytype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="选择"
+                    android:layout_alignParentRight="true"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="选择取票方式" />
+
+                <RadioGroup
+                    android:id="@+id/rg_get_ways"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_alignParentRight="true">
+
+                    <RadioButton
+                        android:id="@+id/rb_sent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:drawableLeft="@drawable/selecter_zhifufangshi"
+                        android:drawablePadding="4dp"
+                        android:text="快递邮寄"
+                        android:textColor="@color/material_grey_800" />
+
+                    <RadioButton
+                        android:id="@+id/rb_getbyself"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:button="@null"
+                        android:drawableLeft="@drawable/selecter_zhifufangshi"
+                        android:drawablePadding="4dp"
+                        android:text="窗口自取"
+                        android:textColor="@color/material_grey_800" />
+                </RadioGroup>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp" />
+
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="8dp">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="姓名"
+                        android:textColor="@color/material_grey_800"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_phoneNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="18518158917"
+                        android:textColor="@color/material_grey_800"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="8dp"
+                    android:text="法国 巴黎南山区沈山街道"
+                    android:textColor="@color/material_grey_800"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/background_color" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color"
+                />
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_user_info"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <LinearLayout
+                    android:padding="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="收货人姓名："
+                        />
+                    <EditText
+                        android:hint="请输入姓名"
+                        android:textSize="14sp"
+                        android:id="@+id/et_user_name"
+                        android:background="@color/transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/line_color"
+                    />
+                <LinearLayout
+                    android:padding="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="联系方式："
+                        />
+                    <EditText
+                        android:inputType="phone"
+                        android:hint="请输入联系方式"
+                        android:textSize="14sp"
+                        android:id="@+id/et_user_phone"
+                        android:background="@color/transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:drawableLeft="@mipmap/ic_screen"
+                android:drawablePadding="4dp"
+                android:gravity="left"
+                android:padding="8dp"
+                android:text="取消条件"
+                android:textColor="@color/material_black" />
+
+            <TextView
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="8dp"
+                android:paddingLeft="32dp"
+                android:text="1、距离到店24小时前可免费取消。\n1、距离到店24小时前可免费取消。\n1、距离到店24小时前可免费取消。" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="您已阅读并同意帮预定免责声明" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/shape_circle"></ImageView>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/ic_choose"></ImageView>
+                </FrameLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

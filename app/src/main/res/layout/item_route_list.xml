@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<ImageView
+    android:layout_width="80dp"
+    android:layout_height="50dp"
+    android:scaleType="fitXY"
+    android:id="@+id/iv_img" />
+    <TextView
+        android:textSize="13dp"
+        android:id="@+id/tv_name"
+        android:textColor="@color/material_grey_800"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="--"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/tv_ordertime"
+        android:layout_alignLeft="@+id/tv_ordertime" />
+    <TextView
+        android:textColor="@color/material_grey_800"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="订单日：--"
+        android:layout_alignBottom="@+id/iv_img"
+        android:layout_toEndOf="@+id/iv_img"
+        android:layout_marginStart="8dp"
+        android:id="@+id/tv_ordertime"
+        android:layout_toRightOf="@+id/iv_img"
+        android:layout_marginLeft="8dp" />
+    <TextView
+        android:id="@+id/tv_startoff"
+        android:textColor="@color/material_grey_800"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="出发日：--"
+        android:layout_alignBaseline="@+id/tv_ordertime"
+        android:layout_alignBottom="@+id/tv_ordertime"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp" />
+</RelativeLayout>

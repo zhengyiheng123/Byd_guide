@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/shape_home_order"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+<TextView
+    android:gravity="center"
+    android:padding="16dp"
+    android:id="@+id/tv_camera"
+    android:textColor="@color/tool_bar_color"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="拍照"
+    />
+    <View
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color"
+        />
+    <TextView
+        android:gravity="center"
+        android:padding="16dp"
+        android:layout_below="@+id/tv_camera"
+        android:id="@+id/tv_picture"
+        android:textColor="@color/tool_bar_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="相册"
+        />
+</LinearLayout>
