@@ -123,7 +123,7 @@ public class DrawBackActivity extends BaseActivity {
      * 获取网络数据
      */
     private void getNetData(){
-        Observable<HttpResult<CityListBean>> result= ServiceApi.getInstance().getServiceContract().cityList(apitoken);
+        Observable<HttpResult<CityListBean>> result= ServiceApi.getInstance().getServiceContract().countyrList(apitoken);
         result.map(new ResultFilter<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -146,6 +146,9 @@ public class DrawBackActivity extends BaseActivity {
                         countryList.addAll(cityListBean.getRegions());
                         tv_month.setText(cityListBean.getRegions().get(0).getRegion_name());
 //                        queryData("7");
+                        if (cityListBean.getRegions()!=null && cityListBean.getRegions().size()>0){
+                            return;
+                        }
                         queryData(cityListBean.getRegions().get(0).getRegion_id()+"");
                     }
                 });

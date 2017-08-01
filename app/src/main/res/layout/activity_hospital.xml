@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/include_details_title"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请选择城市"
+            android:background="@color/white"
+            android:textColor="@color/tool_bar_color"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:id="@+id/tv_month"
+            android:gravity="center"
+            />
+    </RelativeLayout>
+    <ListView
+        android:padding="16dp"
+        android:listSelector="@color/transparent"
+        android:background="@color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lv_hospital"
+        android:divider="@color/transparent"
+        android:dividerHeight="8dp"
+        />
+    <TextView
+        android:id="@+id/tv_empty"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="没有数据 ! ! !" />
+</LinearLayout>

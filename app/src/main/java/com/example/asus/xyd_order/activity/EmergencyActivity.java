@@ -1,5 +1,6 @@
 package com.example.asus.xyd_order.activity;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -53,6 +54,10 @@ public class EmergencyActivity extends BaseActivity  {
                 popWindow = control.getCountry(countryList);
                 popWindow.showAsDropDown(tv_month);
                 break;
+            case R.id.tv_submit:
+                Intent intent=new Intent(getApplicationContext(),HospitalActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
@@ -64,6 +69,10 @@ public class EmergencyActivity extends BaseActivity  {
         iv_back.setOnClickListener(v -> {
             onBackPressed();
         });
+        TextView tv_submit= (TextView) findViewById(R.id.tv_submit);
+        tv_submit.setVisibility(View.VISIBLE);
+        tv_submit.setText("医院");
+        tv_submit.setOnClickListener(this);
     }
 
     @Override

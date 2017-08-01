@@ -30,6 +30,8 @@ import com.example.asus.xyd_order.net.result.ActAttractionsBean;
         import com.example.asus.xyd_order.net.result.His_SampleBean;
         import com.example.asus.xyd_order.net.result.History_Mode;
 import com.example.asus.xyd_order.net.result.HomePage;
+import com.example.asus.xyd_order.net.result.HospitaiDetails;
+import com.example.asus.xyd_order.net.result.HospitalBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
         import com.example.asus.xyd_order.net.result.IsCollectBean;
         import com.example.asus.xyd_order.net.result.JingDianDetails;
@@ -518,7 +520,11 @@ public interface HttpService {
      */
     @GET("v1/drawback/city_list")
     Observable<HttpResult<CityListBean>> cityList(@Query("apitoken")String apitoken);
-
+    /**
+     * 获取退税说明城市列表
+     */
+    @GET("v1/drawback/country_list")
+    Observable<HttpResult<CityListBean>> countyrList(@Query("apitoken")String apitoken);
     /**
      * 退税详情，退税点说明
      */
@@ -686,4 +692,16 @@ public interface HttpService {
     @FormUrlEncoded
     @POST("v1/demand/taking/msg")
     Observable<HttpResult> msg(@Field("apitoken")String apitoken,@Field("msg")String msg,@Field("ord_id")String ord_id);
+
+    /**
+     * 医院列表
+     */
+    @GET("v1/hospital")
+    Observable<HttpResult<HospitalBean>> hospitalList(@Query("apitoken")String apitoken,@Query("region_id")String region_id);
+
+    /**
+     *医院详情
+     */
+    @GET("v1/hospital/{id}")
+    Observable<HttpResult<HospitaiDetails>> hospitalDetails(@Path("id")String id,@Query("apitoken")String apitoken);
 }

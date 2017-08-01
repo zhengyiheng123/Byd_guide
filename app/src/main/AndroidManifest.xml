@@ -78,6 +78,10 @@
         <activity android:name=".activity.CancelOrderActivity"/>
         <!--单选页面-->
         <activity android:name=".activity.SingleChooseActivity"/>
+        <!--医院-->
+        <activity android:name=".activity.HospitalActivity"/>
+        <!--医院详情-->
+        <activity android:name=".activity.Activity_HospitalDetails"/>
         <!--我接的单-->
         <activity android:name=".activity.Activity_MyOrdersGeted"/>
         <!--景点门票-->
@@ -317,7 +321,21 @@
         <!-- Required  . Enable it you can get statistics data with channel -->
         <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
         <meta-data android:name="JPUSH_APPKEY" android:value="d9a8d9c047c0f57200077cf2" /> <!--  </>值来自开发者平台取得的AppKey-->
-
+        <!--支付宝-->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
     </application>
 
 </manifest>
