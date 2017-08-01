@@ -42,6 +42,8 @@ public class HospitalActivity extends BaseActivity {
     ListView lv_hospital;
     @Bind(R.id.tv_empty)
     TextView tv_empty;
+    @Bind(R.id.iv_img)
+    ImageView iv_img;
 
     private CategoryControl control;
     private SelectPopWindow popWindow;
@@ -61,12 +63,18 @@ public class HospitalActivity extends BaseActivity {
                 popWindow = control.getCountry(countryList);
                 popWindow.showAsDropDown(tv_month);
                 break;
+            case R.id.iv_img:
+                Intent intent=new Intent(context,Activity_AddHospital.class);
+                startActivity(intent);
+                break;
         }
     }
 
     @Override
     public void setToolbar() {
         tv_title.setText("医院");
+        iv_img.setVisibility(View.VISIBLE);
+        iv_img.setImageResource(R.drawable.ic_add_hos);
     }
 
     @Override
@@ -108,6 +116,7 @@ public class HospitalActivity extends BaseActivity {
     public void setEvent() {
         iv_back.setOnClickListener(this);
         tv_month.setOnClickListener(this);
+        iv_img.setOnClickListener(this);
         lv_hospital.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

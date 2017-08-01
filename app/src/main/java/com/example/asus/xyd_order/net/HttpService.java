@@ -704,4 +704,10 @@ public interface HttpService {
      */
     @GET("v1/hospital/{id}")
     Observable<HttpResult<HospitaiDetails>> hospitalDetails(@Path("id")String id,@Query("apitoken")String apitoken);
+
+    /**
+     * 添加医院
+     */
+    @POST("v1/hospital")
+    Observable<HttpResult> addHospital(@Body()RequestBody body);
 }

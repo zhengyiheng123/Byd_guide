@@ -90,6 +90,8 @@
         <activity android:name=".activity.AttractionsDetailsActivity"/>
         <!--场景总览-->
         <activity android:name=".activity.OverViewActivity"/>
+        <!--添加医院信息-->
+        <activity android:name=".activity.Activity_AddHospital"/>
         <!--筛选页面-->
         <activity android:name=".activity.FilterActivity"/>
         <!--景点门票座位-->
