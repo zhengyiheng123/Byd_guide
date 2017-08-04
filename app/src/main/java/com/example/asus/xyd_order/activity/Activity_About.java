@@ -1,6 +1,5 @@
 package com.example.asus.xyd_order.activity;
 
-import android.app.Dialog;
 import android.view.View;
 import android.widget.ImageView;
 

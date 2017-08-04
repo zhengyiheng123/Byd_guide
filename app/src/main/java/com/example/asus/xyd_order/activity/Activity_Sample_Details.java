@@ -1,6 +1,7 @@
 package com.example.asus.xyd_order.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -71,6 +72,7 @@ public class Activity_Sample_Details extends BaseActivity {
 
     private String countryId="";
     private String ds_id;
+    private ImageView iv_img_hos;
 
     @Override
     public void myOnclick(View view) {
@@ -104,6 +106,9 @@ public class Activity_Sample_Details extends BaseActivity {
                 break;
             case R.id.tv_publish:
                 publish();
+                break;
+            case R.id.iv_img_hos:
+                selectMore();
                 break;
         }
     }
@@ -209,6 +214,8 @@ public class Activity_Sample_Details extends BaseActivity {
         tv_paytype= (TextView) findViewById(R.id.tv_paytype);
         tv_dmd_area= (TextView) findViewById(R.id.tv_dmd_area);
         tv_publish= (TextView) findViewById(R.id.tv_publish);
+
+        iv_img_hos = (ImageView) findViewById(R.id.iv_img_hos);
     }
 
     /**
@@ -336,16 +343,25 @@ public class Activity_Sample_Details extends BaseActivity {
                         tv_start.setText(TimeUtils.stampToDateS(bean.getStart_time()+""));
                         tv_end.setText(TimeUtils.stampToDateS(bean.getEnd_time()+""));
                         String[] path=bean.getRoute_img_path().split(",");
+                        mLlContainer.removeAllViews();
                         for (int i = 0; i < path.length; i++) {
+                            final int ii=i;
                             ImageView iv = new ImageView(Activity_Sample_Details.this);
-
+                            iv.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent=new Intent(context,ImageViewActivity.class);
+                                    intent.putExtra("path",BaseApi.getBaseUrl()+path[ii]);
+                                    startActivity(intent);
+                                }
+                            });
                             mLlContainer.addView(iv);
                             LinearLayout.LayoutParams mParams = (LinearLayout.LayoutParams) iv.getLayoutParams();
                             if (i > 0) {
-                                mParams.leftMargin = 5;
+                                mParams.leftMargin = CropUtil.dip2Px(Activity_Sample_Details.this, 8);
                             }
-                            mParams.width = CropUtil.dip2Px(Activity_Sample_Details.this, 200);
-                            mParams.height = CropUtil.dip2Px(Activity_Sample_Details.this, 150);
+                            mParams.width = CropUtil.dip2Px(Activity_Sample_Details.this, 60);
+                            mParams.height = CropUtil.dip2Px(Activity_Sample_Details.this, 60);
                             iv.setLayoutParams(mParams);
                             Glide.with(Activity_Sample_Details.this)
                                     .load(BaseApi.getBaseUrl()+path[i])
@@ -367,6 +383,7 @@ public class Activity_Sample_Details extends BaseActivity {
         tv_paytype.setOnClickListener(this);
         tv_dmd_area.setOnClickListener(this);
         tv_publish.setOnClickListener(this);
+        iv_img_hos.setOnClickListener(this);
     }
 
     /**
@@ -380,15 +397,23 @@ public class Activity_Sample_Details extends BaseActivity {
                 for (int i = 0; i < path.length; i++) {
                     ImageView iv = new ImageView(Activity_Sample_Details.this);
                     File file=new File(path[i]);
+                    iv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent=new Intent(context,ImageViewActivity.class);
+                            intent.putExtra("path",file.getAbsoluteFile());
+                            startActivity(intent);
+                        }
+                    });
                     builder.addFormDataPart("img"+i+1, file.getName() , RequestBody.create(MediaType.parse("image/*"), file));
 
                     mLlContainer.addView(iv);
                     LinearLayout.LayoutParams mParams = (LinearLayout.LayoutParams) iv.getLayoutParams();
                     if (i > 0) {
-                        mParams.leftMargin = 5;
+                        mParams.leftMargin = CropUtil.dip2Px(Activity_Sample_Details.this, 8);
                     }
-                    mParams.width = CropUtil.dip2Px(Activity_Sample_Details.this, 200);
-                    mParams.height = CropUtil.dip2Px(Activity_Sample_Details.this, 150);
+                    mParams.width = CropUtil.dip2Px(Activity_Sample_Details.this, 60);
+                    mParams.height = CropUtil.dip2Px(Activity_Sample_Details.this, 60);
                     iv.setLayoutParams(mParams);
                     Glide.with(Activity_Sample_Details.this)
                             .load(path[i])

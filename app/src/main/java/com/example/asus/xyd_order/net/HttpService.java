@@ -45,7 +45,8 @@ import com.example.asus.xyd_order.net.result.HttpResult;
         import com.example.asus.xyd_order.net.result.NomalOrderSuccess;
 import com.example.asus.xyd_order.net.result.NoticeBean;
 import com.example.asus.xyd_order.net.result.Order_Info_Bean;
-        import com.example.asus.xyd_order.net.result.RegisterBean;
+import com.example.asus.xyd_order.net.result.PayParam;
+import com.example.asus.xyd_order.net.result.RegisterBean;
         import com.example.asus.xyd_order.net.result.RestaurantBean;
         import com.example.asus.xyd_order.net.result.RestaurantDetailsBean;
         import com.example.asus.xyd_order.net.result.RoutDetailsBean;
@@ -710,4 +711,11 @@ public interface HttpService {
      */
     @POST("v1/hospital")
     Observable<HttpResult> addHospital(@Body()RequestBody body);
+
+    /**
+     * 生成支付订单
+     */
+    @FormUrlEncoded
+    @POST("v1/order/build")
+    Observable<HttpResult<PayParam>> payParam(@Field("apitoken")String apitoken,@Field("ord_type")String ord_type,@Field("ord_id")String ord_id,@Field("pay_type")String pay_type );
 }

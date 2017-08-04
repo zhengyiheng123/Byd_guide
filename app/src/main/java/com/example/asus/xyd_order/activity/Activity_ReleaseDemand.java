@@ -69,6 +69,7 @@ public class Activity_ReleaseDemand extends BaseActivity {
     private List<String> payList;
     private List<String> areaList;
     private String countryId="";
+    private ImageView iv_img_hos;
 
     @Override
     public void myOnclick(View view) {
@@ -107,6 +108,9 @@ public class Activity_ReleaseDemand extends BaseActivity {
                 }
                 createDemand();
                 break;
+            case R.id.iv_img_hos:
+                selectMore();
+                break;
         }
     }
 
@@ -115,14 +119,14 @@ public class Activity_ReleaseDemand extends BaseActivity {
      * @param strings
      */
     private void showOptionPicker(List<String> strings,TextView tv,int type){
-            if (picker!=null){
-                picker =null;
-            }
-            picker = new OptionPicker(this, strings);
-            picker.setCycleDisable(true);
-            picker.setLineVisible(true);
-            picker.setShadowVisible(false);
-            picker.setTextSize(14);
+        if (picker!=null){
+            picker =null;
+        }
+        picker = new OptionPicker(this, strings);
+        picker.setCycleDisable(true);
+        picker.setLineVisible(true);
+        picker.setShadowVisible(false);
+        picker.setTextSize(14);
 
         picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
@@ -161,22 +165,22 @@ public class Activity_ReleaseDemand extends BaseActivity {
     }
 
     //选择日期
-public void showTime(String type){
-    DatePicker picker=new DatePicker(Activity_ReleaseDemand.this, DatePicker.YEAR_MONTH_DAY);
-    picker.setRange(2010,2025);
-    picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
-        @Override
-        public void onDatePicked(String year, String month, String day) {
-            if (type !=null &&type.equals("1")){
-                tv_start.setText(year+"."+month+"."+day);
+    public void showTime(String type){
+        DatePicker picker=new DatePicker(Activity_ReleaseDemand.this, DatePicker.YEAR_MONTH_DAY);
+        picker.setRange(2010,2025);
+        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+            @Override
+            public void onDatePicked(String year, String month, String day) {
+                if (type !=null &&type.equals("1")){
+                    tv_start.setText(year+"."+month+"."+day);
+                }
+                else if (type !=null &&type.equals("2")){
+                    tv_end.setText(year+"."+month+"."+day);
+                }
             }
-            else if (type !=null &&type.equals("2")){
-                tv_end.setText(year+"."+month+"."+day);
-            }
-        }
-    });
-    picker.show();
-}
+        });
+        picker.show();
+    }
     @Override
     public void setToolbar() {
         ImageView iv_back= (ImageView) findViewById(R.id.iv_back);
@@ -257,6 +261,7 @@ public void showTime(String type){
         et_details= (EditText) findViewById(R.id.et_details);
         et_total_money= (EditText) findViewById(R.id.et_total_money);
         et_route_details= (EditText) findViewById(R.id.et_route_details);
+        iv_img_hos = (ImageView) findViewById(R.id.iv_img_hos);
 
     }
 
@@ -274,6 +279,7 @@ public void showTime(String type){
         tv_paytype.setOnClickListener(this);
         tv_dmd_area.setOnClickListener(this);
         tv_commit.setOnClickListener(this);
+        iv_img_hos.setOnClickListener(this);
     }
 
 
@@ -302,10 +308,11 @@ public void showTime(String type){
                     mLlContainer.addView(iv);
                     LinearLayout.LayoutParams mParams = (LinearLayout.LayoutParams) iv.getLayoutParams();
                     if (i > 0) {
-                        mParams.leftMargin = 5;
+                        mParams.leftMargin = CropUtil.dip2Px(Activity_ReleaseDemand.this, 8);
                     }
-                    mParams.width = CropUtil.dip2Px(Activity_ReleaseDemand.this, 200);
-                    mParams.height = CropUtil.dip2Px(Activity_ReleaseDemand.this, 150);
+                    mParams.width = CropUtil.dip2Px(Activity_ReleaseDemand.this, 60);
+                    mParams.height = CropUtil.dip2Px(Activity_ReleaseDemand.this, 60);
+                    iv.setScaleType(ImageView.ScaleType.FIT_START);
                     iv.setLayoutParams(mParams);
                     Glide.with(Activity_ReleaseDemand.this)
                             .load(path[i])
@@ -398,5 +405,5 @@ public void showTime(String type){
                         }
                     }
                 });
-     }
+    }
 }

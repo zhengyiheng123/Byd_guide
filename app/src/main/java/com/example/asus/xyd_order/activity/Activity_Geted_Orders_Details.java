@@ -8,6 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseActivity;
 import com.example.asus.xyd_order.dialog.ContactDialog;
@@ -84,6 +87,7 @@ public class Activity_Geted_Orders_Details extends BaseActivity {
 
     @Bind(R.id.tv_finish)
     TextView tv_finish;
+
     private String dmd_id;
     private String status;
     private ContactDialog dialog;
@@ -283,16 +287,17 @@ public class Activity_Geted_Orders_Details extends BaseActivity {
                                 break;
                         }
                         String[] path=bean.getRoute_img_path().split(",");
+                        ll_container.removeAllViews();
                         for (int i = 0; i < path.length; i++) {
                             ImageView iv = new ImageView(Activity_Geted_Orders_Details.this);
 
                             ll_container.addView(iv);
                             LinearLayout.LayoutParams mParams = (LinearLayout.LayoutParams) iv.getLayoutParams();
                             if (i > 0) {
-                                mParams.leftMargin = 5;
+                                mParams.leftMargin = CropUtil.dip2Px(Activity_Geted_Orders_Details.this, 8);
                             }
-                            mParams.width = CropUtil.dip2Px(Activity_Geted_Orders_Details.this, 200);
-                            mParams.height = CropUtil.dip2Px(Activity_Geted_Orders_Details.this, 150);
+                            mParams.width = CropUtil.dip2Px(Activity_Geted_Orders_Details.this, 60);
+                            mParams.height = CropUtil.dip2Px(Activity_Geted_Orders_Details.this, 60);
                             iv.setLayoutParams(mParams);
                             Glide.with(Activity_Geted_Orders_Details.this)
                                     .load(BaseApi.getBaseUrl()+path[i])

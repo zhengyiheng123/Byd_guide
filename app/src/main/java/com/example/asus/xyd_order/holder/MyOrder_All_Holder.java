@@ -2,6 +2,7 @@ package com.example.asus.xyd_order.holder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +16,7 @@ import com.example.asus.xyd_order.activity.Activity_write_Opinion;
 import com.example.asus.xyd_order.activity.AttractionsOrderSuccessActivity;
 import com.example.asus.xyd_order.activity.CancelActivity;
 import com.example.asus.xyd_order.activity.ConfirmOrderActivity;
+import com.example.asus.xyd_order.activity.PayActivity;
 import com.example.asus.xyd_order.base.BaseViewHolder;
 import com.example.asus.xyd_order.fragment.MyOrderDetails;
 import com.example.asus.xyd_order.net.BaseApi;
@@ -27,7 +29,7 @@ import com.example.asus.xyd_order.utils.TimeUtils;
 
 public class MyOrder_All_Holder extends BaseViewHolder<MyOrderBean.OrdersBean> implements View.OnClickListener {
 
-    private TextView tv_type,tv_pay_type,tv_name,tv_ord_num,tv_peer
+    private TextView tv_type,tv_name,tv_ord_num,tv_peer
             ,cancel,modify,store,finished,republish,comment,pay,cancel_state,
             tv_routename
             ,tv_tel,tv_address,tv_ord_time;
@@ -187,7 +189,11 @@ public class MyOrder_All_Holder extends BaseViewHolder<MyOrderBean.OrdersBean> i
                 context.startActivity(intent);
                 break;
             case R.id.pay:
-
+                intent=new Intent(context, PayActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("bean",bean);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
                 break;
             case R.id.comment:
                 if (bean.getOrd_type() == 1){

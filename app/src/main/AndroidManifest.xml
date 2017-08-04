@@ -90,8 +90,10 @@
         <activity android:name=".activity.AttractionsDetailsActivity"/>
         <!--场景总览-->
         <activity android:name=".activity.OverViewActivity"/>
-        <!--添加医院信息-->
-        <activity android:name=".activity.Activity_AddHospital"/>
+        <!--添加医院 信息-->
+        <activity android:name=".activity.Activity_AddHospital"
+            android:windowSoftInputMode="stateHidden"
+            />
         <!--筛选页面-->
         <activity android:name=".activity.FilterActivity"/>
         <!--景点门票座位-->
@@ -102,8 +104,11 @@
         <activity android:name=".activity.AttractionsOrderActivity"
             android:windowSoftInputMode="adjustPan"
             />
+        <activity android:name=".activity.PayActivity"/>
         <!--添加地址-->
-        <activity android:name=".activity.AddAddressActivity"/>
+        <activity android:name=".activity.AddAddressActivity"
+            android:windowSoftInputMode="stateHidden"
+            />
 
         <!--我接的单详情-->
         <activity android:name=".activity.Activity_Geted_Orders_Details"/>

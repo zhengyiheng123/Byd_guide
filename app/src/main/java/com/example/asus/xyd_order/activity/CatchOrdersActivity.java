@@ -73,6 +73,7 @@ public class CatchOrdersActivity extends BaseActivity {
 
     @Bind(R.id.tv_catch_order)
     TextView tv_catch_order;
+
     private CatchSeccessDialog seccessDialog;
     private String dmd_id;
 
@@ -106,6 +107,8 @@ public class CatchOrdersActivity extends BaseActivity {
                 break;
             case R.id.tv_catch_order:
                 taking();
+                break;
+            case R.id.iv_img_hos:
                 break;
         }
     }
@@ -242,6 +245,7 @@ public class CatchOrdersActivity extends BaseActivity {
                                 break;
                         }
                         String[] path=bean.getRoute_img_path().split(",");
+                        ll_container.removeAllViews();
                         for (int i = 0; i < path.length; i++) {
                             String url=BaseApi.getBaseUrl()+path[i];
                             ImageView iv = new ImageView(CatchOrdersActivity.this);
@@ -256,10 +260,10 @@ public class CatchOrdersActivity extends BaseActivity {
                             ll_container.addView(iv);
                             LinearLayout.LayoutParams mParams = (LinearLayout.LayoutParams) iv.getLayoutParams();
                             if (i > 0) {
-                                mParams.leftMargin = 5;
+                                mParams.leftMargin = CropUtil.dip2Px(CatchOrdersActivity.this, 8);
                             }
-                            mParams.width = CropUtil.dip2Px(CatchOrdersActivity.this, 200);
-                            mParams.height = CropUtil.dip2Px(CatchOrdersActivity.this, 150);
+                            mParams.width = CropUtil.dip2Px(CatchOrdersActivity.this, 60);
+                            mParams.height = CropUtil.dip2Px(CatchOrdersActivity.this, 60);
                             iv.setLayoutParams(mParams);
                             Glide.with(CatchOrdersActivity.this)
                                     .load(BaseApi.getBaseUrl()+path[i])

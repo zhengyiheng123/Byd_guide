@@ -1,5 +1,6 @@
 package com.example.asus.xyd_order.net.result;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class MyOrderBean {
         this.orders = orders;
     }
 
-    public static class OrdersBean {
+    public static class OrdersBean implements Serializable {
         /**
          * add_time : 1500522191
          * address : trigger

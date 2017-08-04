@@ -128,6 +128,9 @@ public class Activity_Edit_Release extends BaseActivity {
     @Bind(R.id.ll_container)
     LinearLayout mLlContainer;
 
+    @Bind(R.id.iv_img_hos)
+    ImageView iv_img_hos;
+
     private OptionPicker picker;
     private String token;
     private int group_type;
@@ -158,32 +161,45 @@ public class Activity_Edit_Release extends BaseActivity {
     @Override
     public void myOnclick(View view) {
         switch (view.getId()){
-            case R.id.tv_file:
-                selectMore();
-                break;
             case R.id.tv_team_type:
-                showOptionPicker(teamList,tv_team_type,1);
+                if (ord_status.equals("0")){
+                    showOptionPicker(teamList,tv_team_type,1);
+                }
                 break;
             case R.id.tv_service_content:
-                showOptionPicker(serviceList,tv_service_content,2);
+                if (ord_status.equals("0")){
+                    showOptionPicker(serviceList,tv_service_content,2);
+                }
                 break;
             case R.id.tv_level:
-                showOptionPicker(levelList,tv_level,3);
+                if (ord_status.equals("0")){
+                    showOptionPicker(levelList,tv_level,3);
+                }
                 break;
             case R.id.tv_end:
-                showTime("2");
+                if (ord_status .equals("0")){
+                    showTime("2");
+                }
                 break;
             case R.id.tv_start:
-                showTime("1");
+                if (ord_status .equals("0")){
+                    showTime("1");
+                }
                 break;
             case R.id.tv_target_country:
-                showOptionPicker(countryS,tv_target_country,4);
+                if (ord_status.equals("0")){
+                    showOptionPicker(countryS,tv_target_country,4);
+                }
                 break;
             case R.id.tv_paytype:
-                showOptionPicker(payList,tv_paytype,5);
+                if (ord_status.equals("0")){
+                    showOptionPicker(payList,tv_paytype,5);
+                }
                 break;
             case R.id.tv_dmd_area:
-                showOptionPicker(areaList,tv_dmd_area,6);
+                if (ord_status.equals("0")){
+                    showOptionPicker(areaList,tv_dmd_area,6);
+                }
                 break;
             case R.id.tv_cancel:
                 android.support.v7.app.AlertDialog.Builder builder=new android.support.v7.app.AlertDialog.Builder(Activity_Edit_Release.this);
@@ -240,6 +256,11 @@ public class Activity_Edit_Release extends BaseActivity {
                     }
                 },Manifest.permission.SEND_SMS,Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS);
                 break;
+            case R.id.iv_img_hos:
+                if (ord_status.equals("0") ){
+                    selectMore();
+                }
+                break;
         }
     }
 
@@ -262,6 +283,7 @@ public class Activity_Edit_Release extends BaseActivity {
     public int getData() throws Exception {
         dmd_id = getIntent().getStringExtra("dmd_id");
         ord_status = getIntent().getStringExtra("ord_status");
+//        ord_status 订单状态 -2|发布者取消 -1|接受者取消 0|待接单 1|已被接单 2|已完成 3|已评价
         builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         token = (String) SharedPreferenceUtils.getParam(context,"apitoken","");
         getDemandDetails(token);
@@ -310,6 +332,7 @@ public class Activity_Edit_Release extends BaseActivity {
                     et_ord_status.setText("发布者取消");
                     tv_submit.setVisibility(View.GONE);
                     tv_cancel.setVisibility(View.GONE);
+                    iv_img_hos.setVisibility(View.GONE);
                     break;
                 case -1:
                     //接受者取消
@@ -318,6 +341,7 @@ public class Activity_Edit_Release extends BaseActivity {
                     et_ord_status.setText("接受者取消");
                     tv_submit.setVisibility(View.GONE);
                     tv_cancel.setVisibility(View.GONE);
+                    iv_img_hos.setVisibility(View.GONE);
                     break;
                 case 0:
                     //待接单
@@ -325,6 +349,7 @@ public class Activity_Edit_Release extends BaseActivity {
                     et_ord_status.setText("待接单");
                     tv_submit.setVisibility(View.VISIBLE);
                     tv_cancel.setVisibility(View.VISIBLE);
+                    iv_img_hos.setVisibility(View.VISIBLE);
                     break;
                 case 1:
                     //已被接单
@@ -333,6 +358,7 @@ public class Activity_Edit_Release extends BaseActivity {
                     ll_user_info.setVisibility(View.VISIBLE);
                     tv_submit.setVisibility(View.GONE);
                     tv_cancel.setVisibility(View.VISIBLE);
+                    iv_img_hos.setVisibility(View.GONE);
                     break;
                 case 2:
                     //已完成
@@ -341,6 +367,7 @@ public class Activity_Edit_Release extends BaseActivity {
                     ll_user_info.setVisibility(View.VISIBLE);
                     tv_submit.setVisibility(View.GONE);
                     tv_cancel.setVisibility(View.GONE);
+                    iv_img_hos.setVisibility(View.GONE);
                     break;
                 case 3:
                     //已评价
@@ -349,6 +376,7 @@ public class Activity_Edit_Release extends BaseActivity {
                     ll_user_info.setVisibility(View.VISIBLE);
                     tv_submit.setVisibility(View.GONE);
                     tv_cancel.setVisibility(View.GONE);
+                    iv_img_hos.setVisibility(View.GONE);
                     break;
             }
         }
@@ -559,6 +587,7 @@ public class Activity_Edit_Release extends BaseActivity {
                         }
                         tv_start.setText(TimeUtils.stampToDateS(bean.getStart_time()+""));
                         tv_end.setText(TimeUtils.stampToDateS(bean.getEnd_time()+""));
+                        mLlContainer.removeAllViews();
                         String[] path=bean.getRoute_img_path().split(",");
                         for (int i = 0; i < path.length; i++) {
                             final int ii=i;
@@ -574,10 +603,10 @@ public class Activity_Edit_Release extends BaseActivity {
                             mLlContainer.addView(iv);
                             LinearLayout.LayoutParams mParams = (LinearLayout.LayoutParams) iv.getLayoutParams();
                             if (i > 0) {
-                                mParams.leftMargin = 5;
+                                mParams.leftMargin =  CropUtil.dip2Px(Activity_Edit_Release.this, 8);
                             }
-                            mParams.width = CropUtil.dip2Px(Activity_Edit_Release.this, 200);
-                            mParams.height = CropUtil.dip2Px(Activity_Edit_Release.this, 150);
+                            mParams.width = CropUtil.dip2Px(Activity_Edit_Release.this, 60);
+                            mParams.height = CropUtil.dip2Px(Activity_Edit_Release.this, 60);
                             iv.setLayoutParams(mParams);
                             Glide.with(Activity_Edit_Release.this)
                                     .load(BaseApi.getBaseUrl()+path[i])
@@ -602,6 +631,7 @@ public class Activity_Edit_Release extends BaseActivity {
         tv_submit.setOnClickListener(this);
         iv_call.setOnClickListener(this);
         iv_message.setOnClickListener(this);
+        iv_img_hos.setOnClickListener(this);
     }
 
     /**
@@ -627,10 +657,10 @@ public class Activity_Edit_Release extends BaseActivity {
                     });
                     LinearLayout.LayoutParams mParams = (LinearLayout.LayoutParams) iv.getLayoutParams();
                     if (i > 0) {
-                        mParams.leftMargin = 5;
+                        mParams.leftMargin = CropUtil.dip2Px(Activity_Edit_Release.this, 8);
                     }
-                    mParams.width = CropUtil.dip2Px(Activity_Edit_Release.this, 200);
-                    mParams.height = CropUtil.dip2Px(Activity_Edit_Release.this, 150);
+                    mParams.width = CropUtil.dip2Px(Activity_Edit_Release.this, 60);
+                    mParams.height = CropUtil.dip2Px(Activity_Edit_Release.this, 60);
                     iv.setLayoutParams(mParams);
                     Glide.with(Activity_Edit_Release.this)
                             .load(path[i])
