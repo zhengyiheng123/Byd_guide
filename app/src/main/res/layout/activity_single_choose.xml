@@ -12,7 +12,9 @@
         android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/actionBarSize"/>
+        android:layout_marginBottom="@dimen/actionBarSize"
+        android:listSelector="@color/transparent"
+        />
     <TextView
     android:layout_gravity="bottom"
     android:textSize="16sp"

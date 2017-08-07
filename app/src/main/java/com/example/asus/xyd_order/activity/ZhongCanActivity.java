@@ -136,6 +136,7 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
     public int getData() throws Exception {
         builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         cate_id= getIntent().getStringExtra("cate_id");
+        getCateData();
         return 0;
     }
 
@@ -242,7 +243,7 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
         showDialog();
         Observable<HttpResult<RestaurantBean>> result= ServiceApi.getInstance().getServiceContract().restaurantList(apitoken,page,
                 longitude,latitude,cate_id,autoParam,sort_state,price_start,price_end,seat_start,seat_end,sub);
-        result.map(new ResultFilter<>())
+                result.map(new ResultFilter<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<RestaurantBean>() {

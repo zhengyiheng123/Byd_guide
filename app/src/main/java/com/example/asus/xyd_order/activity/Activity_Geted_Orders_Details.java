@@ -1,7 +1,9 @@
 package com.example.asus.xyd_order.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -286,11 +288,22 @@ public class Activity_Geted_Orders_Details extends BaseActivity {
                                 tv_pay_type.setText("支付方式：微信");
                                 break;
                         }
+                        if (TextUtils.isEmpty(bean.getRoute_img_path())){
+                            return;
+                        }
                         String[] path=bean.getRoute_img_path().split(",");
                         ll_container.removeAllViews();
                         for (int i = 0; i < path.length; i++) {
                             ImageView iv = new ImageView(Activity_Geted_Orders_Details.this);
-
+                            int ii=i;
+                            iv.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent=new Intent(context,ImageViewActivity.class);
+                                    intent.putExtra("path",BaseApi.getBaseUrl()+path[ii]);
+                                    startActivity(intent);
+                                }
+                            });
                             ll_container.addView(iv);
                             LinearLayout.LayoutParams mParams = (LinearLayout.LayoutParams) iv.getLayoutParams();
                             if (i > 0) {

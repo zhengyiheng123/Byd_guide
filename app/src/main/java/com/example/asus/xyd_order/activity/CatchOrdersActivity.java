@@ -1,6 +1,7 @@
 package com.example.asus.xyd_order.activity;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -245,6 +246,9 @@ public class CatchOrdersActivity extends BaseActivity {
                                 break;
                         }
                         String[] path=bean.getRoute_img_path().split(",");
+                        if (TextUtils.isEmpty(bean.getRoute_img_path())){
+                            return;
+                        }
                         ll_container.removeAllViews();
                         for (int i = 0; i < path.length; i++) {
                             String url=BaseApi.getBaseUrl()+path[i];

@@ -49,7 +49,6 @@ public class CategoryControl implements View.OnClickListener{
     private final TextView tv_text,tv_confirm,tv_reset;
     private EditText et_minprice,et_maxprice;
     private final LinearLayout linearLayout;
-    private FlowLayout flowLayout;
     private final FrameLayout pop_orderbytime;
     private final ListView lv_pop_orderbytime;
     private final LinearLayout pop_month;
@@ -172,19 +171,20 @@ public SelectPopWindow getMonth(List<YearAndMonth> mlist){
     public SelectPopWindow getAllCategoryPop(){
         popWindow=null;
         tv_text.setText("全部分类");
-        tv_text.setOnClickListener(this);
+        tv_text.setOnClickListener(view1 -> {
+            sub_cate_id ="";
+            ZhongCanActivity.instance.getNetData(autoParam,getSort_State(),sub_cate_id,getMinPrice(),getMaxPrice());
+            popWindow.dismiss();
+        });
         lv_pop_all.removeHeaderView(view);
         lv_pop_all.addHeaderView(view);
             arrayAdapter=new BaseArrayAdapter<>(activity, ()->{ return new PopAllCategoryHolder();},allCategoryList);
 
         lv_pop_all.setAdapter(arrayAdapter);
-        lv_pop_all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                sub_cate_id=allCategoryList.get(i-1).getSub_cate_id()+"";
-                ZhongCanActivity.instance.getNetData(autoParam,getSort_State(),sub_cate_id,getMinPrice(),getMaxPrice());
-                popWindow.dismiss();
-            }
+        lv_pop_all.setOnItemClickListener((adapterView, view1, i, l) -> {
+            sub_cate_id=allCategoryList.get(i-1).getSub_cate_id()+"";
+            ZhongCanActivity.instance.getNetData(autoParam,getSort_State(),sub_cate_id,getMinPrice(),getMaxPrice());
+            popWindow.dismiss();
         });
         popWindow = new SelectPopWindow(activity, rl_all_category);
         return popWindow;
@@ -192,6 +192,14 @@ public SelectPopWindow getMonth(List<YearAndMonth> mlist){
     public SelectPopWindow getAutoPop(){
         popWindow=null;
         tv_text.setText("智能分类");
+        tv_text.setOnClickListener(view1 -> {
+            autoParam="";
+            ZhongCanActivity.instance.isrefreshing=true;
+            ZhongCanActivity.instance.refresh.recoveryLoad();
+            ZhongCanActivity.instance.page=0;
+            ZhongCanActivity.instance.getNetData(autoParam,getSort_State(),sub_cate_id,getMinPrice(),getMaxPrice());
+            popWindow.dismiss();
+        });
         lv_pop_auto.removeHeaderView(view);
         lv_pop_auto.addHeaderView(view);
             arrayAdapter=new BaseArrayAdapter<>(activity, ()->{return new PopAllCategoryHolder();},autoList);
@@ -235,11 +243,11 @@ public SelectPopWindow getMonth(List<YearAndMonth> mlist){
     }
     private void initList(){
         autoList = new ArrayList<>();
+        allCategoryList = new ArrayList<>();
         autoList.add(new CategoryBean.SubCategoriesBean("距离优先",1));
         autoList.add(new CategoryBean.SubCategoriesBean("好评优先",2));
         autoList.add(new CategoryBean.SubCategoriesBean("人均最低",3));
         autoList.add(new CategoryBean.SubCategoriesBean("可停大巴",4));
-        allCategoryList = new ArrayList<>();
     }
     public SelectPopWindow getShaixuan(){
         popWindow=null;
@@ -309,11 +317,6 @@ public SelectPopWindow getMonth(List<YearAndMonth> mlist){
                     }
                     break;
                 case R.id.tv_confirm:
-                    ZhongCanActivity.instance.getNetData(autoParam,getSort_State(),sub_cate_id,getMinPrice(),getMaxPrice());
-                    popWindow.dismiss();
-                    break;
-                case R.id.tv_text:
-                    sub_cate_id="";
                     ZhongCanActivity.instance.getNetData(autoParam,getSort_State(),sub_cate_id,getMinPrice(),getMaxPrice());
                     popWindow.dismiss();
                     break;

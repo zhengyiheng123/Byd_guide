@@ -47,6 +47,15 @@ public class His_SampleBean {
     private int start_time;
     private String user_name;
     private List<String> countries;
+    private List<CountryListBean> country_list;
+
+    public List<CountryListBean> getCountry_list() {
+        return country_list;
+    }
+
+    public void setCountry_list(List<CountryListBean> country_list) {
+        this.country_list = country_list;
+    }
 
     public String getCompany() {
         return company;
@@ -190,5 +199,30 @@ public class His_SampleBean {
 
     public void setCountries(List<String> countries) {
         this.countries = countries;
+    }
+    public static class CountryListBean {
+        /**
+         * region_id : 1
+         * region_name : 德国
+         */
+
+        private int region_id;
+        private String region_name;
+
+        public int getRegion_id() {
+            return region_id;
+        }
+
+        public void setRegion_id(int region_id) {
+            this.region_id = region_id;
+        }
+
+        public String getRegion_name() {
+            return region_name;
+        }
+
+        public void setRegion_name(String region_name) {
+            this.region_name = region_name;
+        }
     }
 }

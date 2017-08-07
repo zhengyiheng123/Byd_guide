@@ -47,8 +47,6 @@ import rx.schedulers.Schedulers;
  */
 
 public class Activity_Sample_Details extends BaseActivity {
-    private List<String> countryS=new ArrayList<>();
-    private List<CountryBean.CountriesBean> countriesList=new ArrayList<>();
     private List<String> teamList;
     private List<String> serviceList;
     private List<String> levelList;
@@ -68,7 +66,6 @@ public class Activity_Sample_Details extends BaseActivity {
     private int pay_type;
 
     private MultipartBody.Builder builder;
-    private int ord_status;
 
     private String countryId="";
     private String ds_id;
@@ -96,7 +93,9 @@ public class Activity_Sample_Details extends BaseActivity {
                 showTime("1");
                 break;
             case R.id.tv_target_country:
-                showOptionPicker(countryS,tv_target_country,4);
+//                showOptionPicker(countryS,tv_target_country,4);
+                Intent intent=new Intent(context,SelectCountry.class);
+                startActivityForResult(intent,0);
                 break;
             case R.id.tv_paytype:
                 showOptionPicker(payList,tv_paytype,5);
@@ -133,7 +132,6 @@ public class Activity_Sample_Details extends BaseActivity {
         builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         token = (String) SharedPreferenceUtils.getParam(context,"apitoken","");
         getDemandDetails(token);
-        getCountry();
         teamList = new ArrayList<>();
 //        "公务","散拼","自由行","其他"
         teamList.add("公务");
@@ -248,9 +246,24 @@ public class Activity_Sample_Details extends BaseActivity {
                         et_route_details.setText("\t\t\t"+bean.getRoute_desc());
                         et_total_money.setText(bean.getPrice());
                         et_tuan_num.setText(bean.getGroup_num());
-//                        TextView tv_team_type,tv_service_content,tv_target_country,tv_level,tv_start,tv_end;
                         int dmd_area1=bean.getDmd_area();
                         dmd_area=dmd_area1;
+                        //目标国家
+                        List<His_SampleBean.CountryListBean> countriesBeen=bean.getCountry_list();
+                        String countryStr="";
+                        for (int i=0;i<countriesBeen.size();i++){
+                            if (TextUtils.isEmpty(countryStr)){
+                                countryStr=countriesBeen.get(i).getRegion_name();
+                            }else {
+                                countryStr=countryStr+","+countriesBeen.get(i).getRegion_name();
+                            }
+                            tv_target_country.setText(countryStr);
+                            if (TextUtils.isEmpty(countryId)){
+                                countryId = (countriesBeen.get(i).getRegion_id()+"");
+                            }else {
+                                countryId = (countryId+","+countriesBeen.get(i).getRegion_id()+"");
+                            }
+                        }
                         switch (dmd_area1){
                             case 1:
                                 tv_dmd_area.setText("导游圈");
@@ -316,11 +329,6 @@ public class Activity_Sample_Details extends BaseActivity {
                                 tv_service_content.setText("其他");
                                 break;
                         }
-//                        StringBuffer buffer=new StringBuffer();
-//                        for (int i=0;i<bean.getCountries().size();i++){
-//                            buffer.append(bean.getCountries().get(i)+",");
-//                        }
-//                        tv_target_country.setText(buffer);
                         int level_req1=bean.getLevel_req();
                         level_req=level_req1;
                         switch (level_req1){
@@ -342,6 +350,9 @@ public class Activity_Sample_Details extends BaseActivity {
                         }
                         tv_start.setText(TimeUtils.stampToDateS(bean.getStart_time()+""));
                         tv_end.setText(TimeUtils.stampToDateS(bean.getEnd_time()+""));
+                        if (TextUtils.isEmpty(bean.getRoute_img_path())){
+                            return;
+                        }
                         String[] path=bean.getRoute_img_path().split(",");
                         mLlContainer.removeAllViews();
                         for (int i = 0; i < path.length; i++) {
@@ -442,17 +453,6 @@ public class Activity_Sample_Details extends BaseActivity {
         picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(int index, String item) {
-//                ToastUtils.show(context,"index=" + index + ", item=" + item,0);
-                if (tv.getId() == R.id.tv_target_country){
-                    tv.setText(tv.getText().toString()+","+item);
-                    if (TextUtils.isEmpty(countryId)){
-                        countryId = (countriesList.get(index).getRegion_id()+"");
-                    }else {
-                        countryId = (countryId+","+countriesList.get(index).getRegion_id()+"");
-                    }
-                }else {
-                    tv.setText(item);
-                }
                 switch (type){
                     case 1:
                         group_type=index+1;
@@ -519,35 +519,30 @@ public class Activity_Sample_Details extends BaseActivity {
                 });
     }
 
-    /**
-     * 获取国家列表
-     */
-    private  void getCountry(){
 
-        Observable<HttpResult<CountryBean>> result=ServiceApi.getInstance().getServiceContract().getCountrys(token);
-        result.map(new ResultFilter<>())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<CountryBean>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(CountryBean countryBean) {
-                        if (countryBean!=null){
-                            for (int i=0;i<countryBean.getCountries().size();i++){
-                                countriesList.addAll(countryBean.getCountries());
-                                countryS.add(i,countryBean.getCountries().get(i).getRegion_name());
-                            }
-                        }
-                    }
-                });
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        countryId ="";
+        if (data == null){
+            return;
+        }
+        if (resultCode == 0){
+            List<CountryBean.CountriesBean> countriesBeen= (List<CountryBean.CountriesBean>) data.getSerializableExtra("countryList");
+            String countryStr="";
+            for (int i=0;i<countriesBeen.size();i++){
+                if (TextUtils.isEmpty(countryStr)){
+                    countryStr=countriesBeen.get(i).getRegion_name();
+                }else {
+                    countryStr=countryStr+","+countriesBeen.get(i).getRegion_name();
+                }
+                tv_target_country.setText(countryStr);
+                if (TextUtils.isEmpty(countryId)){
+                    countryId = (countriesBeen.get(i).getRegion_id()+"");
+                }else {
+                    countryId = (countryId+","+countriesBeen.get(i).getRegion_id()+"");
+                }
+            }
+        }
     }
 }

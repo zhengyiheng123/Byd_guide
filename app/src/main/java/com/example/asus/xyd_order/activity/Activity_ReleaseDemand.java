@@ -60,15 +60,12 @@ public class Activity_ReleaseDemand extends BaseActivity {
     private int level_req;
     private int dmd_area;
     private int pay_type;
-    private String token;
-    private List<String> countryS=new ArrayList<>();
-    private List<CountryBean.CountriesBean> countriesList=new ArrayList<>();
     private List<String> teamList;
     private List<String> serviceList;
     private List<String> levelList;
     private List<String> payList;
     private List<String> areaList;
-    private String countryId="";
+    private String countryId;
     private ImageView iv_img_hos;
 
     @Override
@@ -93,7 +90,9 @@ public class Activity_ReleaseDemand extends BaseActivity {
                 selectMore();
                 break;
             case R.id.tv_target_country:
-                showOptionPicker(countryS,tv_target_country,4);
+//                showOptionPicker(countryS,tv_target_country,4);
+                Intent intent=new Intent(context,SelectCountry.class);
+                startActivityForResult(intent,0);
                 break;
             case R.id.tv_paytype:
                 showOptionPicker(payList,tv_paytype,5);
@@ -131,17 +130,6 @@ public class Activity_ReleaseDemand extends BaseActivity {
         picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(int index, String item) {
-//                ToastUtils.show(context,"index=" + index + ", item=" + item,0);
-                if (tv.getId() == R.id.tv_target_country){
-                    tv.setText(tv.getText().toString()+","+item);
-                    if (TextUtils.isEmpty(countryId)){
-                        countryId = (countriesList.get(index).getRegion_id()+"");
-                    }else {
-                        countryId = (countryId+","+countriesList.get(index).getRegion_id()+"");
-                    }
-                }else {
-                    tv.setText(item);
-                }
                 switch (type){
                     case 1:
                         group_type=index+1;
@@ -198,8 +186,6 @@ public class Activity_ReleaseDemand extends BaseActivity {
     @Override
     public int getData() throws Exception {
         builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        token= (String) SharedPreferenceUtils.getParam(context,"apitoken","");
-        getCountry();
         teamList = new ArrayList<>();
 //        "公务","散拼","自由行","其他"
         teamList.add("公务");
@@ -327,7 +313,7 @@ public class Activity_ReleaseDemand extends BaseActivity {
     private MultipartBody getBody() {
         try {
             builder
-                    .addFormDataPart("apitoken",token)
+                    .addFormDataPart("apitoken",apitoken)
                     .addFormDataPart("user_name",et_name.getText().toString())
                     .addFormDataPart("mobile",et_phonenum.getText().toString())
                     .addFormDataPart("group_type",group_type+"")
@@ -375,35 +361,29 @@ public class Activity_ReleaseDemand extends BaseActivity {
                 });
     }
 
-    /**
-     * 获取国家列表
-     */
-    private  void getCountry(){
-
-        Observable<HttpResult<CountryBean>> result=ServiceApi.getInstance().getServiceContract().getCountrys(token);
-        result.map(new ResultFilter<>())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<CountryBean>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(CountryBean countryBean) {
-                        if (countryBean!=null){
-                            for (int i=0;i<countryBean.getCountries().size();i++){
-                                countriesList.addAll(countryBean.getCountries());
-                                countryS.add(i,countryBean.getCountries().get(i).getRegion_name());
-                            }
-                        }
-                    }
-                });
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        countryId ="";
+        if (data == null){
+            return;
+        }
+        if (resultCode == 0){
+            List<CountryBean.CountriesBean> countriesBeen= (List<CountryBean.CountriesBean>) data.getSerializableExtra("countryList");
+            String countryStr="";
+            for (int i=0;i<countriesBeen.size();i++){
+                if (TextUtils.isEmpty(countryStr)){
+                    countryStr=countriesBeen.get(i).getRegion_name();
+                }else {
+                    countryStr=countryStr+","+countriesBeen.get(i).getRegion_name();
+                }
+                tv_target_country.setText(countryStr);
+                if (TextUtils.isEmpty(countryId)){
+                    countryId = (countriesBeen.get(i).getRegion_id()+"");
+                }else {
+                    countryId = (countryId+","+countriesBeen.get(i).getRegion_id()+"");
+                }
+            }
+        }
     }
 }

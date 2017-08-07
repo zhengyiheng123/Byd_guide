@@ -9,30 +9,35 @@ import java.util.List;
 public class Demand_Details_Bean {
 
     /**
-     * company : 哦呦喂做最我
-     * countries : ["法国","英国","德国"]
+     * company : 诺德中心
+     * countries : ["德国","英国"]
+     * country_list : [{"region_id":1,"region_name":"德国"},{"region_id":3,"region_name":"英国"}]
      * dmd_area : 3
-     * dmd_desc : 魔王勇者
-     * dmd_id : 100
-     * end_time : 1262361599
+     * dmd_desc :
+     * dmd_id : 132
+     * email : zjkkk@163.com
+     * end_time : 1481126399
      * group_num : 1492849283
-     * group_type : 1
+     * group_type : 3
      * level_req : 3
      * mobile : 18212392010
-     * ord_num : BM1944317471
+     * ord_num : DM4621703796
      * pay_type : 1
      * price : 2000.00
-     * reply_user_info : {"birth":"1994-07-14","gender":0,"mobile":"15210967609","user_id":40,"user_name":"lemon"}
-     * route_desc : 我想问一下
-     * route_img_path : /uploads/demand/20170627/409cdac88abe3c3df784fade41233c28.png,/uploads/demand/20170627/88ee8392a7d7c890de19e447186fe6c3.png,/uploads/demand/20170627/7e1eb0ce171df7522f64a5507bc53e43.jpg
+     * reply_user_info : {"avatar":"/uploads/user/avatar/20170727/b6c6be770375de4048885d0878a4743e.png","birth":"1994-07-14","email":"18331387482@163.com","gender":1,"mobile":"15210967609","user_id":40,"user_name":"lemon"}
+     * route_desc :
+     * route_img_path :
      * service_type : 2
-     * start_time : 1262275200
-     * user_name : Bloodmage
+     * start_time : 1481040000
+     * user_id : 34
+     * user_name : 33333333
      */
+
     private String company;
     private int dmd_area;
     private String dmd_desc;
     private int dmd_id;
+    private String email;
     private int end_time;
     private String group_num;
     private int group_type;
@@ -46,8 +51,10 @@ public class Demand_Details_Bean {
     private String route_img_path;
     private int service_type;
     private int start_time;
+    private int user_id;
     private String user_name;
     private List<String> countries;
+    private List<CountryListBean> country_list;
 
     public String getCompany() {
         return company;
@@ -79,6 +86,14 @@ public class Demand_Details_Bean {
 
     public void setDmd_id(int dmd_id) {
         this.dmd_id = dmd_id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getEnd_time() {
@@ -185,6 +200,14 @@ public class Demand_Details_Bean {
         this.start_time = start_time;
     }
 
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
     public String getUser_name() {
         return user_name;
     }
@@ -201,35 +224,55 @@ public class Demand_Details_Bean {
         this.countries = countries;
     }
 
+    public List<CountryListBean> getCountry_list() {
+        return country_list;
+    }
+
+    public void setCountry_list(List<CountryListBean> country_list) {
+        this.country_list = country_list;
+    }
+
     public static class ReplyUserInfoBean {
         /**
+         * avatar : /uploads/user/avatar/20170727/b6c6be770375de4048885d0878a4743e.png
          * birth : 1994-07-14
-         * gender : 0
+         * email : 18331387482@163.com
+         * gender : 1
          * mobile : 15210967609
          * user_id : 40
          * user_name : lemon
          */
+
         private String avatar;
         private String birth;
+        private String email;
         private int gender;
         private String mobile;
         private int user_id;
         private String user_name;
 
-        public String getBirth() {
-            return birth;
+        public String getAvatar() {
+            return avatar;
         }
 
         public void setAvatar(String avatar) {
             this.avatar = avatar;
         }
 
-        public String getAvatar() {
-            return avatar;
+        public String getBirth() {
+            return birth;
         }
 
         public void setBirth(String birth) {
             this.birth = birth;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
         }
 
         public int getGender() {
@@ -262,6 +305,32 @@ public class Demand_Details_Bean {
 
         public void setUser_name(String user_name) {
             this.user_name = user_name;
+        }
+    }
+
+    public static class CountryListBean {
+        /**
+         * region_id : 1
+         * region_name : 德国
+         */
+
+        private int region_id;
+        private String region_name;
+
+        public int getRegion_id() {
+            return region_id;
+        }
+
+        public void setRegion_id(int region_id) {
+            this.region_id = region_id;
+        }
+
+        public String getRegion_name() {
+            return region_name;
+        }
+
+        public void setRegion_name(String region_name) {
+            this.region_name = region_name;
         }
     }
 }
