@@ -68,6 +68,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_toRightOf="@+id/imageView" />
                 <ImageView
+                    android:visibility="gone"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_width="20dp"
@@ -75,17 +76,6 @@
                     android:src="@drawable/ic_right_forward"
                     android:layout_alignParentRight="true" />
             </RelativeLayout>
-            <!--<com.example.asus.xyd_order.ui.MyExpandListView-->
-                <!--android:background="@color/white"-->
-                <!--android:divider="@color/transparent"-->
-                <!--android:paddingLeft="8dp"-->
-                <!--android:paddingRight="8dp"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:choiceMode="singleChoice"-->
-                <!--android:id="@+id/mylistview"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--&gt;</com.example.asus.xyd_order.ui.MyExpandListView>-->
             <com.example.asus.xyd_order.ui.MyListView
                 android:layout_marginTop="8dp"
                 android:clickable="true"
@@ -98,7 +88,6 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>
-    <!--</com.lany.msv.MultiStateView>-->
     <RelativeLayout
         android:elevation="2dp"
         android:padding="8dp"

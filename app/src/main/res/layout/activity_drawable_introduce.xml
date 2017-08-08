@@ -48,7 +48,7 @@
         android:background="@color/white"
         >
         <com.example.asus.xyd_order.ui.SmartImageveiw
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:id="@+id/iv_gaizhang"
             android:layout_margin="8dp"
             android:layout_width="match_parent"
@@ -75,7 +75,7 @@
         android:background="@color/white"
         >
         <com.example.asus.xyd_order.ui.SmartImageveiw
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:id="@+id/iv_draw"
             android:layout_margin="8dp"
             android:layout_width="match_parent"

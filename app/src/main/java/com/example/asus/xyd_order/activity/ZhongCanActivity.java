@@ -2,6 +2,7 @@ package com.example.asus.xyd_order.activity;
 
 import android.Manifest;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.asus.xyd_order.R;
+import com.example.asus.xyd_order.app.APP;
 import com.example.asus.xyd_order.base.BaseActivity;
 import com.example.asus.xyd_order.base.BaseArrayAdapter;
 import com.example.asus.xyd_order.controler.CategoryControl;
@@ -17,9 +19,11 @@ import com.example.asus.xyd_order.holder.ZhongcanHolder;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.CategoryBean;
+import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.RestaurantBean;
 import com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout;
+import com.example.asus.xyd_order.ui.MyListView;
 import com.example.asus.xyd_order.ui.SelectPopWindow;
 import com.example.asus.xyd_order.utils.ActivityFactory;
 import com.example.asus.xyd_order.utils.LocationUtils;
@@ -43,7 +47,7 @@ import rx.schedulers.Schedulers;
 public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLoadListener,SwipeRefreshLayout.OnRefreshListener{
 
     private ImageView iv_back;
-    private ListView lv_zhongcan;
+    private MyListView lv_zhongcan;
     public RefreshLayout refresh;
     private TextView tv_allcategory,auto_sort,tv_shaixuan;
     private RelativeLayout rl_shaixuan,rl_auto,rl_all;
@@ -84,6 +88,8 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
 
     //正在刷新
     public boolean isrefreshing;
+//    private TextView tv_empty;
+
     @Override
     public void myOnclick(View view) {
         switch (view.getId()){
@@ -113,7 +119,13 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
     public void setToolbar() {
         ImageView iv_back= (ImageView) findViewById(R.id.iv_back);
         TextView tv_title= (TextView) findViewById(R.id.tv_title);
-        tv_title.setText("中餐");
+        if (!TextUtils.isEmpty(cate_id)){
+            if (cate_id.equals("1")){
+                tv_title.setText("中餐");
+            }else if (cate_id.equals("2")){
+                tv_title.setText("特色餐");
+            }
+        }
         iv_back.setOnClickListener(v -> {onBackPressed();});
     }
 
@@ -136,6 +148,7 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
     public int getData() throws Exception {
         builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         cate_id= getIntent().getStringExtra("cate_id");
+        CityListBean.RegionsBean cityBean=APP.getApplication().getCityBean();
         getCateData();
         return 0;
     }
@@ -148,20 +161,21 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
         //初始化控件
         iv_back = (ImageView) findViewById(R.id.iv_back);
         refresh = (RefreshLayout) findViewById(R.id.refresh);
-        lv_zhongcan = (ListView) findViewById(R.id.lv_zhongcan);
-        lv_zhongcan.setEmptyView(View.inflate(context,R.layout.emptyview,null));
+        lv_zhongcan = (MyListView) findViewById(R.id.lv_zhongcan);
+//        lv_zhongcan.setEmptyView(View.inflate(context,R.layout.emptyview,null));
         tv_allcategory = (TextView) findViewById(R.id.tv_allcategory);
         tv_shaixuan= (TextView) findViewById(R.id.tv_shaixuan);
         auto_sort= (TextView) findViewById(R.id.auto_sort);
+//        tv_empty = (TextView) findViewById(R.id.tv_empty);
         rl_shaixuan = (RelativeLayout) findViewById(R.id.rl_shaixuan);
         rl_all= (RelativeLayout) findViewById(R.id.rl_all);
         rl_auto= (RelativeLayout) findViewById(R.id.rl_auto);
+
         //设置全部分类为选中状态
         setBg(tv_allcategory,rl_all);
         //初始化下方listview
         initMainListview();
 
-//        initAllCategoryPop();
     }
 
     private void initMainListview() {
@@ -261,6 +275,8 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
                     @Override
                     public void onNext(RestaurantBean bean) {
                         if (bean.getRestaurants()==null || bean.getRestaurants().size() == 0){
+                            refresh.setLoading(true);
+                            refresh.setRefreshing(false);
                             refresh.onLoadFinish();
                         }
                         if (isrefreshing){
@@ -282,7 +298,7 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
      * 获取检索条目列表
      */
     public void getCateData(){
-        Observable<HttpResult<CategoryBean>> result=ServiceApi.getInstance().getServiceContract().categoryBean(apitoken,"1");
+        Observable<HttpResult<CategoryBean>> result=ServiceApi.getInstance().getServiceContract().categoryBean(apitoken,cate_id);
         result.map(new ResultFilter<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

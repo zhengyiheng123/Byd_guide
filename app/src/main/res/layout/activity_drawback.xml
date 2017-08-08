@@ -25,7 +25,7 @@
         android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="慕尼黑机场退税说明"
+        android:text="---"
         />
     <View
         android:layout_marginLeft="8dp"
@@ -40,7 +40,7 @@
         android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="1、办理登机牌，贴行李托运标签\n2、贴好标签的行李退出，交给海关。\n3、在海关窗口盖章，行李交给海关\n4、拿着盖好海关章的 退税单办理邮寄或提税款。"
+        android:text="--"
         />
     <TextView
         android:background="@color/white"

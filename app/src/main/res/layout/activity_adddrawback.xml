@@ -108,17 +108,31 @@
         android:layout_height="wrap_content">
         <TextView
             android:gravity="center"
-            android:drawableRight="@mipmap/bg_add_pic"
             android:id="@+id/tv_select_tuishui"
             android:textSize="17sp"
             android:text="选择退税点图片："
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:id="@+id/iv_tuishui"
-            />
+        <LinearLayout
+            android:padding="8dp"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_select_draw"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_upload_img"/>
+            <ImageView
+                android:scaleType="fitXY"
+                android:layout_marginLeft="16dp"
+                android:id="@+id/iv_img_draw"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                />
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:padding="8dp"
@@ -129,17 +143,31 @@
         android:layout_height="wrap_content">
         <TextView
             android:gravity="center"
-            android:drawableRight="@mipmap/bg_add_pic"
             android:id="@+id/tv_select"
             android:textSize="17sp"
             android:text="选择盖章点图片："
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:id="@+id/iv_stamp"
-            />
+        <LinearLayout
+            android:padding="8dp"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_select_tamp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_upload_img"/>
+            <ImageView
+                android:scaleType="fitXY"
+                android:layout_marginLeft="16dp"
+                android:id="@+id/iv_img_stamp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                />
+        </LinearLayout>
     </LinearLayout>
         </LinearLayout>
     </ScrollView>

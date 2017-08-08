@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout">
         <TextView
-            android:textColor="@color/material_black"
+            android:textColor="@color/material_grey_700"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_name"
@@ -47,12 +47,13 @@
             />
     </LinearLayout>
     <TextView
+
         android:id="@+id/tv_distance_of_you"
         android:textColor="@color/gray_deep"
         android:textSize="13sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="距您：2.3km"
+        android:text=""
         android:layout_alignBottom="@+id/linearLayout"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true" />

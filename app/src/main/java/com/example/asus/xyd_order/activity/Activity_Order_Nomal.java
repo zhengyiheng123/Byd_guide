@@ -136,7 +136,7 @@ public class Activity_Order_Nomal extends BaseActivity {
                 break;
 
             case R.id.tv_paytype:
-                picker = new OptionPicker(Activity_Order_Nomal.this,new String[]{"到店支付","支付宝","微信","银联"});
+                picker = new OptionPicker(Activity_Order_Nomal.this,new String[]{"到店支付","在线支付"});
                 picker.setCycleDisable(true);
                 picker.setLineVisible(true);
                 picker.setShadowVisible(false);

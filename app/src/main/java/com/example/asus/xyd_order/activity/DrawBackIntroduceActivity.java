@@ -120,7 +120,7 @@ public class DrawBackIntroduceActivity extends BaseActivity {
                     @Override
                     public void onNext(TuiShuiDetails tuiShuiDetails) {
                         details = tuiShuiDetails;
-                        tv_title.setText("退税说明");
+                        tv_title.setText("退税说明详情");
                         tv_details.setText(tuiShuiDetails.getDp_desc());
                         tv_point_name.setText(tuiShuiDetails.getDp_address()+"  "+tuiShuiDetails.getDp_point());
                         Glide.with(context).load(BaseApi.getBaseUrl()+tuiShuiDetails.getDrawback_img()).into(iv_draw);

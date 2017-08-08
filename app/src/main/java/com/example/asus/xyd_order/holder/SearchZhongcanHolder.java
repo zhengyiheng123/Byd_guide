@@ -2,22 +2,21 @@ package com.example.asus.xyd_order.holder;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseViewHolder;
-import com.example.asus.xyd_order.entity.ZhongcanItemEntity;
 import com.example.asus.xyd_order.net.BaseApi;
 import com.example.asus.xyd_order.net.result.RestaurantBean;
+import com.example.asus.xyd_order.net.result.SerchResult;
 import com.example.asus.xyd_order.ui.SmartImageveiw;
 
 /**
  * Created by Zheng on 2017/2/23.
  */
-public class ZhongcanHolder extends BaseViewHolder<RestaurantBean.RestaurantsBean> {
+public class SearchZhongcanHolder extends BaseViewHolder<SerchResult.RestaurantsBean> {
 
     private TextView tv_name,tv_distance,tv_range,tv_peer;
     private SmartImageveiw iv_img;
@@ -36,12 +35,12 @@ public class ZhongcanHolder extends BaseViewHolder<RestaurantBean.RestaurantsBea
     }
 
     @Override
-    public void onBindViewHolder(Context context, RestaurantBean.RestaurantsBean s) {
+    public void onBindViewHolder(Context context, SerchResult.RestaurantsBean s) {
         Glide.with(context).load(BaseApi.getBaseUrl()+s.getLogo_path()).into(iv_img);
         tv_name.setText(s.getRes_name());
-        if (s.getDistance()!=null){
-            tv_distance.setText("距您"+s.getDistance()+"米");
-        }
+//        if (s.getDistance()!=null){
+//            tv_distance.setText("距您"+s.getDistance()+"米");
+//        }
         switch (s.getMeal_type()){
             case 1:
                 tv_range.setText("营业范围：团餐");

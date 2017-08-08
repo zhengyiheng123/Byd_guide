@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.example.asus.xyd_order.ui.MyListView
+        android:listSelector="@color/transparent"
+        android:dividerHeight="12dp"
+        android:id="@+id/lv_zhongcan"
+        android:divider="@color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_empty"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="没有数据 ! ! !" />
+</LinearLayout>

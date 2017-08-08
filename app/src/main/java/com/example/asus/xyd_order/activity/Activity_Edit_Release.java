@@ -392,7 +392,7 @@ public class Activity_Edit_Release extends BaseActivity {
                     .addFormDataPart("start_time",TimeUtils.dateToStamp(tv_start.getText().toString()).substring(0,10))
                     .addFormDataPart("end_time",TimeUtils.dateToStamp(tv_end.getText().toString()).substring(0,10))
                     .addFormDataPart("price",et_total_money.getText().toString())
-                    .addFormDataPart("pay_type",pay_type+"")
+//                    .addFormDataPart("pay_type",pay_type+"")
                     .addFormDataPart("company",et_lvxingshe.getText().toString())
                     .addFormDataPart("dmd_desc",et_details.getText().toString())
                     .addFormDataPart("route_desc",et_route_details.getText().toString())

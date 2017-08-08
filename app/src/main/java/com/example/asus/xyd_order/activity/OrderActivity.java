@@ -131,7 +131,7 @@ public class OrderActivity extends BaseActivity {
     public void myOnclick(View view) {
         switch (view.getId()){
             case R.id.tv_paytype:
-                picker = new OptionPicker(OrderActivity.this,new String[]{"到店支付","支付宝","微信","银联"});
+                picker = new OptionPicker(OrderActivity.this,new String[]{"到店支付","在线支付"});
                 picker.setCycleDisable(true);
                 picker.setLineVisible(true);
                 picker.setShadowVisible(false);

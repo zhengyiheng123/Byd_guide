@@ -387,7 +387,7 @@
                     android:layout_height="1dp"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/tv_end"
-                    android:background="@color/material_black" />
+                    android:background="@color/material_grey_700" />
 
                 <TextView
                     android:id="@+id/tv_end"
@@ -493,6 +493,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"

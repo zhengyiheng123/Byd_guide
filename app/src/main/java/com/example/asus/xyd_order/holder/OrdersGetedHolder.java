@@ -85,10 +85,12 @@ public class OrdersGetedHolder extends BaseViewHolder<MyDemandBean.DemandsBean> 
             tv_cancel_state.setVisibility(View.GONE);
         }else if (ord_status == 2){
             linearLayout4.setVisibility(View.GONE);
-            tv_cancel_state.setVisibility(View.GONE);
+            tv_cancel_state.setVisibility(View.VISIBLE);
+            tv_cancel_state.setText("已完成");
         }else if (ord_status == 3){
             linearLayout4.setVisibility(View.GONE);
-            tv_cancel_state.setVisibility(View.GONE);
+            tv_cancel_state.setVisibility(View.VISIBLE);
+            tv_cancel_state.setText("已完成");
         }
         StringBuffer countrys = new StringBuffer();
         for (int i=0;i<demandsBean.getCountries().size();i++){

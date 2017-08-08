@@ -105,9 +105,9 @@ public class AttractionsActivity extends BaseActivity implements SwipeRefreshLay
         //初始化Listview
         initListView();
         onRefresh();
-        ImageView iv_img= (ImageView) findViewById(R.id.iv_img);
-        iv_img.setVisibility(View.VISIBLE);
-        iv_img.setImageResource(R.mipmap.ic_search_white);
+//        ImageView iv_img= (ImageView) findViewById(R.id.iv_img);
+//        iv_img.setVisibility(View.VISIBLE);
+//        iv_img.setImageResource(R.mipmap.ic_search_white);
 
     }
 
@@ -145,21 +145,21 @@ public class AttractionsActivity extends BaseActivity implements SwipeRefreshLay
         tv_sort_distance.setOnClickListener(this);
         lv_attractions.setOnItemClickListener(onItemClickListener);
     }
-AdapterView.OnItemClickListener onItemClickListener=new AdapterView.OnItemClickListener() {
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            switch (mList.get(i).getSub_cate_id()){
-                case 6:
-                    ActivityFactory.gotoAttractionDetails(context,mList.get(i).getScene_id()+"");
-                    break;
-                case 5:
-                    ActivityFactory.gotoAttractionsNomal(context,mList.get(i).getScene_id());
-                    break;
-                case 7:
-                    ActivityFactory.gotoAttractionTicket(context,mList.get(i).getScene_id());
-                    break;
+        AdapterView.OnItemClickListener onItemClickListener=new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    switch (mList.get(i).getSub_cate_id()){
+                        case 6:
+                            ActivityFactory.gotoAttractionDetails(context,mList.get(i).getScene_id()+"");
+                            break;
+                        case 5:
+                            ActivityFactory.gotoAttractionsNomal(context,mList.get(i).getScene_id());
+                            break;
+                        case 7:
+                            ActivityFactory.gotoAttractionTicket(context,mList.get(i).getScene_id());
+                            break;
+                    }
             }
-    }
 };
     @Override
     public void onLoad() {

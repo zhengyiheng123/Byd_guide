@@ -87,12 +87,13 @@ public class Activity_Add_News extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        toastShow(e.getMessage());
                     }
 
                     @Override
                     public void onNext(Object o) {
-
+                        toastShow("发表成功");
+                        finish();
                     }
                 });
     }

@@ -25,9 +25,10 @@
             android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="巴黎"/>
+            android:text="城市"/>
     </LinearLayout>
     <RelativeLayout
+        android:id="@+id/rl_search"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:background="@drawable/shape_search"
@@ -41,8 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@mipmap/icon_search"/>
-        <AutoCompleteTextView
-            android:enabled="false"
+        <TextView
             android:layout_toRightOf="@+id/iv_search"
             android:layout_marginLeft="8dp"
             android:layout_centerVertical="true"

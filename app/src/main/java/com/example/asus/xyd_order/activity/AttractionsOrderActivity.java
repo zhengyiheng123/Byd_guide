@@ -94,7 +94,7 @@ public class AttractionsOrderActivity extends BaseActivity {
                 startActivityForResult(intent,0);
                 break;
             case R.id.tv_paytype:
-                picker = new OptionPicker(AttractionsOrderActivity.this,new String[]{"到店支付","支付宝","微信","银联"});
+                picker = new OptionPicker(AttractionsOrderActivity.this,new String[]{"到店支付","在线支付"});
                 picker.setCycleDisable(true);
                 picker.setLineVisible(true);
                 picker.setShadowVisible(false);

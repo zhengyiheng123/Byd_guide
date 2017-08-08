@@ -252,7 +252,7 @@
                     android:layout_toLeftOf="@+id/tv_end"
                     android:layout_width="16dp"
                     android:layout_height="1dp"
-                    android:background="@color/material_black"
+                    android:background="@color/material_grey_700"
                     />
                 <TextView
                     android:id="@+id/tv_end"

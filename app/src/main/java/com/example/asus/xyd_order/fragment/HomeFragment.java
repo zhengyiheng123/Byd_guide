@@ -21,7 +21,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.asus.xyd_order.R;
+import com.example.asus.xyd_order.activity.SearchActivity;
 import com.example.asus.xyd_order.activity.TestWebActivity;
+import com.example.asus.xyd_order.app.APP;
 import com.example.asus.xyd_order.base.BaseArrayAdapter;
 import com.example.asus.xyd_order.base.BaseFragmentTemp;
 import com.example.asus.xyd_order.base.BaseFragment;
@@ -62,7 +64,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private FlyBanner banner;
     private SwipeRefreshLayout refresh;
     private LinearLayout ll_location,my_news;
-    private RelativeLayout rl_mer_order,rl_ord;
+    private RelativeLayout rl_mer_order,rl_ord,rl_search;
 
 
 //    private ViewPager id_viewpager;
@@ -93,6 +95,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         case R.id.rl_ord:
             //我的需求消息
             ActivityFactory.gotoMyOrder_News(context);
+            break;
+        case R.id.rl_search:
+            Intent intent=new Intent(context, SearchActivity.class);
+            startActivity(intent);
             break;
     }
     }
@@ -128,7 +134,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         rl_news = (RelativeLayout) v.findViewById(R.id.rl_news);
         rl_mer_order= (RelativeLayout) v.findViewById(R.id.rl_mer_order);
         rl_ord= (RelativeLayout) v.findViewById(R.id.rl_ord);
-
+        rl_search= (RelativeLayout) v.findViewById(R.id.rl_search);
     }
 
     private void initBanner(View v) {
@@ -147,6 +153,11 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     public void onResume() {
         super.onResume();
+        if (APP.getApplication().getCityBean()!=null){
+            tv_home_place.setText(APP.getApplication().getCityBean().getRegion_name());
+        }else {
+            tv_home_place.setText("城市");
+        }
         onRefresh();
     }
 
@@ -207,6 +218,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             ActivityFactory.gotoHelpNews(context);
         });
         my_news.setOnClickListener(this);
+        rl_search.setOnClickListener(this);
     }
 
     @Override
@@ -280,7 +292,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     ActivityFactory.gotoZhongCan(context,"1");
                     break;
                 case 1:
-                    ActivityFactory.gotoZhongCan(context,"1");
+                    ActivityFactory.gotoZhongCan(context,"2");
                     break;
                 case 2:
                     ActivityFactory.gotoAttraction(context);

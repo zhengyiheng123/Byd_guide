@@ -146,7 +146,7 @@ public class DrawBackActivity extends BaseActivity {
                         countryList.addAll(cityListBean.getRegions());
                         tv_month.setText(cityListBean.getRegions().get(0).getRegion_name());
 //                        queryData("7");
-                        if (cityListBean.getRegions()!=null && cityListBean.getRegions().size()>0){
+                        if (cityListBean.getRegions()==null || cityListBean.getRegions().size()<0){
                             return;
                         }
                         queryData(cityListBean.getRegions().get(0).getRegion_id()+"");

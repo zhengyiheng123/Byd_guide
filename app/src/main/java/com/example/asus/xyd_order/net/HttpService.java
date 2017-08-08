@@ -52,7 +52,8 @@ import com.example.asus.xyd_order.net.result.RegisterBean;
         import com.example.asus.xyd_order.net.result.RoutDetailsBean;
         import com.example.asus.xyd_order.net.result.RouteBean;
         import com.example.asus.xyd_order.net.result.RouteDetails;
-        import com.example.asus.xyd_order.net.result.ServiceBean;
+import com.example.asus.xyd_order.net.result.SerchResult;
+import com.example.asus.xyd_order.net.result.ServiceBean;
         import com.example.asus.xyd_order.net.result.TakingOrderBean;
         import com.example.asus.xyd_order.net.result.TuancanBean;
         import com.example.asus.xyd_order.net.result.TuiShuiDetails;
@@ -446,6 +447,7 @@ public interface HttpService {
     /**
      * 发表互助消息
      */
+    @FormUrlEncoded
     @POST("v1/mutual")
     Observable<HttpResult> sendMutualData(@Field("apitoken")String apitoken,@Field("content")String content);
 
@@ -718,4 +720,10 @@ public interface HttpService {
     @FormUrlEncoded
     @POST("v1/order/build")
     Observable<HttpResult<PayParam>> payParam(@Field("apitoken")String apitoken,@Field("ord_type")String ord_type,@Field("ord_id")String ord_id,@Field("pay_type")String pay_type );
+
+    /**
+     * 搜索
+     */
+    @GET("v1/mer_list")
+    Observable<HttpResult<SerchResult>> seach(@Query("apitoken")String apitoken,@Query("mer_name")String mer_name);
 }

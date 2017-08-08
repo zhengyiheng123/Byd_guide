@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="200dp">
 <TextView
-    android:textColor="@color/material_black"
+    android:textColor="@color/material_grey_700"
     android:layout_marginTop="32dp"
     android:id="@+id/tv_message"
     android:layout_centerHorizontal="true"

@@ -55,7 +55,7 @@ public class AddDrawBackSiteActivity extends BaseActivity {
     private List<String> mList=new ArrayList<>();
     private List<CityListBean.RegionsBean> cityList=new ArrayList<>();
     private ArrayAdapter adapter;
-    private ImageView iv_stamp,iv_tuishui;
+    private ImageView iv_select_draw,iv_img_draw,iv_select_tamp,iv_img_stamp;
     private TextView tv_select,tv_select_tuishui,tv_back_address;
 
     private MultipartBody.Builder builder;
@@ -72,22 +72,26 @@ public class AddDrawBackSiteActivity extends BaseActivity {
     public void myOnclick(View view) {
         switch (view.getId()){
             case R.id.tv_select:
-                selectPic(iv_stamp);
                 break;
             case R.id.tv_select_tuishui:
-                selectPic(iv_tuishui);
                 break;
             case R.id.tv_submit:
                 dialog = new PromptDialog(AddDrawBackSiteActivity.this);
                 dialog.showLoading("上传中",false);
                 addDraw();
                 break;
-            case R.id.iv_tuishui:
+            case R.id.iv_select_draw:
+                selectPic(iv_select_draw);
+                break;
+            case R.id.iv_select_tamp:
+                selectPic(iv_select_tamp);
+                break;
+            case R.id.iv_img_draw:
                 intent = new Intent(context,ImageViewActivity.class);
                 intent.putExtra("path",fileTuishui.getAbsolutePath());
                 startActivity(intent);
                 break;
-            case R.id.iv_stamp:
+            case R.id.iv_img_stamp:
                 intent = new Intent(context,ImageViewActivity.class);
                 intent.putExtra("path",fileStamp.getAbsolutePath());
                 startActivity(intent);
@@ -100,10 +104,10 @@ public class AddDrawBackSiteActivity extends BaseActivity {
             @Override
             public void onPicSelected(String[] path) {
                 Glide.with(context).load(path[0]).into(iv);
-                if (iv.getId() == R.id.iv_stamp){
+                if (iv.getId() == R.id.iv_select_tamp){
                     fileStamp=new File(path[0]);
                     builder.addFormDataPart("stamp_img",fileStamp.getName(),RequestBody.create(MediaType.parse("image/*"), fileStamp));
-                }else if (iv.getId() == R.id.iv_tuishui){
+                }else if (iv.getId() == R.id.iv_select_draw){
                     fileTuishui=new File(path[0]);
                     builder.addFormDataPart("stamp_img",fileTuishui.getName(),RequestBody.create(MediaType.parse("image/*"), fileTuishui));
                 }
@@ -149,12 +153,17 @@ public class AddDrawBackSiteActivity extends BaseActivity {
         tv_select_tuishui= (TextView) findViewById(R.id.tv_select_tuishui);
         tv_back_address= (TextView) findViewById(R.id.tv_back_address);
 
+
+        iv_select_draw= (ImageView) findViewById(R.id.iv_select_draw);
+        iv_select_tamp= (ImageView) findViewById(R.id.iv_select_tamp);
+        iv_img_stamp= (ImageView) findViewById(R.id.iv_img_stamp);
+        iv_img_draw= (ImageView) findViewById(R.id.iv_img_draw);
+
         et_area = (EditText) findViewById(R.id.et_area);
         et_address= (EditText) findViewById(R.id.et_address);
         et_desc= (EditText) findViewById(R.id.et_desc);
 
-        iv_stamp = (ImageView) findViewById(R.id.iv_stamp);
-        iv_tuishui= (ImageView) findViewById(R.id.iv_tuishui);
+
         country_spinner = (Spinner) findViewById(R.id.country_spinner);
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,mList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -165,10 +174,12 @@ public class AddDrawBackSiteActivity extends BaseActivity {
 
     @Override
     public void setEvent() {
-        iv_tuishui.setOnClickListener(this);
-        iv_stamp.setOnClickListener(this);
+        iv_img_draw.setOnClickListener(this);
+        iv_img_stamp.setOnClickListener(this);
         tv_select.setOnClickListener(this);
         tv_select_tuishui.setOnClickListener(this);
+        iv_select_draw.setOnClickListener(this);
+        iv_select_tamp.setOnClickListener(this);
         country_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

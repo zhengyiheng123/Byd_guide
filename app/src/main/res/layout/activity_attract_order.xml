@@ -117,7 +117,7 @@
                 <TextView
                     android:id="@+id/tv_group_count"
                     android:layout_alignParentRight="true"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -160,7 +160,7 @@
 
                 <TextView
                     android:id="@+id/tv_nomal_count"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -282,7 +282,7 @@
                         android:drawableLeft="@drawable/selecter_zhifufangshi"
                         android:drawablePadding="4dp"
                         android:text="快递邮寄"
-                        android:textColor="@color/material_grey_800" />
+                        android:textColor="@color/material_grey_700" />
 
                     <RadioButton
                         android:id="@+id/rb_getbyself"
@@ -293,7 +293,7 @@
                         android:drawableLeft="@drawable/selecter_zhifufangshi"
                         android:drawablePadding="4dp"
                         android:text="窗口自取"
-                        android:textColor="@color/material_grey_800" />
+                        android:textColor="@color/material_grey_700" />
                 </RadioGroup>
             </RelativeLayout>
 
@@ -421,7 +421,7 @@
                 android:gravity="left"
                 android:padding="8dp"
                 android:text="取消条件"
-                android:textColor="@color/material_black" />
+                android:textColor="@color/material_grey_700" />
 
             <TextView
                 android:visibility="gone"

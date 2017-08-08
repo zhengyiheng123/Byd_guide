@@ -151,7 +151,7 @@
         android:background="@color/white"
         android:drawablePadding="4dp"
         android:gravity="left"
-        android:textColor="@color/material_black"
+        android:textColor="@color/material_grey_700"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="取票注意事项"
