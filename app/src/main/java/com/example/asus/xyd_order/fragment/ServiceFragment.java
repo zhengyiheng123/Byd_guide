@@ -88,6 +88,7 @@ public class ServiceFragment extends BaseFragment {
 
     @Override
     public int initData() {
+        getNetData();
         return STATE_CONTENT;
     }
 

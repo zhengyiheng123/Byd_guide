@@ -22,10 +22,19 @@ public class CategoryBean {
         /**
          * cate_name : 湘菜
          * sub_cate_id : 10
+         * state : 选中状态
          */
-
+        private int state;
         private String cate_name;
         private int sub_cate_id;
+
+        public int getState() {
+            return state;
+        }
+
+        public void setState(int state) {
+            this.state = state;
+        }
 
         public String getCate_name() {
             return cate_name;

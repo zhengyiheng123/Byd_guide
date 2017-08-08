@@ -11,6 +11,7 @@ import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.activity.Activity_Route_List;
 import com.example.asus.xyd_order.base.BaseViewHolder;
 import com.example.asus.xyd_order.net.result.Calender;
+import com.example.asus.xyd_order.utils.Myutils;
 import com.example.asus.xyd_order.utils.StringUtils;
 
 /**
@@ -37,7 +38,9 @@ public class DatsHolder extends BaseViewHolder<Calender.CalendarBean.NodesBean> 
         this.context=context;
         bean=nodesBean;
         tv_days.setText(nodesBean.getDate());
-        tv_count.setText(nodesBean.getCount()+"项行程");
+        String str=nodesBean.getCount()+"项行程";
+        tv_count.setText(str);
+        StringUtils.setTextColorOfPart(context,tv_count,R.color.material_grey_700,str.length()-3,str.length());
         rl_item.setOnClickListener(this);
     }
 

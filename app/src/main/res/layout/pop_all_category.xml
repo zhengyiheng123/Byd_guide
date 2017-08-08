@@ -23,6 +23,7 @@
             android:background="@mipmap/ic_quanbu"
             />
         <ListView
+            android:choiceMode="singleChoice"
             android:layout_marginBottom="@dimen/actionBarSize"
             android:scrollbars="none"
             android:layout_width="match_parent"

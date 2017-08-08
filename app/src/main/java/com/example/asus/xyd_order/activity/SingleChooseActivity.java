@@ -13,6 +13,8 @@ import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.RestaurantDetailsBean;
 import com.example.asus.xyd_order.utils.ActivityFactory;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class SingleChooseActivity extends BaseActivity {
     private String res_name;
     private String logo;
     private String res_id;
+    private TextView tv_empty;
 
     @Override
     public void myOnclick(View view) {
@@ -77,6 +80,8 @@ public class SingleChooseActivity extends BaseActivity {
     public void initView() {
         multiple = (ListView) findViewById(R.id.multiple);
         btn_order = (TextView) findViewById(R.id.btn_order);
+        tv_empty = (TextView) findViewById(R.id.tv_empty);
+        multiple.setEmptyView(tv_empty);
         tv_total_price= (TextView) findViewById(R.id.tv_total_price);
         initAdapter();
     }

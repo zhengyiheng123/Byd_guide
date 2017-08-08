@@ -38,6 +38,7 @@ public class Activity_address_list extends BaseActivity {
     private TextView add_new_address;
     private BaseArrayAdapter adapter;
     private TextView tv_empty;
+    private String choose;
 
     @Override
     protected void onResume() {
@@ -80,6 +81,7 @@ public class Activity_address_list extends BaseActivity {
 
     @Override
     public int getData() throws Exception {
+        choose = getIntent().getStringExtra("choose");
         return 0;
     }
 
@@ -108,12 +110,14 @@ public class Activity_address_list extends BaseActivity {
         lv_address.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent();
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("address",mlist.get(i));
-                intent.putExtras(bundle);
-                setResult(1,intent);
-                finish();
+                if (choose !=null){
+                    Intent intent=new Intent();
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable("address",mlist.get(i));
+                    intent.putExtras(bundle);
+                    setResult(1,intent);
+                    finish();
+                }
             }
         });
     }

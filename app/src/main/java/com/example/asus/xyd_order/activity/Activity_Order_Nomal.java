@@ -123,7 +123,9 @@ public class Activity_Order_Nomal extends BaseActivity {
                 adapter.notifyDataSetChanged();
                 break;
             case R.id.ll_address:
-                ActivityFactory.gotoAddAddressList(context);
+                Intent intent=new Intent(context,Activity_address_list.class);
+                intent.putExtra("choose","1");
+                startActivityForResult(intent,0);
                 break;
             case R.id.btn_order_now:
                 try {
@@ -310,6 +312,7 @@ public class Activity_Order_Nomal extends BaseActivity {
                 switch (i){
                     case R.id.rb_sent:
                         Intent intent=new Intent(context,Activity_address_list.class);
+                        intent.putExtra("choose","1");
                         startActivityForResult(intent,0);
                         break;
                     case R.id.rb_getbyself:

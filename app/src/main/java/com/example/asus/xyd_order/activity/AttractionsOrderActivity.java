@@ -90,6 +90,7 @@ public class AttractionsOrderActivity extends BaseActivity {
                 break;
             case R.id.ll_address:
                 Intent intent=new Intent(context,Activity_address_list.class);
+                intent.putExtra("choose","1");
                 startActivityForResult(intent,0);
                 break;
             case R.id.tv_paytype:
@@ -311,6 +312,7 @@ public class AttractionsOrderActivity extends BaseActivity {
                 switch (i){
                     case R.id.rb_sent:
                         Intent intent=new Intent(context,Activity_address_list.class);
+                        intent.putExtra("choose","1");
                         startActivityForResult(intent,0);
                         break;
                     case R.id.rb_getbyself:

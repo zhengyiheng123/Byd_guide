@@ -8,8 +8,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.asus.xyd_order.R;
-import com.example.asus.xyd_order.adapter.Journey_Adapter;
-import com.example.asus.xyd_order.adapter.Journey_Adapter_Ex;
 import com.example.asus.xyd_order.base.BaseActivity;
 import com.example.asus.xyd_order.base.BaseArrayAdapter;
 import com.example.asus.xyd_order.holder.MonthHolder;

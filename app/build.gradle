@@ -4,7 +4,7 @@ apply plugin: 'me.tatarka.retrolambda'
 android {
 
     compileSdkVersion 25
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "25.0.0"
 
 //    lintOptions{
 //        checkReleaseBuilds false
@@ -67,4 +67,5 @@ dependencies {
     compile project(':PhotoPickerLib')
     compile files('libs/jpush-android-3.0.7.jar')
     compile files('libs/alipaySdk-20170725.jar')
+
 }
