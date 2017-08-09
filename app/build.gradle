@@ -60,6 +60,7 @@ dependencies {
     compile 'cn.qqtheme.framework:FilePicker:1.4.4'
     compile 'com.squareup:otto:1.3.5'
     compile project(':promptlibrary')
+    compile 'com.contrarywind:Android-PickerView:3.2.5'
     /**
      *    获取验证码倒计时
      */
@@ -67,5 +68,8 @@ dependencies {
     compile project(':PhotoPickerLib')
     compile files('libs/jpush-android-3.0.7.jar')
     compile files('libs/alipaySdk-20170725.jar')
+
+    //spinner
+    compile 'com.jaredrummler:material-spinner:1.1.0'
 
 }

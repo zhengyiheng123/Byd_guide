@@ -1,19 +1,15 @@
 package com.example.asus.xyd_order.activity;
 
 import android.app.Dialog;
-import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.bumptech.glide.Glide;
 import com.example.asus.xyd_order.R;

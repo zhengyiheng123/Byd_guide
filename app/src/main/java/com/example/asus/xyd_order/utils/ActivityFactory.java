@@ -587,9 +587,14 @@ public static void gotoMain(Context context){
         context.startActivity(intent);
     }
 
-    public static void gotoTickList(Context context){
+    public static void gotoTickList(Context context,String route_id,String start_station,String end_station,String date,String scene_id){
         intent=new Intent(context, Ticket_List_Activity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("route_id",route_id);
+        intent.putExtra("scene_id",scene_id);
+        intent.putExtra("start_station",start_station);
+        intent.putExtra("end_station",end_station);
+        intent.putExtra("date",date);
         context.startActivity(intent);
     }
     /**

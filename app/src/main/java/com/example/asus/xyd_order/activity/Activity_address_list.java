@@ -127,6 +127,7 @@ public class Activity_address_list extends BaseActivity {
      * 获取网络数据
      */
     public void getNetData(){
+        showDialog();
         Observable<HttpResult<AddressBean>> result= ServiceApi.getInstance().getServiceContract().addressData(apitoken);
         result.map(new ResultFilter<>())
                 .subscribeOn(Schedulers.io())
@@ -134,12 +135,13 @@ public class Activity_address_list extends BaseActivity {
                 .subscribe(new Subscriber<AddressBean>() {
                     @Override
                     public void onCompleted() {
-
+                    dismissDialog();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         toastShow(e.getMessage());
+                        dismissDialog();
                     }
 
                     @Override

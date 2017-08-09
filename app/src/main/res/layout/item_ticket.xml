@@ -13,19 +13,21 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
     <TextView
+        android:id="@+id/tv_start"
         android:textColor="@color/material_grey_800"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="北京"
+        android:text="--"
         />
 
     <TextView
+        android:id="@+id/tv_start_time"
         android:layout_marginTop="8dp"
         android:textColor="@color/tool_bar_color"
         android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="19:40" />
+        android:text="--" />
 </LinearLayout>
     <LinearLayout
         android:layout_weight="1"
@@ -35,10 +37,11 @@
         android:baselineAligned="false"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/tv_train_name"
             android:textColor="@color/material_grey_800"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="T215"
+            android:text="历时"
             />
     <View
         android:layout_marginLeft="8dp"
@@ -50,12 +53,12 @@
         android:background="@color/line_color"
         />
         <TextView
-
+            android:id="@+id/tv_spend"
             android:textColor="@color/tool_bar_color"
             android:textSize="12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1时26分" />
+            android:text="--" />
     </LinearLayout>
     <LinearLayout
         android:layout_weight="1"
@@ -64,27 +67,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/tv_end_station"
             android:textColor="@color/material_grey_800"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="天津南"
+            android:text="--"
             />
 
         <TextView
+            android:id="@+id/tv_end_time"
             android:layout_marginTop="8dp"
             android:textColor="@color/tool_bar_color"
             android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="21：06" />
+            android:text="---" />
     </LinearLayout>
     <TextView
+        android:id="@+id/tv_price"
         android:gravity="center"
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/material_yellow_700"
-        android:text="￥38元起"
+        android:text="--"
         />
 </LinearLayout>

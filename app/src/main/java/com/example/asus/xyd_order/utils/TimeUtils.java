@@ -31,6 +31,19 @@ public class TimeUtils {
         res = String.valueOf(ts);
         return res;
     }
+
+    /*
+    * 将时间转换为时间戳
+    */
+    public static String dateToStampssss(String ssss) throws ParseException {
+        String res;
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH");
+        Date date = simpleDateFormat.parse(ssss);
+        long ts = date.getTime();
+        res = String.valueOf(ts);
+        return res;
+    }
     /*
 * 将时间戳转换为时间
 */

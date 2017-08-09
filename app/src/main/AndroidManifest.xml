@@ -232,6 +232,9 @@
         <!---->
         <activity android:name=".activity.Activity_Route_List"/>
         <activity android:name=".activity.Attractions_TicketActivity"/>
+
+        <!--选择火车票-->
+        <activity android:name=".activity.SelectTicketActivity"/>
         <!--车票列表-->
         <activity android:name=".activity.Ticket_List_Activity"/>
         <!--我的预定-->
@@ -330,8 +333,8 @@
         </receiver>
 
         <!-- Required  . Enable it you can get statistics data with channel -->
-        <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
-        <meta-data android:name="JPUSH_APPKEY" android:value="d9a8d9c047c0f57200077cf2" /> <!--  </>值来自开发者平台取得的AppKey-->
+        <meta-data android:name="JPUSH_CHANNEL"  android:value="developer-default" />
+        <meta-data android:name="JPUSH_APPKEY"  android:value="d9a8d9c047c0f57200077cf2" /> <!--  </>值来自开发者平台取得的AppKey-->
         <!--支付宝-->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
@@ -347,8 +350,7 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
-        <activity android:name=".activity.SelectCountry" />
-        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.SelectTicketActivity" />
     </application>
 
 </manifest>

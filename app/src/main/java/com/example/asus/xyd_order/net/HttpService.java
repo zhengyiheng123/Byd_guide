@@ -46,15 +46,17 @@ import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.NoticeBean;
 import com.example.asus.xyd_order.net.result.Order_Info_Bean;
 import com.example.asus.xyd_order.net.result.PayParam;
+import com.example.asus.xyd_order.net.result.QueryData;
 import com.example.asus.xyd_order.net.result.RegisterBean;
         import com.example.asus.xyd_order.net.result.RestaurantBean;
         import com.example.asus.xyd_order.net.result.RestaurantDetailsBean;
         import com.example.asus.xyd_order.net.result.RoutDetailsBean;
         import com.example.asus.xyd_order.net.result.RouteBean;
         import com.example.asus.xyd_order.net.result.RouteDetails;
+import com.example.asus.xyd_order.net.result.RouteResult;
 import com.example.asus.xyd_order.net.result.SerchResult;
 import com.example.asus.xyd_order.net.result.ServiceBean;
-        import com.example.asus.xyd_order.net.result.TakingOrderBean;
+import com.example.asus.xyd_order.net.result.TakingOrderBean;
         import com.example.asus.xyd_order.net.result.TuancanBean;
         import com.example.asus.xyd_order.net.result.TuiShuiDetails;
         import com.example.asus.xyd_order.net.result.TuishuiBean;
@@ -726,4 +728,29 @@ public interface HttpService {
      */
     @GET("v1/mer_list")
     Observable<HttpResult<SerchResult>> seach(@Query("apitoken")String apitoken,@Query("mer_name")String mer_name);
+
+    /**
+     * 游船类景区站点列表
+     */
+    @FormUrlEncoded
+    @POST("v1/scene/train/station_list")
+    Observable<HttpResult<RouteResult>> station_list(@Field("apitoken")String apitoken, @Field("mer_id")String mer_id,@Field("route_id")String route_id);
+
+    /**
+     * 车次查询
+     */
+    @FormUrlEncoded
+    @POST("v1/scene/train/ticket_list")
+    Observable<HttpResult<QueryData>> ticket_list(@Field("apitoken")String apitoken,@Field("route_id")String route_id,@Field("start_station")String start_station,@Field("end_station")String end_station,@Field("date")String date);
+
+    /**
+     * 保存新增游船类订单
+     */
+    @FormUrlEncoded
+    @POST("v1/scene/train/order")
+    Observable<HttpResult<ZhongcanOrderSuccessBean>> saveOrder(@Field("apitoken")String apitoken
+            ,@Field("group_num")String group_num,@Field("pay_type")String pay_type,@Field("post_type")String post_type
+    ,@Field("mer_id")String mer_id,@Field("route_id")String route_id,@Field("date")String date,@Field("price")String price
+    ,@Field("ticket_type")String ticket_type,@Field("start_station")String start_station,@Field("end_station")String end_station,@Field("time_start")String time_start
+    ,@Field("time_end")String time_end,@Field("time_spend")String time_spend,@Field("nums")String nums,@Field("ua_id")String ua_id,@Field("user_name")String user_name,@Field("mobile")String mobile);
 }
