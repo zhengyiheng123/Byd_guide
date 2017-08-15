@@ -66,6 +66,8 @@
         <!--图片预览-->
         <activity android:name=".activity.ImageViewActivity"
             android:theme="@style/ThemeSplash"/>
+        <!--退款-->
+        <activity android:name=".activity.FefundsActivity"/>
         <!--预订页面-->
         <activity android:name=".activity.OrderActivity"/>
         <!--团餐详情页面-->
@@ -234,7 +236,9 @@
         <activity android:name=".activity.Attractions_TicketActivity"/>
 
         <!--选择火车票-->
-        <activity android:name=".activity.SelectTicketActivity"/>
+        <activity android:name=".activity.SelectTicketActivity"
+            android:windowSoftInputMode="adjustPan"
+            />
         <!--车票列表-->
         <activity android:name=".activity.Ticket_List_Activity"/>
         <!--我的预定-->
@@ -350,7 +354,7 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
-        <activity android:name=".activity.SelectTicketActivity" />
+        <activity android:name=".activity.Activity_Train_Success" />
     </application>
 
 </manifest>

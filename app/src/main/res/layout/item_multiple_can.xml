@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <RelativeLayout
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
+        android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
         <TextView
+            android:gravity="center"
+            android:layout_centerVertical="true"
             android:drawablePadding="4dp"
             android:drawableLeft="@mipmap/ic_dish"
             android:textColor="@color/material_grey_800"
@@ -32,6 +33,7 @@
             android:layout_alignParentRight="true"
             />
         <TextView
+            android:visibility="gone"
             android:layout_below="@id/tv_meal_name"
             android:id="@+id/tv_meal_details"
             android:layout_marginTop="8dp"

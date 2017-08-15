@@ -1,6 +1,7 @@
 package com.example.asus.xyd_order.activity;
 
 import android.app.Dialog;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.bumptech.glide.Glide;
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseActivity;
@@ -33,6 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -89,6 +92,7 @@ public class OrderActivity extends BaseActivity {
     private List<RestaurantDetailsBean.SingleMealBean> restList;
     private String singleCaidan;
     private Double price;
+    private TimePickerView pvTime;
 
     /**
      * 日期选择框
@@ -157,7 +161,7 @@ public class OrderActivity extends BaseActivity {
             case R.id.tv_timepicker:
 //                showDateDialog(DateUtil.getDateForString("2017-02-28"));
 //                showDialog(DATA_MODE);
-                datePicker();
+                pvTime.show();
                 break;
             case R.id.btn_order:
                 //团餐
@@ -270,6 +274,7 @@ public class OrderActivity extends BaseActivity {
     @Override
     public void initView() {
         //初始化时间选择器
+        initTimePicker();
         final Calendar ca = Calendar.getInstance();
         mHour =ca.get(Calendar.HOUR_OF_DAY);
         mMinute =ca.get(Calendar.MINUTE);
@@ -390,11 +395,53 @@ public class OrderActivity extends BaseActivity {
                     public void onNext(ZhongcanOrderSuccessBean zhongcan) {
                         ActivityFactory.goToConfirmOrder(context,zhongcan.getOrd_id()+"");
                         finish();
-                        Log.e("zyh",zhongcan.getOrd_id()+"");
+//                        Log.e("zyh",zhongcan.getOrd_id()+"");
                     }
                 });
     }
 
 
+    //选择时间
+    private void initTimePicker() {
+        //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+        //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
+        Calendar selectedDate = Calendar.getInstance();
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(2016, 0, 23);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2020, 11, 28);
+        //时间选择器
+        pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
 
+                /*btn_Time.setText(getTime(date));*/
+//                    Button btn = (Button) v;
+//                    btn.setText(getDateAndTime(date));
+                tv_timepicker.setText(getDateAndTime(date));
+                try {
+                    time = TimeUtils.dateToStampssss(getDateAndTime(date));
+                    time=time.substring(0,10);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        })
+                //年月日时分秒 的显示与否，不设置则默认全部显示
+                .setType(new boolean[]{true, true, true, true, true, false})
+                .setLabel("年", "月", "日", "点", "", "")
+                .isCenterLabel(false)
+                .setDividerColor(Color.DKGRAY)
+                .setContentSize(14)
+                .setDate(selectedDate)
+                .setRangDate(startDate, endDate)
+                .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
+                .setDecorView(null)
+                .build();
+    }
+    private String getDateAndTime(Date date) {//可根据需要自行截取数据显示
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return format.format(date);
+    }
 }

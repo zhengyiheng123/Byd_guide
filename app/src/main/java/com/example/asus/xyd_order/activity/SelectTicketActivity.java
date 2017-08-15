@@ -217,6 +217,11 @@ public class SelectTicketActivity extends BaseActivity {
                 order(group_num,pay_type,post_type,scene_id,route_id,date,price,ticket_type,data.getStart_station(),data.getEnd_station(),data.getTime_start(),data.getTime_end(),
                         data.getTime_spend(),nums+"",ua_id,et_user_name.getText().toString(),et_user_phone.getText().toString());
                 break;
+            case R.id.ll_address:
+                Intent intent=new Intent(context,Activity_address_list.class);
+                intent.putExtra("choose","1");
+                startActivityForResult(intent,0);
+                break;
         }
     }
 
@@ -256,6 +261,7 @@ public class SelectTicketActivity extends BaseActivity {
 
     @Override
     public void setEvent() {
+        ll_address.setOnClickListener(this);
         iv_add.setOnClickListener(this);
         iv_release.setOnClickListener(this);
         tv_order.setOnClickListener(this);
@@ -323,7 +329,10 @@ public class SelectTicketActivity extends BaseActivity {
 
                     @Override
                     public void onNext(ZhongcanOrderSuccessBean zhongcanOrderSuccessBean) {
-
+                        toastShow("预定成功");
+                        Intent intent=new Intent(context,Activity_Train_Success.class);
+                        intent.putExtra("ord_id",zhongcanOrderSuccessBean.getOrd_id()+"");
+                        startActivity(intent);
                     }
                 });
     }

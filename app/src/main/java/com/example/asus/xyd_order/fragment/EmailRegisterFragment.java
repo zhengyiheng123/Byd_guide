@@ -14,6 +14,7 @@ import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.CodeBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.RegisterBean;
+import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 import com.example.asus.xyd_order.utils.StringUtils;
 import com.lucenlee.countdownlibrary.CountdownButton;
 
@@ -30,6 +31,14 @@ public class EmailRegisterFragment extends BaseFragment {
     private CountdownButton countdown;
     private EditText et_email,et_code,et_password,et_repassword;
     private TextView tv_next;
+    private RegisterBean registerBean1;
+    public static EmailRegisterFragment instance;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        instance=this;
+    }
 
     @Override
     public void myOnclick(View view) {
@@ -115,7 +124,7 @@ public class EmailRegisterFragment extends BaseFragment {
 
                     @Override
                     public void onNext(CodeBean codeBean) {
-                        toastShow("验证码发送成功"+codeBean.getCaptcha());
+                        toastShow("验证码发送成功");
                     }
                 });
     }
@@ -143,10 +152,12 @@ public class EmailRegisterFragment extends BaseFragment {
 
                     @Override
                     public void onNext(RegisterBean registerBean) {
+                        registerBean1 = registerBean;
+                        SharedPreferenceUtils.setParam(context,"apitoken",registerBean.getApitoken());
                         getActivity().finish();
-                        startActivity(new Intent(getActivity(), Activity_Register_confirm.class));
+                        Intent intent=new Intent(getActivity(), Activity_Register_confirm.class);
+                        getActivity().startActivity(intent);
                     }
                 });
-
     }
 }

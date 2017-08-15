@@ -159,9 +159,9 @@
             android:textColor="@color/tool_bar_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="再发布一次"
+            android:text="退款"
             android:background="@drawable/shape_order"
-            android:id="@+id/republish"
+            android:id="@+id/refunds"
             />
         <TextView
             android:visibility="gone"

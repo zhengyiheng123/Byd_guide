@@ -1,5 +1,6 @@
 package com.example.asus.xyd_order.fragment;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -20,7 +21,7 @@ import java.util.List;
 /**
  * Created by Zheng on 2017/8/8.
  */
-
+@SuppressLint("ValidFragment")
 public class AttractionsFragment extends BaseFragment {
 
     private MyListView lv_attractions;

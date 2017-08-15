@@ -1,6 +1,8 @@
 package com.example.asus.xyd_order.activity;
 
+import android.graphics.Color;
 import android.support.annotation.IdRes;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -12,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseActivity;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
@@ -22,6 +25,9 @@ import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 import com.example.asus.xyd_order.utils.TimeUtils;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.DateTimePicker;
@@ -43,7 +49,6 @@ public class Activity_Register_confirm extends BaseActivity {
     private EditText et_realname,live_city,et_passport,et_phonenum,et_email,et_belong_company,service_type_desc;
     private CheckBox cb_only_guide,cb_nine,cb_daba,cb_translate;
     private RadioGroup rg_sex,rg_have_car;
-    private String apitoken;
     private MultipartBody.Builder builder;
 
     private String find_guide;
@@ -51,15 +56,16 @@ public class Activity_Register_confirm extends BaseActivity {
     private String nine_sidao;
     private String translate;
     //性别
-    private String sex;
+    private String sex="";
     //从业日期
-    private String attend_time;
+    private String attend_time="";
     private LinearLayout ll_ishave_car;
     private CheckBox cb_insurence;
     private TextView tv_factory_time;
     private EditText et_grand;
     //是否有车辆保险
     private String isInsurence="";
+    private TimePickerView pvTime;
 
     @Override
     protected void onDestroy() {
@@ -73,56 +79,28 @@ public class Activity_Register_confirm extends BaseActivity {
     public void myOnclick(View view) {
         switch (view.getId()){
             case R.id.tv_career_time:
-                showDatePicker(tv_career_time);
+//                showDatePicker(tv_career_time);
+                pvTime.show(tv_career_time);
                 break;
             case R.id.tv_birth:
-                showDatePicker(tv_birth);
+//                showDatePicker(tv_birth);
+                pvTime.show(tv_birth);
                 break;
             case R.id.tv_next:
                 confirmInfo();
                 break;
             case R.id.tv_factory_time:
-                selectCarDate();
+//                selectCarDate();
+                pvTime.show(tv_factory_time);
                 break;
         }
     }
-    //选择车辆出厂日期
-    private void selectCarDate(){
-        DatePicker datePicke=new DatePicker(Activity_Register_confirm.this, DatePicker.YEAR_MONTH_DAY);
-        datePicke.setRange(1930,2025);
-        datePicke.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
-            @Override
-            public void onDatePicked(String year, String month,String day) {
-                tv_factory_time.setText(year+"-"+month+"-"+day);
-            }
-        });
-        datePicke.show();
-    }
-private void showDatePicker(TextView tv){
-    datePicker = new DatePicker(Activity_Register_confirm.this, DatePicker.YEAR_MONTH_DAY);
-    datePicker.setRange(1970,2025);
-    datePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
-        @Override
-        public void onDatePicked(String year, String month,String day) {
-            if (tv.getId()== R.id.tv_career_time){
-                String time=year+"."+month+"."+day;
-                try {
-                    tv_career_time.setText(time);
-                    attend_time=TimeUtils.dateToStamp(time);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }else if (tv.getId() == R.id.tv_birth){
-                tv_birth.setText(year+"-"+month+"-"+day);
-            }
-        }
-    });
-    datePicker.show();
-}
 
     @Override
     public void setToolbar() {
         ImageView iv_back= (ImageView) findViewById(R.id.iv_back);
+        TextView tv_title= (TextView) findViewById(R.id.tv_title);
+        tv_title.setText("认证");
         iv_back.setOnClickListener(v -> {onBackPressed();});
     }
 
@@ -134,15 +112,15 @@ private void showDatePicker(TextView tv){
 
     @Override
     public int getData() throws Exception {
+        builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         return 0;
     }
 
     @Override
     public void initView() {
         //初始化所有布局
-        apitoken = getIntent().getStringExtra("apitoken");
-        builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         iniaLizeView();
+        initTimePicker();
     }
 
     private void iniaLizeView() {
@@ -217,6 +195,7 @@ private void showDatePicker(TextView tv){
      * 注册信息认证
      */
     private void confirmInfo(){
+        showDialog();
         Observable<HttpResult<ConfirmUserInfo>> result=
                 ServiceApi.getInstance().getServiceContract().confirmUserinfo(getrequestBody());
         result.map(new ResultFilter<>())
@@ -225,12 +204,13 @@ private void showDatePicker(TextView tv){
                 .subscribe(new Subscriber<ConfirmUserInfo>() {
                     @Override
                     public void onCompleted() {
-
+dismissDialog();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         toastShow(e.getMessage());
+                        dismissDialog();
                     }
 
                     @Override
@@ -265,6 +245,19 @@ private void showDatePicker(TextView tv){
         }else {
             have_daba="";
         }
+        String service_type="";
+        if(!TextUtils.isEmpty(find_guide)){
+            service_type=service_type+find_guide+",";
+        }
+        if (!TextUtils.isEmpty(translate)){
+            service_type=service_type+translate+",";
+        }
+        if (!TextUtils.isEmpty(nine_sidao)){
+            service_type=service_type+nine_sidao+",";
+        }
+        if (!TextUtils.isEmpty(have_daba)){
+            service_type=service_type+have_daba+",";
+        }
         builder.addFormDataPart("apitoken",apitoken);
         builder.addFormDataPart("user_name",et_realname.getText().toString());
         builder.addFormDataPart("gender",sex);
@@ -272,9 +265,8 @@ private void showDatePicker(TextView tv){
         builder.addFormDataPart("mobile",et_phonenum.getText().toString());
         builder.addFormDataPart("email",et_email.getText().toString());
         builder.addFormDataPart("company",et_belong_company.getText().toString());
-        builder.addFormDataPart("attend_time",attend_time.substring(0,10));
-        builder.addFormDataPart("service_type",find_guide+","+have_daba+","+nine_sidao+","+translate);
-//        Log.e("zyh",have_daba+","+find_guide+","+nine_sidao+","+translate);
+        builder.addFormDataPart("attend_time",attend_time);
+        builder.addFormDataPart("service_type",service_type);
         builder.addFormDataPart("service_type_desc",service_type_desc.getText().toString());
         builder.addFormDataPart("live_city",live_city.getText().toString());
         builder.addFormDataPart("passport_num",et_passport.getText().toString());
@@ -284,40 +276,46 @@ private void showDatePicker(TextView tv){
         return builder.build();
     }
 
-    public class SelectInfo{
-        public SelectInfo(String tv_factory_time, String et_grand, String insurence) {
-            this.tv_factory_time = tv_factory_time;
-            this.et_grand = et_grand;
-            this.insurence = insurence;
-        }
+    //选择时间
+    private void initTimePicker() {
+        //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+        //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
+        Calendar selectedDate = Calendar.getInstance();
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(1980, 0, 23);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2022, 11, 28);
+        //时间选择器
+        pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
 
-        private String tv_factory_time;
-        private String et_grand;
-        private String insurence;
-
-        public String getTv_factory_time() {
-            return tv_factory_time;
-        }
-
-        public String getEt_grand() {
-            return et_grand;
-        }
-
-        public String isInsurence() {
-            return insurence;
-        }
-
-        public void setTv_factory_time(String tv_factory_time) {
-            this.tv_factory_time = tv_factory_time;
-        }
-
-        public void setEt_grand(String et_grand) {
-            this.et_grand = et_grand;
-        }
-
-        public void setInsurence(String insurence) {
-            this.insurence = insurence;
-        }
+                /*btn_Time.setText(getTime(date));*/
+                TextView tv_time = (TextView) v;
+                tv_time.setText(getDateAndTime(date));
+//                tv_timepicker.setText(getDateAndTime(date));
+                    if (tv_time.getId() == R.id.tv_career_time){
+                        attend_time = TimeUtils.getStringToDate(getDateAndTime(date))+"";
+                        attend_time = attend_time.substring(0,10);
+                    }else if (tv_time.getId() == R.id.tv_birth){
+                }
+            }
+        })
+                //年月日时分秒 的显示与否，不设置则默认全部显示
+                .setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel("年", "月", "日", "", "", "")
+                .isCenterLabel(false)
+                .setDividerColor(Color.DKGRAY)
+                .setContentSize(14)
+                .setDate(selectedDate)
+                .setRangDate(startDate, endDate)
+                .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
+                .setDecorView(null)
+                .build();
     }
-
+    private String getDateAndTime(Date date) {//可根据需要自行截取数据显示
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(date);
+    }
 }

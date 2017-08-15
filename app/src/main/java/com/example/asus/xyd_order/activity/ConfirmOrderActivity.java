@@ -182,7 +182,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                                     tv_paytype.setText("到店支付");
                                     break;
                                 case 2:
-                                    tv_paytype.setText("支付宝");
+                                    tv_paytype.setText("在线支付");
                                     break;
                                 case 3:
                                     tv_paytype.setText("微信");

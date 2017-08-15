@@ -9,12 +9,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.asus.xyd_order.R;
+import com.example.asus.xyd_order.app.APP;
 import com.example.asus.xyd_order.base.BaseActivity;
 import com.example.asus.xyd_order.base.BaseArrayAdapter;
 import com.example.asus.xyd_order.controler.CategoryControl;
 import com.example.asus.xyd_order.holder.AttractionsHolder;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
+import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.JingdianBean;
 import com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout;
@@ -48,13 +50,14 @@ public class AttractionsActivity extends BaseActivity implements SwipeRefreshLay
     //维度
     private String latitude="";
 
-    //排序标志1距离优先  2时间派排序
+    //排序标志 1|价格升序 2|价格降序 3|距离优先
     private String sort_state="3";
 
     //分页码
     private int page;
     private TextView tv_sort_distance;
     private TextView tv_price_down;
+    private String region_id;
 
     @Override
     public void myOnclick(View view) {
@@ -90,6 +93,12 @@ public class AttractionsActivity extends BaseActivity implements SwipeRefreshLay
 
     @Override
     public int getData() throws Exception {
+        CityListBean.RegionsBean cityBean= APP.getApplication().getCityBean();
+        if (cityBean!=null){
+            region_id = cityBean.getRegion_id()+"";
+        }else {
+            region_id="";
+        }
         return 0;
     }
 
@@ -105,9 +114,6 @@ public class AttractionsActivity extends BaseActivity implements SwipeRefreshLay
         //初始化Listview
         initListView();
         onRefresh();
-//        ImageView iv_img= (ImageView) findViewById(R.id.iv_img);
-//        iv_img.setVisibility(View.VISIBLE);
-//        iv_img.setImageResource(R.mipmap.ic_search_white);
 
     }
 
@@ -188,7 +194,7 @@ public class AttractionsActivity extends BaseActivity implements SwipeRefreshLay
      * 获取网络信息
      */
     private void getNetData(String p,String sort_state){
-        Observable<HttpResult<JingdianBean>> result= ServiceApi.getInstance().getServiceContract().jingdianList(apitoken,longitude,latitude,sort_state,p);
+        Observable<HttpResult<JingdianBean>> result= ServiceApi.getInstance().getServiceContract().jingdianList(apitoken,longitude,latitude,sort_state,p,region_id);
         result.map(new ResultFilter<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

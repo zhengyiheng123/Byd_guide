@@ -28,6 +28,7 @@ import com.example.asus.xyd_order.net.result.AddressBean;
 import com.example.asus.xyd_order.net.result.BaseTicketBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.RoutDetailsBean;
+import com.example.asus.xyd_order.net.result.RouteDetails;
 import com.example.asus.xyd_order.net.result.ZhongcanOrderSuccessBean;
 import com.example.asus.xyd_order.ui.ChildViewPager;
 import com.example.asus.xyd_order.ui.MyListView;
@@ -97,6 +98,7 @@ public class Activity_Order_Nomal extends BaseActivity {
     private int nomalNum;
     private ImageView iv_driver_free;
     private ImageView iv_guide_free;
+    private RoutDetailsBean detailsBean;
 
 
     @Override
@@ -222,8 +224,9 @@ public class Activity_Order_Nomal extends BaseActivity {
         }
        if (groupNum==0){
            groupString=jsonArrayGroup.toString();
-       }else if (groupNum>0 && groupNum<10){
-           toastShow("团体票最低购买数量为10张");
+       }
+       else if (groupNum>0 && groupNum<detailsBean.getGroup_start()){
+           toastShow("团体票最低购买数量为"+detailsBean.getGroup_start()+"张");
            return;
        }else {
            groupString=jsonArrayGroup.toString();
@@ -324,9 +327,7 @@ public class Activity_Order_Nomal extends BaseActivity {
             }
         });
     }
-    /**
-     * 获取网络数据
-     */
+
     public void upDataCounts(){
         groupNum = 0;
         double groupPrice=0.0f;
@@ -336,7 +337,7 @@ public class Activity_Order_Nomal extends BaseActivity {
                 groupPrice=groupPrice+groupList.get(i).getTotalPrice();
             }
         }
-        tv_group.setText("10人以上"+"("+ groupNum +"张)");
+        tv_group.setText(detailsBean.getGroup_start()+"人以上"+"("+ groupNum +"张)");
         nomalNum = 0;
         double nomalPrice=0.0f;
         for (int i=0;i<nomalList.size();i++){
@@ -372,6 +373,7 @@ public class Activity_Order_Nomal extends BaseActivity {
 
                     @Override
                     public void onNext(RoutDetailsBean routDetailsBean) {
+                        detailsBean = routDetailsBean;
                         routeBean = routDetailsBean;
                         if (routDetailsBean.getDriver_free() == 1){
                             tv_driver_free.setText("司机可免");

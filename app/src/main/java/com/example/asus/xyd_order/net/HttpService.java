@@ -57,7 +57,8 @@ import com.example.asus.xyd_order.net.result.RouteResult;
 import com.example.asus.xyd_order.net.result.SerchResult;
 import com.example.asus.xyd_order.net.result.ServiceBean;
 import com.example.asus.xyd_order.net.result.TakingOrderBean;
-        import com.example.asus.xyd_order.net.result.TuancanBean;
+import com.example.asus.xyd_order.net.result.TrainSuccessBean;
+import com.example.asus.xyd_order.net.result.TuancanBean;
         import com.example.asus.xyd_order.net.result.TuiShuiDetails;
         import com.example.asus.xyd_order.net.result.TuishuiBean;
         import com.example.asus.xyd_order.net.result.UserInfoResult;
@@ -473,7 +474,7 @@ public interface HttpService {
                                                           @Query("sort_type")String sort_type,@Query("park")String park,@Query("price_start")String price_start,@Query("price_end")String price_end,
                                                           @Query("seat_start")String seat_start,@Query("seat_end")String seat_end,
                                                           @Query("sub_cate_id")String sub_cate_id
-                                                          );
+                                                          ,@Query("region_id")String region_id);
 
     /**
      * 餐厅详情页
@@ -556,7 +557,7 @@ public interface HttpService {
      * 景点列表
      */
     @GET("v1/scene")
-    Observable<HttpResult<JingdianBean>> jingdianList(@Query("apitoken")String apitoken,@Query("longitude")String longitude,@Query("latitude")String latitude,@Query("sort_type")String sort_type,@Query("p")String p);
+    Observable<HttpResult<JingdianBean>> jingdianList(@Query("apitoken")String apitoken,@Query("longitude")String longitude,@Query("latitude")String latitude,@Query("sort_type")String sort_type,@Query("p")String p,@Query("region_id")String region_id);
 
     /**
      * 景区详情
@@ -753,4 +754,23 @@ public interface HttpService {
     ,@Field("mer_id")String mer_id,@Field("route_id")String route_id,@Field("date")String date,@Field("price")String price
     ,@Field("ticket_type")String ticket_type,@Field("start_station")String start_station,@Field("end_station")String end_station,@Field("time_start")String time_start
     ,@Field("time_end")String time_end,@Field("time_spend")String time_spend,@Field("nums")String nums,@Field("ua_id")String ua_id,@Field("user_name")String user_name,@Field("mobile")String mobile);
+
+    /**
+     * 游船类订单详情
+     */
+    @GET("v1/scene/train/order/{id}")
+    Observable<HttpResult<TrainSuccessBean>> orderTrain(@Path("id")String id,@Query("apitoken")String apitoken);
+
+    /**
+     * 餐厅订单申请退款
+     */
+    @FormUrlEncoded
+    @POST("v1/res_order/refund")
+    Observable<HttpResult> refund(@Field("apitoken") String apitoken,@Field("ord_id")String ord_id,@Field("cancel_content")String cancel_content);
+
+    /**
+     * 景区订单退款
+     */
+    @POST("v1/scene/order/refund")
+    Observable<HttpResult> refundJingdian(@Field("apitoken") String apitoken,@Field("ord_id")String ord_id,@Field("cancel_content")String cancel_content);
 }

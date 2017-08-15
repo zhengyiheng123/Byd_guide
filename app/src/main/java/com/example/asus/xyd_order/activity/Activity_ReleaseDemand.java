@@ -3,6 +3,7 @@ package com.example.asus.xyd_order.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.bumptech.glide.Glide;
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseActivity;
@@ -27,8 +29,11 @@ import com.example.asus.xyd_order.utils.ToastUtils;
 import java.io.File;
 import java.lang.reflect.Array;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -67,6 +72,11 @@ public class Activity_ReleaseDemand extends BaseActivity {
     private List<String> areaList;
     private String countryId;
     private ImageView iv_img_hos;
+    private TimePickerView pvTime;
+    //开始时间
+    private String startTime;
+    //结束时间
+    private String endTime;
 
     @Override
     public void myOnclick(View view) {
@@ -81,10 +91,12 @@ public class Activity_ReleaseDemand extends BaseActivity {
                 showOptionPicker(levelList,tv_level,3);
                 break;
             case R.id.tv_end:
-                showTime("2");
+//                showTime("2");
+                pvTime.show(tv_end);
                 break;
             case R.id.tv_start:
-                showTime("1");
+//                showTime("1");
+                pvTime.show(tv_start);
                 break;
             case R.id.tv_file:
                 selectMore();
@@ -95,7 +107,7 @@ public class Activity_ReleaseDemand extends BaseActivity {
                 startActivityForResult(intent,0);
                 break;
             case R.id.tv_paytype:
-                showOptionPicker(payList,tv_paytype,5);
+//                showOptionPicker(payList,tv_paytype,5);
                 break;
             case R.id.tv_dmd_area:
                 showOptionPicker(areaList,tv_dmd_area,6);
@@ -133,18 +145,22 @@ public class Activity_ReleaseDemand extends BaseActivity {
                 switch (type){
                     case 1:
                         group_type=index+1;
+                        tv_team_type.setText(item);
                         break;
                     case 2:
                         service_type =index+1;
+                        tv_service_content.setText(item);
                         break;
                     case 3:
                         level_req=index+1;
+                        tv_level.setText(item);
                         break;
                     case 5:
                         pay_type=index+1;
                         break;
                     case 6:
                         dmd_area=index+1;
+                        tv_dmd_area.setText(item);
                         break;
                 }
             }
@@ -152,23 +168,6 @@ public class Activity_ReleaseDemand extends BaseActivity {
         picker.show();
     }
 
-    //选择日期
-    public void showTime(String type){
-        DatePicker picker=new DatePicker(Activity_ReleaseDemand.this, DatePicker.YEAR_MONTH_DAY);
-        picker.setRange(2010,2025);
-        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
-            @Override
-            public void onDatePicked(String year, String month, String day) {
-                if (type !=null &&type.equals("1")){
-                    tv_start.setText(year+"."+month+"."+day);
-                }
-                else if (type !=null &&type.equals("2")){
-                    tv_end.setText(year+"."+month+"."+day);
-                }
-            }
-        });
-        picker.show();
-    }
     @Override
     public void setToolbar() {
         ImageView iv_back= (ImageView) findViewById(R.id.iv_back);
@@ -226,6 +225,7 @@ public class Activity_ReleaseDemand extends BaseActivity {
 
     @Override
     public void initView() {
+        initTimePicker();
         tv_commit= (TextView) findViewById(R.id.tv_commit);
         tv_team_type = (TextView) findViewById(R.id.tv_team_type);
         tv_service_content= (TextView) findViewById(R.id.tv_service_content);
@@ -311,7 +311,6 @@ public class Activity_ReleaseDemand extends BaseActivity {
     }
 
     private MultipartBody getBody() {
-        try {
             builder
                     .addFormDataPart("apitoken",apitoken)
                     .addFormDataPart("user_name",et_name.getText().toString())
@@ -322,16 +321,13 @@ public class Activity_ReleaseDemand extends BaseActivity {
                     .addFormDataPart("target_country",countryId)
                     .addFormDataPart("level_req",level_req+"")
                     .addFormDataPart("dmd_area",dmd_area+"")
-                    .addFormDataPart("start_time", TimeUtils.dateToStamp(tv_start.getText().toString()).substring(0,10))
-                    .addFormDataPart("end_time",TimeUtils.dateToStamp(tv_end.getText().toString()).substring(0,10))
+                    .addFormDataPart("start_time", startTime)
+                    .addFormDataPart("end_time",endTime)
                     .addFormDataPart("price",et_total_money.getText().toString())
 //                    .addFormDataPart("pay_type",pay_type+"")
                     .addFormDataPart("company",et_lvxingshe.getText().toString())
                     .addFormDataPart("dmd_desc",et_details.getText().toString())
                     .addFormDataPart("route_desc",et_route_details.getText().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         return builder.build();
     }
     //创建订单
@@ -385,5 +381,53 @@ public class Activity_ReleaseDemand extends BaseActivity {
                 }
             }
         }
+    }
+    //选择时间
+    private void initTimePicker() {
+        //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+        //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
+        Calendar selectedDate = Calendar.getInstance();
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(2016, 0, 23);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2020, 11, 28);
+        //时间选择器
+        pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
+
+                /*btn_Time.setText(getTime(date));*/
+                    TextView tv_time = (TextView) v;
+                    tv_time.setText(getDateAndTime(date));
+//                tv_timepicker.setText(getDateAndTime(date));
+                try {
+                    if (tv_time.getId() == R.id.tv_start){
+                        startTime = TimeUtils.dateToStampssss(getDateAndTime(date));
+                        startTime=startTime.substring(0,10);
+                    }else if (tv_time.getId() == R.id.tv_end){
+                        endTime = TimeUtils.dateToStampssss(getDateAndTime(date));
+                        endTime=endTime.substring(0,10);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        })
+                //年月日时分秒 的显示与否，不设置则默认全部显示
+                .setType(new boolean[]{true, true, true, true, false, false})
+                .setLabel("年", "月", "日", "", "", "")
+                .isCenterLabel(false)
+                .setDividerColor(Color.DKGRAY)
+                .setContentSize(14)
+                .setDate(selectedDate)
+                .setRangDate(startDate, endDate)
+                .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
+                .setDecorView(null)
+                .build();
+    }
+    private String getDateAndTime(Date date) {//可根据需要自行截取数据显示
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH");
+        return format.format(date);
     }
 }

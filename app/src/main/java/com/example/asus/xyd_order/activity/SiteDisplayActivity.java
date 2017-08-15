@@ -15,6 +15,7 @@ import com.example.asus.xyd_order.adapter.MyPagerAdapter;
 import com.example.asus.xyd_order.base.BaseActivity;
 import com.example.asus.xyd_order.base.BaseArrayAdapter;
 import com.example.asus.xyd_order.fragment.FragmentSiteFragment1;
+import com.example.asus.xyd_order.holder.SiteDisplayGroupHolder;
 import com.example.asus.xyd_order.holder.SiteDisplayHolder;
 import com.example.asus.xyd_order.net.BaseApi;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
@@ -70,6 +71,7 @@ public class SiteDisplayActivity extends BaseActivity {
     //总金额
     private double totalPrice=0.0f;
     private TextView tv_title;
+    private RouteDetails details;
 
     @Override
     protected void onResume() {
@@ -97,9 +99,12 @@ public class SiteDisplayActivity extends BaseActivity {
             case R.id.tv_peer:
                 break;
             case R.id.btn_order_now:
+                //团体票总数
+                int groupCount=0;
                 List<BaseTicketRouteBean> groupTemp=new ArrayList<>();
                 for (int i=0;i<groupList.size();i++){
                     if (groupList.get(i).getAllCount()>0){
+                        groupCount=groupCount+groupList.get(i).getAllCount();
                         groupTemp.add(groupList.get(i));
                     }
                 }
@@ -109,8 +114,14 @@ public class SiteDisplayActivity extends BaseActivity {
                         nomalTemp.add(nomalList.get(i));
                     }
                 }
+                //团体票总数
+
                 if (groupTemp.size()== 0 && nomalTemp.size() == 0){
                     toastShow("请选择票");
+                    return;
+                }
+                if (groupCount>0&& groupCount<details.getGroup_start()){
+                    toastShow("团体票最低购买"+details.getGroup_start()+"张");
                     return;
                 }
                 ActivityFactory.gotoAttractionsOrder(context,groupTemp,nomalTemp,totalPrice+"",bean.getMer_id()+"",bean.getRoute_id()+"");
@@ -183,15 +194,15 @@ public class SiteDisplayActivity extends BaseActivity {
         scrollview.scrollTo(0,0);
         lv_order_nomal = (MyListView) findViewById(R.id.lv_order_nomal);
         lv_order_group= (MyListView) findViewById(R.id.lv_order_group);
-
+        //团体票
         groupAdapter = new BaseArrayAdapter(context, new BaseArrayAdapter.OnCreateViewHolderListener() {
             @Override
             public Object onCreateViewHolder() {
-                return new SiteDisplayHolder();
+                return new SiteDisplayGroupHolder();
             }
         },groupList);
         lv_order_group.setAdapter(groupAdapter);
-
+        //单人票
         nomalAdapter=new BaseArrayAdapter(context, new BaseArrayAdapter.OnCreateViewHolderListener() {
             @Override
             public Object onCreateViewHolder() {
@@ -237,6 +248,7 @@ public class SiteDisplayActivity extends BaseActivity {
 
                     @Override
                     public void onNext(RouteDetails routeDetails) {
+                        details = routeDetails;
                         smart_head.setRatio(1.7f);
                         bean = routeDetails;
                         tv_cancel_desc.setText(routeDetails.getIntroduction());

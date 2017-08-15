@@ -21,6 +21,7 @@ import com.example.asus.xyd_order.base.BaseArrayAdapter;
 import com.example.asus.xyd_order.holder.Category_Home_Holder;
 import com.example.asus.xyd_order.holder.CountryHolder;
 import com.example.asus.xyd_order.holder.MonthHolder;
+import com.example.asus.xyd_order.holder.MonthSelectHolder;
 import com.example.asus.xyd_order.holder.PopAllCategoryHolder;
 import com.example.asus.xyd_order.mode.City;
 import com.example.asus.xyd_order.net.result.CategoryBean;
@@ -118,7 +119,7 @@ public class CategoryControl implements View.OnClickListener{
 public SelectPopWindow getMonth(List<YearAndMonth> mlist){
     popWindow=null;
     popWindow=new SelectPopWindow(activity,pop_month);
-    lv_pop_orderbymonth.setAdapter(new BaseArrayAdapter<>(activity, ()->{return new MonthHolder();},mlist));
+    lv_pop_orderbymonth.setAdapter(new BaseArrayAdapter<>(activity, ()->{return new MonthSelectHolder();},mlist));
     lv_pop_orderbymonth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -164,7 +165,7 @@ public SelectPopWindow getMonth(List<YearAndMonth> mlist){
             setallCategoryList();
             if (i==0){
                 sub_cate_id ="";
-                ZhongCanActivity.instance.getNetData(autoParam,getSort_State(),sub_cate_id,getMinPrice(),getMaxPrice());
+                ZhongCanActivity.instance.onRefresh();
                 popWindow.dismiss();
                 return;
             }
@@ -322,7 +323,8 @@ public SelectPopWindow getMonth(List<YearAndMonth> mlist){
                     }
                     break;
                 case R.id.tv_confirm:
-                    ZhongCanActivity.instance.getNetData(autoParam,getSort_State(),sub_cate_id,getMinPrice(),getMaxPrice());
+                    ZhongCanActivity.instance.onRefresh();
+//                    ZhongCanActivity.instance.getNetData(autoParam,getSort_State(),sub_cate_id,getMinPrice(),getMaxPrice());
                     popWindow.dismiss();
                     break;
                 case R.id.tv_reset:

@@ -79,6 +79,7 @@ public class Item_SiteHolder extends BaseViewHolder<BaseTicketRouteBean.TicketsB
         }
     }
     private CountTotalCount countTotalCount;
+
     public interface CountTotalCount{
         void countTotal();
     }

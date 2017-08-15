@@ -41,7 +41,7 @@ public class Activity_Attractions_order_Successed extends BaseActivity {
 
     private TextView tv_cancel_order,tv_nomal_count
             ,tv_group_count,tv_mer_name,tv_time
-            ,tv_route_name,tv_phone,tv_address,tv_ord_num,introduce,tv_price,tv_order_status,tv_order_info;
+            ,tv_route_name,tv_phone,tv_address,tv_ord_num,introduce,tv_price,tv_order_status,tv_order_info,tv_group_num;
     private MyListView mylistview_group,mylistview_nomal;
     private String ord_id;
 
@@ -94,6 +94,7 @@ public class Activity_Attractions_order_Successed extends BaseActivity {
 
     @Override
     public void initView() {
+        tv_group_num= (TextView) findViewById(R.id.tv_group_num);
         tv_cancel_order = (TextView) findViewById(R.id.tv_cancel_order);
         tv_group_count= (TextView) findViewById(R.id.tv_group_count);
         tv_nomal_count= (TextView) findViewById(R.id.tv_nomal_count);
@@ -184,7 +185,7 @@ public class Activity_Attractions_order_Successed extends BaseActivity {
                                 et_pay_type.setText("到店支付");
                                 break;
                             case 2:
-                                et_pay_type.setText("支付宝");
+                                et_pay_type.setText("在线支付");
                                 break;
                             case 3:
                                 et_pay_type.setText("微信");
@@ -210,6 +211,7 @@ public class Activity_Attractions_order_Successed extends BaseActivity {
                         nomalList.addAll(nomalOrderSuccess.getNormal_ticket());
                         adapterGroup.notifyDataSetChanged();
                         adapterNomal.notifyDataSetChanged();
+                        tv_group_num.setText(nomalOrderSuccess.getGroup_num()+"");
                         int ord_status=nomalOrderSuccess.getOrd_status();
                         switch (ord_status){
 //                                -2|用户取消 -1|商家取消 0|待接单 1|待付款 2|已付款 3|已消费 4|已评价

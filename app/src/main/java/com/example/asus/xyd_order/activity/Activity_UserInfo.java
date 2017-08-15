@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.bumptech.glide.Glide;
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseActivity;
@@ -45,7 +47,10 @@ import com.example.asus.xyd_order.utils.ToastUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -145,6 +150,7 @@ public class Activity_UserInfo extends BaseActivity {
      CheckBox cb_insurence;
 
     private DatePicker datePicker;
+    private TimePickerView pvTime;
 
     @Override
     public void myOnclick(View view) {
@@ -162,13 +168,16 @@ public class Activity_UserInfo extends BaseActivity {
     public void textOnclik(TextView button){
         switch (button.getId()){
             case R.id.tv_birth:
-                showDatePicker(tv_birth);
+//                showDatePicker(tv_birth);
+                pvTime.show(tv_birth);
                 break;
             case R.id.tv_career_time:
-                showDatePicker(tv_career_time);
+//                showDatePicker(tv_career_time);
+                pvTime.show(tv_career_time);
                 break;
             case R.id.tv_factory_time:
-                selectCarDate();
+//                selectCarDate();
+                pvTime.show(tv_factory_time);
                 break;
         }
     }
@@ -209,6 +218,7 @@ public class Activity_UserInfo extends BaseActivity {
         tv_submit= (TextView) findViewById(R.id.tv_submit);
         tv_submit.setVisibility(View.VISIBLE);
         tv_submit.setOnClickListener(this);
+        initTimePicker();
 
     }
 
@@ -218,16 +228,6 @@ public class Activity_UserInfo extends BaseActivity {
         tv_picture.setOnClickListener(this);
         rl_change_head.setOnClickListener(this);
         tv_submit.setOnClickListener(this);
-//        rg_sex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
-//                if (R.id.rb_male == i){
-//                    sex="1";
-//                }else if (R.id.rb_female == i){
-//                    sex="0";
-//                }
-//            }
-//        });
     }
 
     /**
@@ -307,11 +307,7 @@ public class Activity_UserInfo extends BaseActivity {
         builder.addFormDataPart("mobile",et_phonenum.getText().toString());
         builder.addFormDataPart("email",et_email.getText().toString());
         builder.addFormDataPart("company",et_belong_company.getText().toString());
-        try {
-            builder.addFormDataPart("attend_time",TimeUtils.dateToStamp(tv_career_time.getText().toString()).substring(0,10));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+            builder.addFormDataPart("attend_time",attend_time);
 //        builder.addFormDataPart("service_type",find_guide+","+have_daba+","+nine_sidao+","+translate);
         Log.e("zyh",have_daba+","+find_guide+","+nine_sidao+","+translate);
 //        builder.addFormDataPart("service_type_desc",service_type_desc.getText().toString());
@@ -359,23 +355,6 @@ public class Activity_UserInfo extends BaseActivity {
                     }
                 });
 
-    }
-    private void showDatePicker(TextView tv){
-        datePicker = new DatePicker(Activity_UserInfo.this, DatePicker.YEAR_MONTH_DAY);
-        datePicker.setRange(1970,2025);
-        datePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
-            @Override
-            public void onDatePicked(String year, String month,String day) {
-                if (tv.getId()== R.id.tv_career_time){
-                    String time=year+"."+month+"."+day;
-                        tv_career_time.setText(time);
-
-                }else if (tv.getId() == R.id.tv_birth){
-                    tv_birth.setText(year+"-"+month+"-"+day);
-                }
-            }
-        });
-        datePicker.show();
     }
     //选择车辆出厂日期
     private void selectCarDate(){
@@ -434,6 +413,7 @@ private void getuserInfo(){
                 break;
         }
         tv_career_time.setText(TimeUtils.stampToDateS(info.getAttend_time()+""));
+        attend_time=info.getAttend_time()+"";
         tv_birth.setText(info.getBirth());
         tv_factory_time.setText(info.getCar_birth());
         int is_insured=info.getIs_car_insured();
@@ -445,4 +425,50 @@ private void getuserInfo(){
     }
 
 
+    //选择时间
+    private void initTimePicker() {
+        //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+        //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
+        Calendar selectedDate = Calendar.getInstance();
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(1980, 0, 23);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2022, 11, 28);
+        //时间选择器
+        pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
+
+                /*btn_Time.setText(getTime(date));*/
+                TextView tv_time = (TextView) v;
+                tv_time.setText(getDateAndTime(date));
+//                tv_timepicker.setText(getDateAndTime(date));
+                try {
+                    if (tv_time.getId() == R.id.tv_career_time){
+                        attend_time = TimeUtils.dateToStampsssss(getDateAndTime(date));
+                        attend_time = attend_time.substring(0,10);
+                    }else if (tv_time.getId() == R.id.tv_birth){
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        })
+                //年月日时分秒 的显示与否，不设置则默认全部显示
+                .setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel("年", "月", "日", "", "", "")
+                .isCenterLabel(false)
+                .setDividerColor(Color.DKGRAY)
+                .setContentSize(14)
+                .setDate(selectedDate)
+                .setRangDate(startDate, endDate)
+                .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
+                .setDecorView(null)
+                .build();
+    }
+    private String getDateAndTime(Date date) {//可根据需要自行截取数据显示
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(date);
+    }
 }

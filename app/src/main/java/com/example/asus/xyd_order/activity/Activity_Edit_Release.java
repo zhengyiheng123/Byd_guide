@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.bumptech.glide.Glide;
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseActivity;
@@ -32,7 +34,10 @@ import com.example.asus.xyd_order.utils.common.PermissionResult;
 
 import java.io.File;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -155,6 +160,9 @@ public class Activity_Edit_Release extends BaseActivity {
     EditText et_ord_status;
     private ImageView iv_call,iv_message;
     private Demand_Details_Bean.ReplyUserInfoBean userInfoBean;
+    private TimePickerView pvTime;
+    private String startTime;
+    private String endTime;
 
     @Override
     public void myOnclick(View view) {
@@ -176,12 +184,14 @@ public class Activity_Edit_Release extends BaseActivity {
                 break;
             case R.id.tv_end:
                 if (ord_status .equals("0")){
-                    showTime("2");
+//                    showTime("2");
+                    pvTime.show(tv_end);
                 }
                 break;
             case R.id.tv_start:
                 if (ord_status .equals("0")){
-                    showTime("1");
+//                    showTime("1");
+                    pvTime.show(tv_start);
                 }
                 break;
             case R.id.tv_target_country:
@@ -307,8 +317,8 @@ public class Activity_Edit_Release extends BaseActivity {
         payList = new ArrayList<>();
 //        "线下支付","支付宝","微信"
         payList.add("线下支付");
-        payList.add("支付宝");
-        payList.add("微信");
+        payList.add("线上支付");
+//        payList.add("微信");
         areaList = new ArrayList<>();
 //        "导游圈","车行圈","全部"
         areaList.add("导游圈");
@@ -320,6 +330,7 @@ public class Activity_Edit_Release extends BaseActivity {
     @Override
     public void initView() {
         inialize();
+        initTimePicker();
         if (ord_status !=null){
             switch (Integer.valueOf(ord_status)){
                 case -2:
@@ -329,6 +340,7 @@ public class Activity_Edit_Release extends BaseActivity {
                     tv_submit.setVisibility(View.GONE);
                     tv_cancel.setVisibility(View.GONE);
                     iv_img_hos.setVisibility(View.GONE);
+                    tv_file.setVisibility(View.GONE);
                     break;
                 case -1:
                     //接受者取消
@@ -338,6 +350,7 @@ public class Activity_Edit_Release extends BaseActivity {
                     tv_submit.setVisibility(View.GONE);
                     tv_cancel.setVisibility(View.GONE);
                     iv_img_hos.setVisibility(View.GONE);
+                    tv_file.setVisibility(View.GONE);
                     break;
                 case 0:
                     //待接单
@@ -355,6 +368,7 @@ public class Activity_Edit_Release extends BaseActivity {
                     tv_submit.setVisibility(View.GONE);
                     tv_cancel.setVisibility(View.VISIBLE);
                     iv_img_hos.setVisibility(View.GONE);
+                    tv_file.setVisibility(View.GONE);
                     break;
                 case 2:
                     //已完成
@@ -364,6 +378,7 @@ public class Activity_Edit_Release extends BaseActivity {
                     tv_submit.setVisibility(View.GONE);
                     tv_cancel.setVisibility(View.GONE);
                     iv_img_hos.setVisibility(View.GONE);
+                    tv_file.setVisibility(View.GONE);
                     break;
                 case 3:
                     //已评价
@@ -373,12 +388,12 @@ public class Activity_Edit_Release extends BaseActivity {
                     tv_submit.setVisibility(View.GONE);
                     tv_cancel.setVisibility(View.GONE);
                     iv_img_hos.setVisibility(View.GONE);
+                    tv_file.setVisibility(View.GONE);
                     break;
             }
         }
     }
     private MultipartBody getBody() {
-        try {
             builder.addFormDataPart("dmd_id",dmd_id)
                     .addFormDataPart("apitoken",token)
                     .addFormDataPart("user_name",et_name.getText().toString())
@@ -389,17 +404,14 @@ public class Activity_Edit_Release extends BaseActivity {
                     .addFormDataPart("target_country",countryId)
                     .addFormDataPart("level_req",level_req+"")
                     .addFormDataPart("dmd_area",dmd_area+"")
-                    .addFormDataPart("start_time",TimeUtils.dateToStamp(tv_start.getText().toString()).substring(0,10))
-                    .addFormDataPart("end_time",TimeUtils.dateToStamp(tv_end.getText().toString()).substring(0,10))
+                    .addFormDataPart("start_time",startTime)
+                    .addFormDataPart("end_time",endTime)
                     .addFormDataPart("price",et_total_money.getText().toString())
 //                    .addFormDataPart("pay_type",pay_type+"")
                     .addFormDataPart("company",et_lvxingshe.getText().toString())
                     .addFormDataPart("dmd_desc",et_details.getText().toString())
                     .addFormDataPart("route_desc",et_route_details.getText().toString())
                     .addFormDataPart("_method","PUT");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         return builder.build();
     }
     private void inialize() {
@@ -525,7 +537,7 @@ public class Activity_Edit_Release extends BaseActivity {
                                 tv_paytype.setText("线下支付");
                                 break;
                             case 2:
-                                tv_paytype.setText("支付宝");
+                                tv_paytype.setText("在线支付");
                                 break;
                             case 3:
                                 tv_paytype.setText("微信");
@@ -591,8 +603,10 @@ public class Activity_Edit_Release extends BaseActivity {
                                 break;
                         }
 
-                        tv_start.setText(TimeUtils.stampToDateS(bean.getStart_time()+""));
-                        tv_end.setText(TimeUtils.stampToDateS(bean.getEnd_time()+""));
+                        tv_start.setText(TimeUtils.stampToDateSdemand(bean.getStart_time()+""));
+                        tv_end.setText(TimeUtils.stampToDateSdemand(bean.getEnd_time()+""));
+                        startTime=bean.getStart_time()+"";
+                        endTime=bean.getEnd_time()+"";
                         mLlContainer.removeAllViews();
                         if (TextUtils.isEmpty(bean.getRoute_img_path())){
                             return;
@@ -620,6 +634,7 @@ public class Activity_Edit_Release extends BaseActivity {
                             Glide.with(Activity_Edit_Release.this)
                                     .load(BaseApi.getBaseUrl()+path[i])
                                     .centerCrop()
+                                    .placeholder(R.drawable.zhanewi)
                                     .into(iv);
                         }
                     }
@@ -701,36 +716,23 @@ public class Activity_Edit_Release extends BaseActivity {
                 switch (type){
                     case 1:
                         group_type=index+1;
+                        tv_team_type.setText(item);
                         break;
                     case 2:
                         service_type =index+1;
+                        tv_service_content.setText(item);
                         break;
                     case 3:
                         level_req=index+1;
+                        tv_level.setText(item);
                         break;
                     case 5:
                         pay_type=index+1;
                         break;
                     case 6:
                         dmd_area=index+1;
+                        tv_dmd_area.setText(item);
                         break;
-                }
-            }
-        });
-        picker.show();
-    }
-    //选择日期
-    public void showTime(String type){
-        DatePicker picker=new DatePicker(Activity_Edit_Release.this, DatePicker.YEAR_MONTH_DAY);
-        picker.setRange(1930,2025);
-        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
-            @Override
-            public void onDatePicked(String year, String month, String day) {
-                if (type !=null &&type.equals("1")){
-                    tv_start.setText(year+"."+month+"."+day);
-                }
-                else if (type !=null &&type.equals("2")){
-                    tv_end.setText(year+"."+month+"."+day);
                 }
             }
         });
@@ -811,5 +813,53 @@ public class Activity_Edit_Release extends BaseActivity {
                 }
             }
         }
+    }
+    //选择时间
+    private void initTimePicker() {
+        //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+        //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
+        Calendar selectedDate = Calendar.getInstance();
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(2016, 0, 23);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2020, 11, 28);
+        //时间选择器
+        pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
+
+                /*btn_Time.setText(getTime(date));*/
+                TextView tv_time = (TextView) v;
+                tv_time.setText(getDateAndTime(date));
+//                tv_timepicker.setText(getDateAndTime(date));
+                try {
+                    if (tv_time.getId() == R.id.tv_start){
+                        startTime = TimeUtils.dateToStampssss(getDateAndTime(date));
+                        startTime=startTime.substring(0,10);
+                    }else if (tv_time.getId() == R.id.tv_end){
+                        endTime = TimeUtils.dateToStampssss(getDateAndTime(date));
+                        endTime = endTime.substring(0,10);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        })
+                //年月日时分秒 的显示与否，不设置则默认全部显示
+                .setType(new boolean[]{true, true, true, true, false, false})
+                .setLabel("年", "月", "日", "", "", "")
+                .isCenterLabel(false)
+                .setDividerColor(Color.DKGRAY)
+                .setContentSize(14)
+                .setDate(selectedDate)
+                .setRangDate(startDate, endDate)
+                .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
+                .setDecorView(null)
+                .build();
+    }
+    private String getDateAndTime(Date date) {//可根据需要自行截取数据显示
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH");
+        return format.format(date);
     }
 }

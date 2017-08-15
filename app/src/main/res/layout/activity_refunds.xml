@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/include_details_title"/>
+    <EditText
+        android:id="@+id/et_desc"
+        android:padding="8dp"
+        android:gravity="start"
+        android:hint="请输入退款理由"
+        android:textSize="14sp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="4"
+        />
+    <Button
+        android:id="@+id/btn_refund"
+        android:layout_margin="8dp"
+        android:textColor="@color/white"
+        android:text="退款"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:background="@drawable/shape_cancel_order"
+        />
+</LinearLayout>

@@ -239,7 +239,7 @@ public class CatchOrdersActivity extends BaseActivity {
                                 tv_pay_type.setText("支付方式：线下支付");
                                 break;
                             case 2:
-                                tv_pay_type.setText("支付方式：支付宝");
+                                tv_pay_type.setText("支付方式：在线支付");
                                 break;
                             case 3:
                                 tv_pay_type.setText("支付方式：微信");

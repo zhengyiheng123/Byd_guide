@@ -88,7 +88,8 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
 
     //正在刷新
     public boolean isrefreshing;
-//    private TextView tv_empty;
+    private String region_id;
+    //    private TextView tv_empty;
 
     @Override
     public void myOnclick(View view) {
@@ -149,6 +150,11 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
         builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         cate_id= getIntent().getStringExtra("cate_id");
         CityListBean.RegionsBean cityBean=APP.getApplication().getCityBean();
+        if (cityBean!=null){
+            region_id = cityBean.getRegion_id()+"";
+        }else {
+            region_id="";
+        }
         getCateData();
         return 0;
     }
@@ -256,7 +262,7 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
     public void getNetData(String autoParam,String sort_state,String sub,String price_start,String price_end){
         showDialog();
         Observable<HttpResult<RestaurantBean>> result= ServiceApi.getInstance().getServiceContract().restaurantList(apitoken,page,
-                longitude,latitude,cate_id,autoParam,sort_state,price_start,price_end,seat_start,seat_end,sub);
+                longitude,latitude,cate_id,autoParam,sort_state,price_start,price_end,seat_start,seat_end,sub,region_id);
                 result.map(new ResultFilter<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

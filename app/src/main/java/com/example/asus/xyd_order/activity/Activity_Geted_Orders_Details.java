@@ -282,10 +282,7 @@ public class Activity_Geted_Orders_Details extends BaseActivity {
                                 tv_pay_type.setText("支付方式：线下支付");
                                 break;
                             case 2:
-                                tv_pay_type.setText("支付方式：支付宝");
-                                break;
-                            case 3:
-                                tv_pay_type.setText("支付方式：微信");
+                                tv_pay_type.setText("支付方式：在线支付");
                                 break;
                         }
                         if (TextUtils.isEmpty(bean.getRoute_img_path())){
@@ -315,6 +312,7 @@ public class Activity_Geted_Orders_Details extends BaseActivity {
                             Glide.with(Activity_Geted_Orders_Details.this)
                                     .load(BaseApi.getBaseUrl()+path[i])
                                     .centerCrop()
+                                    .placeholder(R.drawable.zhanewi)
                                     .into(iv);
                         }
                     }

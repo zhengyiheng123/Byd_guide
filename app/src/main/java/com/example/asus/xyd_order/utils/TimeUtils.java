@@ -18,6 +18,18 @@ public class TimeUtils {
         res = String.valueOf(ts);
         return res;
     }
+    /*将字符串转为时间戳*/
+    public static long getStringToDate(String time) {
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        try{
+            date = sf.parse(time);
+        } catch(ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return date.getTime();
+    }
 
     /*
     * 将时间转换为时间戳
@@ -45,11 +57,34 @@ public class TimeUtils {
         return res;
     }
     /*
+* 将时间转换为时间戳
+*/
+    public static String dateToStampsssss(String ssss) throws ParseException {
+        String res;
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = simpleDateFormat.parse(ssss);
+        long ts = date.getTime();
+        res = String.valueOf(ts);
+        return res;
+    }
+    /*
 * 将时间戳转换为时间
 */
     public static String stampToDateS(String s){
         String res;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
+        long lt = new Long(s);
+        Date date = new Date(lt*1000L);
+        res = simpleDateFormat.format(date);
+        return res;
+    }
+    /*
+* 将时间戳转换为时间
+*/
+    public static String stampToDateSdemand(String s){
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH");
         long lt = new Long(s);
         Date date = new Date(lt*1000L);
         res = simpleDateFormat.format(date);

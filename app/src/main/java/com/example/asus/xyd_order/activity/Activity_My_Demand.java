@@ -90,6 +90,8 @@ public class Activity_My_Demand extends BaseActivity {
         tablayout = (TabLayout) findViewById(R.id.tablayout);
         tablayout.setTabTextColors(context.getResources().getColor(R.color.text_grey),context.getResources().getColor(R.color.tool_bar_color));
         viewpager = (ViewPager) findViewById(R.id.viewpager);
+        viewpager.setCurrentItem(1);
+        viewpager.setOffscreenPageLimit(1);
         tablayout.setTabMode(TabLayout.MODE_FIXED);
 //        tablayout.addTab(tablayout.newTab().setText(titleList.get(0)));
 //        tablayout.addTab(tablayout.newTab().setText(titleList.get(1)));

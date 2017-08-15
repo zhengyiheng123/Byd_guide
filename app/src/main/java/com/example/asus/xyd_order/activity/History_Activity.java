@@ -88,6 +88,7 @@ public class History_Activity extends BaseActivity {
      * 获取网络数据
      */
     public void getNetData(){
+        showDialog();
         Observable<HttpResult<History_Mode>> result= ServiceApi.getInstance().getServiceContract().historyList(apitoken);
         result.map(new ResultFilter<>())
                 .subscribeOn(Schedulers.io())
@@ -95,12 +96,13 @@ public class History_Activity extends BaseActivity {
                 .subscribe(new Subscriber<History_Mode>() {
                     @Override
                     public void onCompleted() {
-
+dismissDialog();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         toastShow(e.getMessage());
+                        dismissDialog();
                     }
 
                     @Override

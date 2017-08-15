@@ -37,7 +37,7 @@ public class ResultFilter<T> implements Func1<HttpResult<T>,T> {
         }else if (tHttpResult.getCode() == 2){
             LoginResult result= (LoginResult) tHttpResult.getData();
             Intent intent=new Intent(APP.getCtx(), Activity_Register_confirm.class);
-            intent.putExtra("apitoken",result.getApitoken());
+            SharedPreferenceUtils.setParam(APP.getCtx(),"apitoken",result.getApitoken());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             APP.getCtx().startActivity(intent);
             throw new ApiException(tHttpResult.getMessage());

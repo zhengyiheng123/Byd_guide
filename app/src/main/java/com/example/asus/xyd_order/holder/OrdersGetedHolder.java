@@ -12,6 +12,7 @@ import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseViewHolder;
 import com.example.asus.xyd_order.fragment.Fragment_All_Demand;
 import com.example.asus.xyd_order.fragment.GetedFragment_All;
+import com.example.asus.xyd_order.fragment.GetedFragment_Geted;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.HttpResult;
@@ -217,7 +218,7 @@ private void cancel(){
                 @Override
                 public void onNext(Object o) {
                     ToastUtils.show(context,"取消成功",0);
-                    activity.finish();
+                    GetedFragment_Geted.instance.getNetData();
                 }
             });
 }
@@ -244,7 +245,7 @@ private void cancel(){
                     @Override
                     public void onNext(Object o) {
                         ToastUtils.show(context,"订单已确认完成",0);
-                        activity.finish();
+                        GetedFragment_Geted.instance.getNetData();
                     }
                 });
     }

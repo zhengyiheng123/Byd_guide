@@ -83,11 +83,13 @@ public class Activity_MyOrdersGeted extends BaseActivity {
         tablayout = (TabLayout) findViewById(R.id.tablayout);
         tablayout.setTabTextColors(context.getResources().getColor(R.color.text_grey),context.getResources().getColor(R.color.tool_bar_color));
         viewpager = (ViewPager) findViewById(R.id.viewpager);
+        viewpager.setOffscreenPageLimit(1);
         tablayout.setTabMode(TabLayout.MODE_FIXED);
         DemandPagerAdapter adapter=new DemandPagerAdapter(getSupportFragmentManager(),fragmentList,titleList);
         viewpager.setAdapter(adapter);
         tablayout.setupWithViewPager(viewpager);
         tablayout.setTabsFromPagerAdapter(adapter);
+        viewpager.setCurrentItem(1);
     }
 
     @Override

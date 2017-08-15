@@ -131,6 +131,10 @@ public class Attractions_TicketActivity extends BaseActivity {
                     toastShow("请选择时间");
                     return;
                 }
+                if (start_station_id.equals(end_station_id)){
+                    toastShow("开始站点不能和结束站点相同");
+                    return;
+                }
                 ActivityFactory.gotoTickList(context,route_id,start_station_id,end_station_id,queryStamp,scene_id);
                 break;
             case R.id.iv_img:
@@ -235,8 +239,8 @@ public class Attractions_TicketActivity extends BaseActivity {
 
     @Override
     public int getData() throws Exception {
-//        scene_id = getIntent().getStringExtra("scene_id");
-        scene_id="19";
+        scene_id = getIntent().getStringExtra("scene_id");
+//        scene_id="19";
         getNetData();
         getComment();
         return 0;

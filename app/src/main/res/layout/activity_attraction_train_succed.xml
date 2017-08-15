@@ -6,12 +6,13 @@
 
     <ScrollView
         android:id="@+id/scroll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:descendantFocusability="blocksDescendants"
         android:scrollbars="none">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,14 +50,14 @@
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:padding="8dp">
 
                 <com.example.asus.xyd_order.ui.SmartImageveiw
                     android:id="@+id/imageView5"
                     android:layout_width="100dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:scaleType="fitXY"
                     android:src="@mipmap/icon_zhongcan_tu" />
 
@@ -67,29 +68,123 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="8dp"
                     android:layout_toEndOf="@+id/imageView5"
-                    android:text="---"
+                    android:text="----"
                     android:layout_toRightOf="@+id/imageView5" />
 
                 <TextView
-                    android:layout_centerVertical="true"
                     android:id="@+id/tv_route_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="----"
+                    android:layout_alignBottom="@+id/imageView5"
+                    android:layout_alignStart="@+id/tv_mer_name"
+                    android:text="---"
                     android:textSize="12sp"
                     android:layout_alignLeft="@+id/tv_mer_name" />
 
                 <TextView
-                    android:layout_alignParentBottom="true"
                     android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="演出时间：--"
+                    android:layout_alignBottom="@+id/imageView5"
+                    android:layout_alignStart="@+id/tv_mer_name"
+                    android:text="演出时间：09:22"
                     android:textColor="@color/material_yellow_700"
-                    android:layout_alignLeft="@+id/tv_mer_name"
-                    />
+                    android:visibility="gone"
+                    android:layout_alignLeft="@+id/tv_mer_name" />
             </RelativeLayout>
+            <TextView
+                android:layout_marginTop="8dp"
+                android:id="@+id/tv_date"
+                android:text="日期："
+                android:padding="12dp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:padding="8dp"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_start"
+                        android:textColor="@color/material_grey_800"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        />
 
+                    <TextView
+                        android:id="@+id/tv_start_time"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/tool_bar_color"
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_train_name"
+                        android:textColor="@color/material_grey_800"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="历时"
+                        />
+                    <View
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/line_color"
+                        />
+                    <TextView
+                        android:id="@+id/tv_spend"
+                        android:textColor="@color/tool_bar_color"
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_end_station"
+                        android:textColor="@color/material_grey_800"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_end_time"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/tool_bar_color"
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="---" />
+                </LinearLayout>
+            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,7 +214,7 @@
                     android:text="地址" />
 
                 <TextView
-                    android:id="@+id/tv_address"
+                    android:id="@+id/tv__address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/textView10"
@@ -198,7 +293,7 @@
                     android:layout_toEndOf="@+id/tuan"
                     android:text="----"
                     android:layout_marginLeft="17dp"
-                    android:layout_toRightOf="@+id/tuan" />
+                    />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -232,7 +327,7 @@
                 android:padding="8dp">
 
                 <TextView
-                    android:id="@+id/tv_money"
+                    android:id="@+id/textView13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="总价" />
@@ -243,86 +338,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="17dp"
-                    android:layout_toEndOf="@+id/tv_money"
+                    android:layout_toEndOf="@+id/textView13"
                     android:text="----"
                     android:layout_marginLeft="17dp"
-                    android:layout_toRightOf="@+id/tv_money" />
+                    android:layout_toRightOf="@+id/textView13" />
             </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@color/white"
-                android:padding="8dp">
-
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/tv_group_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="--张" />
-
-                <TextView
-                    android:textColor="@color/tool_bar_color"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="17dp"
-                    android:text="团票"
-                    android:layout_marginLeft="17dp"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
-            <com.example.asus.xyd_order.ui.MyListView
-                android:id="@+id/mylistview_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:divider="@color/transparent"
-                />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@color/white"
-                android:padding="0.5dp"
-                >
-
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/tv_nomal_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="--张" />
-
-                <TextView
-                    android:textColor="@color/tool_bar_color"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="17dp"
-                    android:text="个人票"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="17dp" />
-            </RelativeLayout>
-
-            <com.example.asus.xyd_order.ui.MyListView
-                android:id="@+id/mylistview_nomal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:divider="@color/line_color"
-                />
-            <!--<com.example.asus.xyd_order.ui.MyExpandListView-->
-            <!--android:background="@color/white"-->
-            <!--android:divider="@color/transparent"-->
-            <!--android:groupIndicator="@null"-->
-            <!--android:paddingTop="8dp"-->
-            <!--android:choiceMode="singleChoice"-->
-            <!--android:id="@+id/mylistview"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--&gt;</com.example.asus.xyd_order.ui.MyExpandListView>-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -395,7 +415,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
-                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <TextView
@@ -479,7 +498,7 @@
                     android:text="取票地址" />
 
                 <EditText
-                    android:textColor="@color/text_color_black"
+                    android:textColor="@color/material_grey_700"
                     android:id="@+id/et_get_address"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -538,13 +557,20 @@
                 android:paddingBottom="8dp"
                 android:paddingLeft="32dp"
                 android:text="" />
-
+            <View
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/line_color" />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp">
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/tv_cancel_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

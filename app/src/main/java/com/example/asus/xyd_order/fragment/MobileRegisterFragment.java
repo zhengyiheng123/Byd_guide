@@ -19,6 +19,7 @@ import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.CodeBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.RegisterBean;
+import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 import com.example.asus.xyd_order.utils.StringUtils;
 import com.example.asus.xyd_order.utils.TextCodeUtils;
 import com.example.asus.xyd_order.utils.ToastUtils;
@@ -49,6 +50,14 @@ public class MobileRegisterFragment extends BaseFragment {
     private EditText et_phonenum,et_code,et_password,et_repassword;
     private String countryCode;
     private TextView tv_next;
+    private RegisterBean registerBean1;
+    public static MobileRegisterFragment instance;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        instance=this;
+    }
 
     @Override
     public void myOnclick(View view) {
@@ -59,6 +68,7 @@ public class MobileRegisterFragment extends BaseFragment {
                 }
                 break;
             case R.id.tv_next:
+//                startActivity(new Intent(getActivity(), Activity_Register_confirm.class));
                 if (!(TextUtils.isEmpty(et_phonenum.getText().toString()) || TextUtils.isEmpty(et_code.getText().toString())
                         ||TextUtils.isEmpty(et_password.getText().toString()) || TextUtils.isEmpty(et_repassword.getText().toString()))){
                     if (!et_password.getText().toString().equals(et_repassword.getText().toString())){
@@ -187,12 +197,14 @@ public class MobileRegisterFragment extends BaseFragment {
 
                     @Override
                     public void onNext(RegisterBean registerBean) {
+                        registerBean1 = registerBean;
+                        SharedPreferenceUtils.setParam(context,"apitoken",registerBean.getApitoken());
                         getActivity().finish();
-                        startActivity(new Intent(getActivity(), Activity_Register_confirm.class));
+                        Intent intent=new Intent(getActivity(), Activity_Register_confirm.class);
+                        getActivity().startActivity(intent);
                     }
                 });
     }
-
     /**
      * 获取验证码
      */
@@ -216,8 +228,11 @@ public class MobileRegisterFragment extends BaseFragment {
 
                     @Override
                     public void onNext(CodeBean httpResult) {
-                        toastShow("验证码发送成功"+httpResult.getCaptcha());
+                        toastShow("验证码发送成功");
                     }
                 });
+    }
+    public String getToken(){
+        return registerBean1.getApitoken();
     }
 }

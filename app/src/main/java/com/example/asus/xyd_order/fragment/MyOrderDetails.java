@@ -137,7 +137,7 @@ public class MyOrderDetails extends BaseActivity {
         if (ord_status==0 || ord_status == 1){
             tv_comment.setText("取消订单");
         }
-        else if (ord_status == -2 || ord_status == -1 || ord_status == 2 || ord_status == 4){
+        else if (ord_status == -2 || ord_status == -1 || ord_status == 2 || ord_status == 4 || ord_status == -4 || ord_status == -3){
             tv_comment.setVisibility(View.GONE);
         }
         else if (ord_status == 3){
@@ -214,7 +214,7 @@ public class MyOrderDetails extends BaseActivity {
                                     tv_paytype.setText("到店支付");
                                     break;
                                 case 2:
-                                    tv_paytype.setText("支付宝");
+                                    tv_paytype.setText("在线支付");
                                     //支付宝
                                     break;
                                 case 3:
@@ -231,6 +231,18 @@ public class MyOrderDetails extends BaseActivity {
                             tv_order_phone.setText(bean.getMobile());
                             int ord_status=bean.getOrd_status();
                             switch (ord_status){
+                                case -4:
+                                    //退款成功
+                                    tv_ord_status.setText("退款成功");
+                                    tv_cancel.setVisibility(View.VISIBLE);
+                                    tv_cancel.setText("退款成功");
+                                    break;
+                                case -3:
+                                    //退款中
+                                    tv_ord_status.setText("退款中");
+                                    tv_cancel.setVisibility(View.VISIBLE);
+                                    tv_cancel.setText("退款中");
+                                    break;
                                 case -2:
                                     //用户取消
                                     tv_ord_status.setText("用户取消");

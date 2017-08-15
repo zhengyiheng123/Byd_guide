@@ -227,16 +227,23 @@ public class ZhongcanDetailsActivity extends BaseActivity {
                     public void onNext(RestaurantDetailsBean bean) {
                         restaurantDetailsBean = bean;
                         String pic=bean.getPic_meal();
-//                        if (!TextUtils.isEmpty(pic)){
-//                            iv_cai.setVisibility(View.VISIBLE);
-//                            rl_order.setVisibility(View.GONE);
-//                            Glide.with(context).load(BaseApi.getBaseUrl()+bean.getPic_meal()).into(iv_cai);
-//                        }else {
+                        if (bean.getIs_collected() == 0){
+                            iv_img.setImageResource(R.drawable.ic_collect);
+                        }else {
+                            iv_img.setImageResource(R.drawable.ic_collected);
+                        }
+                        if (!TextUtils.isEmpty(pic)){
+                            iv_cai.setVisibility(View.VISIBLE);
+                            rl_order.setVisibility(View.GONE);
+                            sc_zhongcan.setVisibility(View.GONE);
+                            Glide.with(context).load(BaseApi.getBaseUrl()+bean.getPic_meal()).into(iv_cai);
+                        }else {
+                            sc_zhongcan.setVisibility(View.VISIBLE);
                         mList.clear();
                         mList.addAll(bean.getGroup_meal());
                         adapter.notifyDataSetChanged();
                         processData(bean);
-//                        }
+                        }
                     }
                 });
     }
@@ -247,11 +254,6 @@ public class ZhongcanDetailsActivity extends BaseActivity {
      */
     private void processData(RestaurantDetailsBean bean) {
         tv_title.setText(bean.getRes_name());
-        if (bean.getIs_collected() == 0){
-            iv_img.setImageResource(R.drawable.ic_collect);
-        }else {
-            iv_img.setImageResource(R.drawable.ic_collected);
-        }
         bean1 = bean;
         if (bannerList.size()>0){
             bannerList.clear();

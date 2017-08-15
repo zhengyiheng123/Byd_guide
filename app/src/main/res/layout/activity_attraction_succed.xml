@@ -212,6 +212,30 @@
                 android:padding="8dp">
 
                 <TextView
+                    android:id="@+id/tuan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="团号" />
+
+                <TextView
+                    android:id="@+id/tv_group_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="17dp"
+                    android:layout_toEndOf="@+id/tuan"
+                    android:text="----"
+                    android:layout_marginLeft="17dp"
+                    android:layout_toRightOf="@+id/tuan" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:padding="8dp">
+
+                <TextView
                     android:id="@+id/textView13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -459,7 +483,7 @@
                     android:text="取票地址" />
 
                 <EditText
-                    android:textColor="@color/text_color_black"
+                    android:textColor="@color/material_grey_700"
                     android:id="@+id/et_get_address"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"

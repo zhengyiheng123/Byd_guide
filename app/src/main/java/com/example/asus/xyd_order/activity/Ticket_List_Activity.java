@@ -64,7 +64,7 @@ public class Ticket_List_Activity extends BaseActivity {
         String end_station=getIntent().getStringExtra("end_station");
         String date=getIntent().getStringExtra("date");
         scene_id = getIntent().getStringExtra("scene_id");
-        getNetData(route_id,"10","6",date);
+        getNetData(route_id,start_station,end_station,date);
         return 0;
     }
 

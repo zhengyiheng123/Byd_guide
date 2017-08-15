@@ -84,6 +84,9 @@ public class AttractionsOrderSuccessActivity extends BaseActivity {
 
     @Bind(R.id.mylistview_nomal)
     MyListView mylistview_nomal;
+
+    @Bind(R.id.tv_group_num)
+    TextView tv_group_num;
     private AttractionsOrderSuccess bean;
 
     @Override
@@ -201,6 +204,7 @@ public class AttractionsOrderSuccessActivity extends BaseActivity {
                                 break;
                         }
                         int ord_status=s.getOrd_status();
+                        tv_group_num.setText(s.getGroup_num());
                         switch (ord_status){
 //                                -2|用户取消 -1|商家取消 0|待接单 1|待付款 2|已付款 3|已消费 4|已评价
                             case -2:

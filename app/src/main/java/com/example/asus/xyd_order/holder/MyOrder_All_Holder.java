@@ -12,10 +12,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.activity.Activity_Attractions_order_Successed;
+import com.example.asus.xyd_order.activity.Activity_Train_Success;
 import com.example.asus.xyd_order.activity.Activity_write_Opinion;
 import com.example.asus.xyd_order.activity.AttractionsOrderSuccessActivity;
 import com.example.asus.xyd_order.activity.CancelActivity;
 import com.example.asus.xyd_order.activity.ConfirmOrderActivity;
+import com.example.asus.xyd_order.activity.FefundsActivity;
 import com.example.asus.xyd_order.activity.PayActivity;
 import com.example.asus.xyd_order.base.BaseViewHolder;
 import com.example.asus.xyd_order.fragment.MyOrderDetails;
@@ -30,7 +32,7 @@ import com.example.asus.xyd_order.utils.TimeUtils;
 public class MyOrder_All_Holder extends BaseViewHolder<MyOrderBean.OrdersBean> implements View.OnClickListener {
 
     private TextView tv_type,tv_name,tv_ord_num,tv_peer
-            ,cancel,modify,store,finished,republish,comment,pay,cancel_state,
+            ,cancel,modify,store,finished,refunds,comment,pay,cancel_state,
             tv_routename
             ,tv_tel,tv_address,tv_ord_time;
     private ImageView iv_img;
@@ -53,7 +55,7 @@ public class MyOrder_All_Holder extends BaseViewHolder<MyOrderBean.OrdersBean> i
         modify= (TextView) v.findViewById(R.id.modify);
         store= (TextView) v.findViewById(R.id.store);
         finished= (TextView) v.findViewById(R.id.finished);
-        republish= (TextView) v.findViewById(R.id.republish);
+        refunds= (TextView) v.findViewById(R.id.refunds);
         comment= (TextView) v.findViewById(R.id.comment);
         pay= (TextView) v.findViewById(R.id.pay);
         cancel_state= (TextView) v.findViewById(R.id.cancel_state);
@@ -90,32 +92,20 @@ public class MyOrder_All_Holder extends BaseViewHolder<MyOrderBean.OrdersBean> i
                 tv_type.setText("订单类型：游船类");
                 break;
         }
-//        int pay_type=s.getPay_type();
-//        switch (pay_type){
-//            case 1:
-//                //到店支付
-//                tv_pay_type.setText("到店支付");
-//                break;
-//            case 2:
-//                //支付宝
-//                tv_pay_type.setText("支付宝");
-//                break;
-//            case 3:
-//                //微信
-//                tv_pay_type.setText("微信");
-//                break;
-//            case 4:
-//                //银联
-//                tv_pay_type.setText("银联");
-//                break;
-//
-//        }
         Glide.with(context).load(BaseApi.getBaseUrl()+s.getLogo_path()).into(iv_img);
         tv_name.setText(s.getMer_name()+" "+s.getRoute_name());
         tv_peer.setText("总计:"+s.getPrice());
         tv_ord_num.setText("订单号:"+s.getOrd_num());
         int ord_status=s.getOrd_status();
         switch (ord_status){
+            case -4://导游申请退款成功
+                cancel_state.setText("退款成功");
+                cancel_state.setVisibility(View.VISIBLE);
+                break;
+            case -3://-3|导游申请退款
+                cancel_state.setText("退款中");
+                cancel_state.setVisibility(View.VISIBLE);
+                break;
             case -2:
                 //导游取消
                 cancel_state.setText("导游取消");
@@ -142,6 +132,8 @@ public class MyOrder_All_Holder extends BaseViewHolder<MyOrderBean.OrdersBean> i
                 //已付款
                 cancel_state.setVisibility(View.VISIBLE);
                 cancel_state.setText("已付款");
+                refunds.setVisibility(View.VISIBLE);
+                refunds.setOnClickListener(this);
                 break;
             case 3:
                 //已消费
@@ -162,7 +154,7 @@ public class MyOrder_All_Holder extends BaseViewHolder<MyOrderBean.OrdersBean> i
         return R.layout.item_myorders2;
     }
     private void setGone(){
-            republish.setVisibility(View.GONE);
+        refunds.setVisibility(View.GONE);
             modify.setVisibility(View.GONE);
             finished.setVisibility(View.GONE);
             store.setVisibility(View.GONE);
@@ -199,7 +191,7 @@ public class MyOrder_All_Holder extends BaseViewHolder<MyOrderBean.OrdersBean> i
                 if (bean.getOrd_type() == 1){
                     //餐饮
                     intent=new Intent(context, Activity_write_Opinion.class);
-                    intent.putExtra("ord_id",bean.getOrd_id());
+                    intent.putExtra("ord_id",bean.getOrd_id()+"");
                     intent.putExtra("commentType","1");
                     intent.putExtra("dmd_id",bean.getMer_id()+"");
                     context.startActivity(intent);
@@ -230,8 +222,17 @@ public class MyOrder_All_Holder extends BaseViewHolder<MyOrderBean.OrdersBean> i
                     intent=new Intent(context, AttractionsOrderSuccessActivity.class);
                     intent.putExtra("order_id",bean.getOrd_id()+"");
                     context.startActivity(intent);
+                }else if (ord_type == 7){
+                    intent=new Intent(context, Activity_Train_Success.class);
+                    intent.putExtra("ord_id",bean.getOrd_id()+"");
+                    context.startActivity(intent);
                 }
-
+                break;
+            case R.id.refunds:
+                intent=new Intent(context, FefundsActivity.class);
+                intent.putExtra("ord_id",bean.getOrd_id()+"");
+                intent.putExtra("ord_type",bean.getOrd_type()+"");
+                context.startActivity(intent);
                 break;
         }
     }

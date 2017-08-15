@@ -184,7 +184,7 @@ public class MyFragment extends BaseFragment {
                     public void onNext(HeadBean headBean) {
                         toastShow("头像修改成功");
                         SharedPreferenceUtils.setParam(context,"avatar",headBean.getAvatar());
-                        Glide.with(getActivity()).load(BaseApi.getBaseUrl()+headBean.getAvatar()).into(iv_head);
+                        Glide.with(getActivity()).load(BaseApi.getBaseUrl()+headBean.getAvatar()).dontAnimate().error(R.drawable.ic_unauth).into(iv_head);
                     }
                 });
     }

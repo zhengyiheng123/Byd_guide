@@ -160,6 +160,9 @@ public class AttractionsDetailsActivity extends BaseActivity {
                     dayStr="0"+dayStr;
                 }
                 if (kexuan.contains(year+monthStr+dayStr)){
+                    if (bean==null){
+                        return;
+                    }
                     ActivityFactory.gotoOverView(context,bean.getScene_id()+"",year+"-"+monthStr+"-"+dayStr);
                 }
 //                ToastUtils.show(context,year+"-"+month+"-"+day,0);

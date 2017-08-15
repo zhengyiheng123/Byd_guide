@@ -25,7 +25,7 @@ public class TuancanHolder extends BaseViewHolder<RestaurantDetailsBean.SingleMe
 
     @Override
     public void onBindViewHolder(Context context, RestaurantDetailsBean.SingleMealBean s) {
-        tv_price.setText(s.getMeal_price()+"元");
+        tv_price.setText(s.getMeal_price()+"元/份");
         tv_meal_name.setText(s.getMeal_name());
         tv_num.setText(s.getNums()+"份");
     }

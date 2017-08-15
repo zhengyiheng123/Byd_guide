@@ -19,6 +19,7 @@ import com.example.asus.xyd_order.activity.Activity_write_Opinion;
 import com.example.asus.xyd_order.base.BaseArrayAdapter;
 import com.example.asus.xyd_order.dialog.CardTypeDialog;
 import com.example.asus.xyd_order.dialog.CommonDialog;
+import com.example.asus.xyd_order.fragment.Fragment_Geted_Demand;
 import com.example.asus.xyd_order.holder.MyOrderHolder;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
@@ -315,7 +316,7 @@ public class AllOrderAdapter extends BaseAdapter implements View.OnClickListener
                     @Override
                     public void onNext(Object o) {
                         ToastUtils.show(context,"取消成功",0);
-                        context.finish();
+                        Fragment_Geted_Demand.instance.getNetData();
                     }
                 });
     }

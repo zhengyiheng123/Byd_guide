@@ -19,10 +19,6 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         isLogin = (boolean) SharedPreferenceUtils.getParam(this,"isLogin",false);
-// 设置全屏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        // 移除标题栏
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -34,7 +30,7 @@ public class SplashActivity extends Activity {
                 }
                 finish();
             }
-        },0);
+        },1500);
     }
 
 

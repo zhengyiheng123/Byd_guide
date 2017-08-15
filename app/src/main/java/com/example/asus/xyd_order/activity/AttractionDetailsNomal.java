@@ -51,6 +51,7 @@ public class AttractionDetailsNomal extends BaseActivity {
     private JingDianDetails bean;
     private ImageView iv_img;
     private RelativeLayout rl_map;
+    private ScrollView scroll;
 
     @Override
     public void myOnclick(View view) {
@@ -104,7 +105,7 @@ public class AttractionDetailsNomal extends BaseActivity {
     }
     //初始化基础控件
     private void initAllView() {
-        ScrollView scroll= (ScrollView) findViewById(R.id.scroll);
+        scroll = (ScrollView) findViewById(R.id.scroll);
         scroll.fullScroll(ScrollView.FOCUS_UP);
         tv_order= (TextView) findViewById(R.id.tv_order);
         rl_map = (RelativeLayout) findViewById(R.id.rl_map);
@@ -217,6 +218,7 @@ public class AttractionDetailsNomal extends BaseActivity {
                         tv_message_count.setText("同行留言("+commentBean.getComments().size()+")");
                         mList.addAll(commentBean.getComments());
                         commentAdapter.notifyDataSetChanged();
+                        scroll.smoothScrollTo(0,0);
                     }
                 });
     }

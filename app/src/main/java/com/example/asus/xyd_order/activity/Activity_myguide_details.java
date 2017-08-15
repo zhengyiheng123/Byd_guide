@@ -1,5 +1,6 @@
 package com.example.asus.xyd_order.activity;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -61,10 +62,17 @@ public class Activity_myguide_details extends BaseActivity {
 
     @Bind(R.id.tv_career_time)
     TextView tv_career_time;
+    private GuideDetailsBean bean1;
 
     @Override
     public void myOnclick(View view) {
-
+        switch (view.getId()){
+            case R.id.iv_head:
+                Intent intent=new Intent(context,ImageViewActivity.class);
+                intent.putExtra("path",BaseApi.getBaseUrl()+bean1.getAvatar());
+                startActivity(intent);
+                break;
+        }
     }
 
     @Override
@@ -95,7 +103,7 @@ public class Activity_myguide_details extends BaseActivity {
 
     @Override
     public void setEvent() {
-
+        iv_head.setOnClickListener(this);
     }
 
     /**
@@ -119,6 +127,7 @@ public class Activity_myguide_details extends BaseActivity {
 
                         @Override
                         public void onNext(GuideDetailsBean bean) {
+                            bean1 = bean;
                             processData(bean);
                         }
                     });

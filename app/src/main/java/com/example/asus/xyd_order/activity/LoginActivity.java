@@ -16,10 +16,8 @@ import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.LoginResult;
-import com.example.asus.xyd_order.net.result.RegisterBean;
 import com.example.asus.xyd_order.utils.ActivityFactory;
 import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
-import com.example.asus.xyd_order.utils.StringUtils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

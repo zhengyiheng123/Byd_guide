@@ -93,6 +93,7 @@ public class GetedFragment_All extends BaseFragment {
      * 获取网络数据
      */
     public void getNetData(){
+        showDialog();
         String apitoken= (String) SharedPreferenceUtils.getParam(context,"apitoken","");
         Observable<HttpResult<MyDemandBean>> result= ServiceApi.getInstance().getServiceContract().getMyDemanOther("",apitoken);
         result.map(new ResultFilter<>())
@@ -101,12 +102,13 @@ public class GetedFragment_All extends BaseFragment {
                 .subscribe(new Subscriber<MyDemandBean>() {
                     @Override
                     public void onCompleted() {
-
+dismissDialog();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         toastShow(e.getMessage());
+                        dismissDialog();
                     }
 
                     @Override
