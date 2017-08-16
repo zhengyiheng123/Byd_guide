@@ -32,5 +32,13 @@
             android:id="@+id/lv_overvew"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_empty"
+            android:text="没有数据！"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            />
     <!--</com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout>-->
 </LinearLayout>

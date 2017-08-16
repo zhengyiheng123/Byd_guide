@@ -340,14 +340,14 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                             banner.setImagesUrl(bannerList);
                             banner.startAutoPlay();
                         }
-                        if (homePage.getMer_notice()!=null){
+                        if (homePage.getMer_notice().getAdd_time()!=0){
                             tv_mer_time.setText(TimeUtils.stampToDateSs(homePage.getMer_notice().getAdd_time()+""));
                             tv_mer_message.setText(homePage.getMer_notice().getMsg());
                             tv_mer_name.setText(homePage.getMer_notice().getTitle());
                         }else {
                             rl_mer_order.setVisibility(View.GONE);
                         }
-                        if (homePage.getDmd_notice() !=null){
+                        if (homePage.getDmd_notice().getAdd_time() !=0){
                             tv_ord_message.setText(homePage.getDmd_notice().getMsg());
                             tv_ord_time.setText(TimeUtils.stampToDateSs(homePage.getDmd_notice().getAdd_time()+""));
                             tv_ord_name.setText(homePage.getDmd_notice().getTitle());

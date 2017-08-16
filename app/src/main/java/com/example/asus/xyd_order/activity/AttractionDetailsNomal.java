@@ -1,6 +1,7 @@
 package com.example.asus.xyd_order.activity;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -94,7 +95,9 @@ public class AttractionDetailsNomal extends BaseActivity {
     public int getData() throws Exception {
         mList = new ArrayList<>();
         scene_id=getIntent().getStringExtra("scene_id");
-        getNetData();
+        if (!TextUtils.isEmpty(scene_id)){
+            getNetData();
+        }
         return 0;
     }
 
@@ -142,6 +145,7 @@ public class AttractionDetailsNomal extends BaseActivity {
      * 请求网络数据
      */
     private void getNetData(){
+        showDialog();
         Observable<HttpResult<JingDianDetails>> result= ServiceApi.getInstance().getServiceContract().jingdianDetails(scene_id,apitoken);
         result.map(new ResultFilter<>())
                 .subscribeOn(Schedulers.io())
@@ -149,12 +153,12 @@ public class AttractionDetailsNomal extends BaseActivity {
                 .subscribe(new Subscriber<JingDianDetails>() {
                     @Override
                     public void onCompleted() {
-
+                        dismissDialog();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        dismissDialog();
                     }
 
                     @Override

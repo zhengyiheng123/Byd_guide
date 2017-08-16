@@ -61,8 +61,9 @@ public class Activity_Route_List extends BaseActivity {
 
     @Override
     public void initView() {
+        TextView tv_empty= (TextView) findViewById(R.id.tv_empty);
         lv_route_list = (ListView) findViewById(R.id.lv_route_list);
-        lv_route_list.setEmptyView(View.inflate(context,R.layout.emptyview,null));
+        lv_route_list.setEmptyView(tv_empty);
         adapter = new BaseArrayAdapter(context, new BaseArrayAdapter.OnCreateViewHolderListener() {
             @Override
             public Object onCreateViewHolder() {

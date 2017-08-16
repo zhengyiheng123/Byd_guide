@@ -29,7 +29,7 @@ public class MyCircleHolder extends BaseViewHolder<Guide_Circle_Bean.UsersBean> 
 
     @Override
     public void onBindViewHolder(Context context, Guide_Circle_Bean.UsersBean s) {
-        Glide.with(context).load(BaseApi.getBaseUrl()+s.getAvatar()).into(iv_head);
+        Glide.with(context).load(BaseApi.getBaseUrl()+s.getAvatar()).error(R.mipmap.icon_head).into(iv_head);
         tv_name.setText(s.getUser_name());
     }
 

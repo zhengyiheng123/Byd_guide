@@ -33,7 +33,7 @@ public class Help_News_Holder extends BaseViewHolder<MutualBean.MutualMessagesBe
 
     @Override
     public void onBindViewHolder(Context context, MutualBean.MutualMessagesBean s) {
-        Glide.with(context).load(BaseApi.getBaseUrl()+s.getAvatar()).into(iv_head);
+        Glide.with(context).load(BaseApi.getBaseUrl()+s.getAvatar()).error(R.mipmap.icon_head).into(iv_head);
         tv_name.setText(s.getUser_name());
         tv_content.setText(s.getContent());
         tv_time.setText(TimeUtils.stampToDateSs(s.getAdd_time()+""));

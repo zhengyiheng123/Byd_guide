@@ -32,7 +32,7 @@ public class HomeNewsHolder extends BaseViewHolder<HomePage.MutualMessageBean> {
 
     @Override
     public void onBindViewHolder(Context context, HomePage.MutualMessageBean newsEntity) {
-        Glide.with(context).load(BaseApi.getBaseUrl()+newsEntity.getAvatar()).into(rl_head);
+        Glide.with(context).load(BaseApi.getBaseUrl()+newsEntity.getAvatar()).error(R.mipmap.icon_head).into(rl_head);
         tv_home_msg.setText(newsEntity.getContent());
         tv_home_name.setText(newsEntity.getUser_name());
         tv_home_time.setText(TimeUtils.stampToDateSs(newsEntity.getAdd_time()+""));

@@ -32,7 +32,7 @@ public class Route_ListHolder extends BaseViewHolder<MyOrderBean.OrdersBean> {
 
     @Override
     public void onBindViewHolder(Context context, MyOrderBean.OrdersBean s) {
-        Glide.with(context).load(BaseApi.getBaseUrl()+s.getLogo_path()).into(iv_img);
+        Glide.with(context).load(BaseApi.getBaseUrl()+s.getLogo_path()).dontAnimate().into(iv_img);
         tv_name.setText(s.getMer_name()+" "+s.getRoute_name());
         tv_ordertime.setText("预定日:"+ TimeUtils.stampToDateS(s.getAdd_time()+""));
         tv_startoff.setText("预约日:"+TimeUtils.stampToDateS(s.getBook_time()+""));

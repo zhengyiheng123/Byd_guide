@@ -37,6 +37,7 @@ public class MyCollectActivity extends BaseActivity{
     private ListView lv_collect;
     private List<Collections.CollectionsBean> mList=new ArrayList<>();
     private MyCollectMultipleAdapter adapter;
+    private TextView tv_empty;
 
     @Override
     public void myOnclick(View view) {
@@ -70,11 +71,13 @@ public class MyCollectActivity extends BaseActivity{
 
     @Override
     public void initView() {
+        tv_empty = (TextView) findViewById(R.id.tv_empty);
         initRefresh();
     }
 
     private void initRefresh() {
         lv_collect = (ListView) findViewById(R.id.lv_collect);
+        lv_collect.setEmptyView(tv_empty);
         adapter = new MyCollectMultipleAdapter(context,mList,2);
         lv_collect.setAdapter(adapter);
     }

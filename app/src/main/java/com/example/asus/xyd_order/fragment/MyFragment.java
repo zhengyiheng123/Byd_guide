@@ -105,7 +105,7 @@ public class MyFragment extends BaseFragment {
         String user_name= (String) SharedPreferenceUtils.getParam(context,"user_name","");
         tv_login.setText(user_name);
         String avatar= (String) SharedPreferenceUtils.getParam(context,"avatar","");
-        Glide.with(context).load(BaseApi.getBaseUrl()+avatar).into(iv_head);
+        Glide.with(context).load(BaseApi.getBaseUrl()+avatar).placeholder(R.drawable.ic_head).into(iv_head);
     }
 
     private void inializeView(View v) {
@@ -184,7 +184,7 @@ public class MyFragment extends BaseFragment {
                     public void onNext(HeadBean headBean) {
                         toastShow("头像修改成功");
                         SharedPreferenceUtils.setParam(context,"avatar",headBean.getAvatar());
-                        Glide.with(getActivity()).load(BaseApi.getBaseUrl()+headBean.getAvatar()).dontAnimate().error(R.drawable.ic_unauth).into(iv_head);
+                        Glide.with(getActivity()).load(BaseApi.getBaseUrl()+headBean.getAvatar()).dontAnimate().error(R.drawable.ic_head).into(iv_head);
                     }
                 });
     }

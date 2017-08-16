@@ -59,13 +59,15 @@ public class SelectRoutes extends BaseActivity {
     @Override
     public int getData() throws Exception {
         mer_id = getIntent().getStringExtra("mer_id");
-        getNetData("9");
+        getNetData(mer_id);
         return 0;
     }
 
     @Override
     public void initView() {
+        TextView tv_empty= (TextView) findViewById(R.id.tv_empty);
         lv_routes = (ListView) findViewById(R.id.lv_routes);
+        lv_routes.setEmptyView(tv_empty);
         adapter = new BaseArrayAdapter(context, new BaseArrayAdapter.OnCreateViewHolderListener() {
             @Override
             public Object onCreateViewHolder() {

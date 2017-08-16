@@ -65,7 +65,9 @@ public class Journy_Activity extends BaseActivity {
 
     @Override
     public void initView() {
+        TextView tv_empty= (TextView) findViewById(R.id.tv_empty);
         lv_route = (ListView) findViewById(R.id.lv_route);
+        lv_route.setEmptyView(tv_empty);
         lv_route.setEmptyView(View.inflate(context,R.layout.emptyview,null));
         adapter = new BaseArrayAdapter(context, new BaseArrayAdapter.OnCreateViewHolderListener() {
             @Override

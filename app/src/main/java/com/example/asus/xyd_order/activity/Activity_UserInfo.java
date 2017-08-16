@@ -356,22 +356,11 @@ public class Activity_UserInfo extends BaseActivity {
                 });
 
     }
-    //选择车辆出厂日期
-    private void selectCarDate(){
-        DatePicker datePicke=new DatePicker(Activity_UserInfo.this, DatePicker.YEAR_MONTH_DAY);
-        datePicke.setRange(1970,2025);
-        datePicke.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
-            @Override
-            public void onDatePicked(String year, String month,String day) {
-                tv_factory_time.setText(year+"-"+month+"-"+day);
-            }
-        });
-        datePicke.show();
-    }
 /**
  * 获取用户信息
  */
 private void getuserInfo(){
+    showDialog();
     int user_id= (int) SharedPreferenceUtils.getParam(context,"user_id",0);
     Observable<HttpResult<UserInfoResult>> result=ServiceApi.getInstance().getServiceContract().getUserInfo(user_id+"",apitoken);
     result.map(new ResultFilter<>())
@@ -380,11 +369,12 @@ private void getuserInfo(){
             .subscribe(new Subscriber<UserInfoResult>() {
                 @Override
                 public void onCompleted() {
-
+dismissDialog();
                 }
 
                 @Override
                 public void onError(Throwable e) {
+                    dismissDialog();
                     toastShow(e.getMessage());
                 }
 

@@ -150,7 +150,6 @@ public class AttractionsDetailsActivity extends BaseActivity {
         mCalendarView.setOnClickDate(new CalendarView.OnClickListener() {
             @Override
             public void onClickDateListener(int year, int month, int day) {
-                List<String> list=mCalendarView.getSelectedDates();
                 String monthStr=month+"";
                 String dayStr=day+"";
                 if (month<10){
@@ -219,6 +218,7 @@ public class AttractionsDetailsActivity extends BaseActivity {
 
     //请求网络数据
     private void getNetData(){
+        showDialog();
         Observable<HttpResult<AttractionsBean>> result= ServiceApi.getInstance().getServiceContract().attractiosDetails(scene_id,apitoken);
         result.map(new ResultFilter<>())
                 .subscribeOn(Schedulers.io())
@@ -227,12 +227,12 @@ public class AttractionsDetailsActivity extends BaseActivity {
 
                     @Override
                     public void onCompleted() {
-
+dismissDialog();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+dismissDialog();
                     }
 
                     @Override

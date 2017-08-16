@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <include layout="@layout/include_details_title"/>
     <ListView
+
         android:id="@+id/lv_routes"
         android:scrollbars="none"
         android:divider="@color/transparent"
         android:dividerHeight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-</LinearLayout>
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_centerInParent="true"
+        android:text="没有数据！"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
+</RelativeLayout>

@@ -265,6 +265,7 @@ public class Attractions_TicketActivity extends BaseActivity {
      * 获取网络数据
      */
     private void getNetData(){
+        showDialog();
         Observable<HttpResult<JingDianDetails>> result= ServiceApi.getInstance().getServiceContract().jingdianDetails(scene_id,apitoken);
         result.map(new ResultFilter<>())
                 .subscribeOn(Schedulers.io())
@@ -273,11 +274,12 @@ public class Attractions_TicketActivity extends BaseActivity {
 
                     @Override
                     public void onCompleted() {
-
+dismissDialog();
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        dismissDialog();
                         toastShow(e.getMessage());
                     }
 

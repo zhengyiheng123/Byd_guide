@@ -83,7 +83,6 @@ public class OverViewActivity extends BaseActivity {
     public int getData() throws Exception {
         mer_id = getIntent().getStringExtra("mer_id");
         date = getIntent().getStringExtra("date");
-//        mer_id="18";
         if (!TextUtils.isEmpty(date)){
             getNetData("",date);
         }else {
@@ -109,6 +108,8 @@ public class OverViewActivity extends BaseActivity {
     //初始化listview
     private void inilizeListView() {
         lv_overview = (ListView) findViewById(R.id.lv_overvew);
+        TextView tv_empty= (TextView) findViewById(R.id.tv_empty);
+        lv_overview.setEmptyView(tv_empty);
 //        refresh = (RefreshLayout) findViewById(R.id.refresh);
         adapter = new BaseArrayAdapter(context, new BaseArrayAdapter.OnCreateViewHolderListener() {
             @Override
