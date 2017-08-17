@@ -75,7 +75,7 @@ public class EmailRegisterFragment extends BaseFragment {
     @Override
     public void initView(View v) {
         countdown = (CountdownButton) v.findViewById(R.id.countdown);
-        countdown.setCount(60);
+        countdown.setCount(120);
         et_email = (EditText) v.findViewById(R.id.et_email);
         et_code= (EditText) v.findViewById(R.id.et_code);
         et_password= (EditText) v.findViewById(R.id.et_password);

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import com.example.asus.xyd_order.utils.CompressUtil;
 import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 import com.example.asus.xyd_order.utils.TimeUtils;
 import com.example.asus.xyd_order.utils.ToastUtils;
+import com.nanchen.compresshelper.CompressHelper;
 
 import java.io.File;
 import java.lang.reflect.Array;
@@ -282,12 +284,15 @@ public class Activity_ReleaseDemand extends BaseActivity {
                 for (int i = 0; i < path.length; i++) {
                     ImageView iv = new ImageView(Activity_ReleaseDemand.this);
                     File file=new File(path[i]);
-                    builder.addFormDataPart("img"+i+1, file.getName() , RequestBody.create(MediaType.parse("image/*"), file));
+//                    Log.e("zyh","oldFile"+file.length()+"");
+                    File newFile=new CompressHelper.Builder(context).setQuality(80).build().compressToFile(file);
+//                    Log.e("zyh","newFile"+newFile.length()+"");
+                    builder.addFormDataPart("img"+i+1, newFile.getName() , RequestBody.create(MediaType.parse("image/*"), newFile));
                     iv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent intent=new Intent(context,ImageViewActivity.class);
-                            intent.putExtra("path",file.getAbsolutePath());
+                            intent.putExtra("path",newFile.getAbsolutePath());
                             startActivity(intent);
                         }
                     });

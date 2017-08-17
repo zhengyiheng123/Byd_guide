@@ -31,6 +31,7 @@ import com.example.asus.xyd_order.utils.TimeUtils;
 import com.example.asus.xyd_order.utils.ToastUtils;
 import com.example.asus.xyd_order.utils.common.PermissionManager;
 import com.example.asus.xyd_order.utils.common.PermissionResult;
+import com.nanchen.compresshelper.CompressHelper;
 
 import java.io.File;
 import java.text.ParseException;
@@ -669,13 +670,14 @@ public class Activity_Edit_Release extends BaseActivity {
                 for (int i = 0; i < path.length; i++) {
                     ImageView iv = new ImageView(Activity_Edit_Release.this);
                     File file=new File(path[i]);
-                    builder.addFormDataPart("img"+i+1, file.getName() , RequestBody.create(MediaType.parse("image/*"), file));
+                    File newFile= CompressHelper.getDefault(context).compressToFile(file);
+                    builder.addFormDataPart("img"+i+1, newFile.getName() , RequestBody.create(MediaType.parse("image/*"), newFile));
                     mLlContainer.addView(iv);
                     iv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent intent=new Intent(context,ImageViewActivity.class);
-                            intent.putExtra("path",file.getAbsolutePath());
+                            intent.putExtra("path",newFile.getAbsolutePath());
                             startActivity(intent);
                         }
                     });

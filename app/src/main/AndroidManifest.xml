@@ -65,7 +65,7 @@
         <activity android:name=".activity.MapWebViewActivity"/>
         <!--图片预览-->
         <activity android:name=".activity.ImageViewActivity"
-            android:theme="@style/ThemeSplash"/>
+            android:theme="@style/ThemeImage"/>
         <!--退款-->
         <activity android:name=".activity.FefundsActivity"/>
         <!--预订页面-->

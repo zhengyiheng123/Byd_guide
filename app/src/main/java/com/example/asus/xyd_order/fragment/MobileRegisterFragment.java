@@ -122,7 +122,7 @@ public class MobileRegisterFragment extends BaseFragment {
         tv_country_code = (TextView) v.findViewById(R.id.tv_country_code);
         tv_next = (TextView) v.findViewById(R.id.tv_next);
         counddown= (CountdownButton) v.findViewById(R.id.countdown);
-        counddown.setCount(60);
+        counddown.setCount(120);
         et_phonenum = (EditText) v.findViewById(R.id.et_phonenum);
         et_code= (EditText) v.findViewById(R.id.et_code);
         et_password= (EditText) v.findViewById(R.id.et_password);

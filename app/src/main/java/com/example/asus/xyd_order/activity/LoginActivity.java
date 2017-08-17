@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,6 +40,11 @@ public class LoginActivity extends BaseActivity {
     private TextView tv_register,tv_forget;
     private EditText et_password,et_username;
     private Button btn_login;
+    private String username;
+    private String password;
+    private CheckBox cb_remeber;
+    //记住密码
+    private boolean isRemember;
 
     @Override
     public void myOnclick(View view) {
@@ -78,6 +85,8 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public int getData() throws Exception {
+        username = (String) SharedPreferenceUtils.getParam(context,"username","");
+        password = (String) SharedPreferenceUtils.getParam(context,"password","");
         return 1;
     }
 
@@ -88,10 +97,13 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void inializeView() {
+        cb_remeber = (CheckBox) findViewById(R.id.cb_remeber);
         tv_register = (TextView) findViewById(R.id.tv_register);
         tv_forget= (TextView) findViewById(R.id.tv_forget);
         et_password = (EditText) findViewById(R.id.et_password);
+        et_password.setText(password);
         et_username= (EditText) findViewById(R.id.et_username);
+        et_username.setText(username);
         btn_login= (Button) findViewById(R.id.btn_login);
     }
 
@@ -100,6 +112,12 @@ public class LoginActivity extends BaseActivity {
         tv_register.setOnClickListener(this);
         tv_forget.setOnClickListener(this);
         btn_login.setOnClickListener(this);
+        cb_remeber.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                isRemember=b;
+            }
+        });
     }
 
     /**
@@ -125,6 +143,12 @@ public class LoginActivity extends BaseActivity {
 
                     @Override
                     public void onNext(LoginResult loginResult) {
+                        SharedPreferenceUtils.setParam(context,"username",et_username.getText().toString());
+                        if (isRemember){
+                            SharedPreferenceUtils.setParam(context,"password",et_password.getText().toString());
+                        }else {
+                            SharedPreferenceUtils.setParam(context,"password","");
+                        }
                         try {
                             initAlis(loginResult);
                         } catch (NoSuchAlgorithmException e) {
@@ -141,6 +165,7 @@ public class LoginActivity extends BaseActivity {
     public void initAlis(LoginResult loginResult) throws NoSuchAlgorithmException {
 //        String alis=getMD5("helpd_user_"+ali);
 //        Log.e("zyh","别名："+loginResult.getUser_id());
+        showDialog();
         JPushInterface.setAlias(getApplicationContext(), "helpd_user_"+loginResult.getUser_id(), new TagAliasCallback() {
             @Override
             public void gotResult(int i, String s, Set<String> set) {
@@ -155,6 +180,7 @@ public class LoginActivity extends BaseActivity {
                     ActivityFactory.gotoMain(context);
                     finish();
                 }
+                dismissDialog();
             }
         });
     }

@@ -50,6 +50,8 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'io.reactivex:rxandroid:0.24.0'
     compile 'com.google.code.gson:gson:2.4'
+    //图片压缩
+    compile 'com.github.nanchen2251:CompressHelper:1.0.5'
     //图片加载
     //轮播图控件
     compile 'com.recker.flybanner:flybanner:1.3'

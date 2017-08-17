@@ -23,6 +23,7 @@ import com.example.asus.xyd_order.net.result.His_SampleBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 import com.example.asus.xyd_order.utils.TimeUtils;
+import com.nanchen.compresshelper.CompressHelper;
 
 import java.io.File;
 import java.text.ParseException;
@@ -411,15 +412,16 @@ public class Activity_Sample_Details extends BaseActivity {
                 for (int i = 0; i < path.length; i++) {
                     ImageView iv = new ImageView(Activity_Sample_Details.this);
                     File file=new File(path[i]);
+                    File newFile= CompressHelper.getDefault(context).compressToFile(file);
                     iv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent intent=new Intent(context,ImageViewActivity.class);
-                            intent.putExtra("path",file.getAbsoluteFile());
+                            intent.putExtra("path",newFile.getAbsoluteFile());
                             startActivity(intent);
                         }
                     });
-                    builder.addFormDataPart("img"+i+1, file.getName() , RequestBody.create(MediaType.parse("image/*"), file));
+                    builder.addFormDataPart("img"+i+1, newFile.getName() , RequestBody.create(MediaType.parse("image/*"), newFile));
 
                     mLlContainer.addView(iv);
                     LinearLayout.LayoutParams mParams = (LinearLayout.LayoutParams) iv.getLayoutParams();

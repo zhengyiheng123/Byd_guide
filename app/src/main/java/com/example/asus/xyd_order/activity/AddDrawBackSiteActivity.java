@@ -3,6 +3,7 @@ package com.example.asus.xyd_order.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -26,6 +27,7 @@ import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.CountryBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.ui.SmartImageveiw;
+import com.nanchen.compresshelper.CompressHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -106,10 +108,16 @@ public class AddDrawBackSiteActivity extends BaseActivity {
                 Glide.with(context).load(path[0]).into(iv);
                 if (iv.getId() == R.id.iv_select_tamp){
                     fileStamp=new File(path[0]);
-                    builder.addFormDataPart("stamp_img",fileStamp.getName(),RequestBody.create(MediaType.parse("image/*"), fileStamp));
+                    File newFile= new CompressHelper.Builder(context)
+                            .setQuality(80)    // 默认压缩质量为80
+                            .setCompressFormat(Bitmap.CompressFormat.JPEG) // 设置默认压缩为jpg格式
+                            .build()
+                            .compressToFile(fileStamp);
+                    builder.addFormDataPart("stamp_img",newFile.getName(),RequestBody.create(MediaType.parse("image/*"), newFile));
                 }else if (iv.getId() == R.id.iv_select_draw){
                     fileTuishui=new File(path[0]);
-                    builder.addFormDataPart("stamp_img",fileTuishui.getName(),RequestBody.create(MediaType.parse("image/*"), fileTuishui));
+                    File newFile=CompressHelper.getDefault(context).compressToFile(fileTuishui);
+                    builder.addFormDataPart("stamp_img",newFile.getName(),RequestBody.create(MediaType.parse("image/*"), newFile));
                 }
             }
         });

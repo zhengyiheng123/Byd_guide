@@ -19,6 +19,7 @@ import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
+import com.nanchen.compresshelper.CompressHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -104,8 +105,9 @@ public class Activity_AddHospital extends BaseActivity {
             public void onPicSelected(String[] path) {
                 pat = path[0];
                 File file=new File(path[0]);
+                File newFile= CompressHelper.getDefault(context).compressToFile(file);
                 Glide.with(context).load(path[0]).into(iv_img_hos);
-                builder.addFormDataPart("img",file.getName(),RequestBody.create(MediaType.parse("image/*"), file));
+                builder.addFormDataPart("img",newFile.getName(),RequestBody.create(MediaType.parse("image/*"), newFile));
             }
         });
     }

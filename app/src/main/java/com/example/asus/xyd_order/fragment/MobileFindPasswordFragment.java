@@ -118,6 +118,7 @@ public class MobileFindPasswordFragment extends BaseFragment {
         tv_country_code = (TextView) v.findViewById(R.id.tv_country_code);
         et_code = (EditText) v.findViewById(R.id.et_code);
         tv_getcode= (CountdownButton) v.findViewById(R.id.tv_getcode);
+        tv_getcode.setCount(120);
         et_password= (EditText) v.findViewById(R.id.et_password);
         tv_next= (TextView) v.findViewById(R.id.tv_next);
     }
