@@ -135,15 +135,14 @@ public class Activity_myguide_details extends BaseActivity {
 
     private void processData(GuideDetailsBean bean) {
         Picasso.with(context).load(BaseApi.getBaseUrl()+bean.getAvatar()).into(iv_head);
-//        Glide.with(Activity_myguide_details.this).load(BaseApi.getBaseUrl()+bean.getAvatar()).into(iv_head);
         tv_name.setText(bean.getUser_name());
         if (!TextUtils.isEmpty(bean.getCar_birth())){
-            tv_car_factory.setText(TimeUtils.stampToDateS(bean.getCar_birth()));
+            tv_car_factory.setText(bean.getCar_birth());
         }else {
             tv_car_factory.setText("未设置");
         }
         if (!TextUtils.isEmpty(bean.getAttend_time())){
-            tv_career_time.setText(TimeUtils.stampToDateS(bean.getAttend_time()));
+            tv_career_time.setText(bean.getAttend_time());
         }else {
             tv_career_time.setText("未设置");
         }

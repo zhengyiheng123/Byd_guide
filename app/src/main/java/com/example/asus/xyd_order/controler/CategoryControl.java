@@ -153,6 +153,14 @@ public SelectPopWindow getMonth(List<YearAndMonth> mlist){
         void onItemClick(CityListBean.RegionsBean bean);
     }
 
+    private AllCategoryInterface allCategoryInterface;
+    //全部分类点击事件
+    public interface AllCategoryInterface{
+        void AllCagetoryClick(int position,List<CategoryBean.SubCategoriesBean> beanList);
+    }
+    public void SetAllCategoryInterface(AllCategoryInterface allCategoryInterface){
+        this.allCategoryInterface=allCategoryInterface;
+    }
     public SelectPopWindow getAllCategoryPop(){
         popWindow=null;
         tv_text.setText("不限");
@@ -163,19 +171,31 @@ public SelectPopWindow getMonth(List<YearAndMonth> mlist){
         lv_pop_all.setAdapter(arrayAdapter);
         lv_pop_all.setOnItemClickListener((adapterView, view1, i, l) -> {
             setallCategoryList();
-            if (i==0){
-                sub_cate_id ="";
-                ZhongCanActivity.instance.onRefresh();
-                popWindow.dismiss();
-                return;
+            allCategoryInterface.AllCagetoryClick(i,allCategoryList);
+//            if (i==0){
+//                sub_cate_id ="";
+//                ZhongCanActivity.instance.onRefresh();
+//                popWindow.dismiss();
+//                return;
+//            }
+            if (i!=0){
+                allCategoryList.get(i-1).setState(1);
+                arrayAdapter.notifyDataSetChanged();
             }
-            allCategoryList.get(i-1).setState(1);
-            sub_cate_id=allCategoryList.get(i-1).getSub_cate_id()+"";
-            ZhongCanActivity.instance.getNetData(autoParam,getSort_State(),sub_cate_id,getMinPrice(),getMaxPrice());
+//            sub_cate_id=allCategoryList.get(i-1).getSub_cate_id()+"";
+//            ZhongCanActivity.instance.getNetData(autoParam,getSort_State(),sub_cate_id,getMinPrice(),getMaxPrice());
             popWindow.dismiss();
         });
         popWindow = new SelectPopWindow(activity, rl_all_category);
         return popWindow;
+    }
+    //智能排序点击事件
+    public interface AutoCategoryInterface{
+        void AutoCategoryClick(int position, List<CategoryBean.SubCategoriesBean> bean);
+    }
+    AutoCategoryInterface autoCategoryInterface;
+    public void SetAutoInterface(AutoCategoryInterface autoCategoryInterface){
+        this.autoCategoryInterface=autoCategoryInterface;
     }
     public SelectPopWindow getAutoPop(){
         popWindow=null;
@@ -186,51 +206,14 @@ public SelectPopWindow getMonth(List<YearAndMonth> mlist){
         lv_pop_auto.setAdapter(arrayAdapter);
         popWindow = new SelectPopWindow(activity, rl_all_auto);
         lv_pop_auto.setOnItemClickListener((parent, view1, position, id) -> {
+            autoCategoryInterface.AutoCategoryClick(position,autoList);
                     setAutoListState();
-            switch (position){
-                case 0:
-                    autoParam="";
-                    ZhongCanActivity.instance.isrefreshing=true;
-                    ZhongCanActivity.instance.refresh.recoveryLoad();
-                    ZhongCanActivity.instance.page=0;
-                    ZhongCanActivity.instance.getNetData(autoParam,getSort_State(),sub_cate_id,getMinPrice(),getMaxPrice());
-                    popWindow.dismiss();
-                    break;
-                case 1:
-                    autoParam="1";
-                    ZhongCanActivity.instance.isrefreshing=true;
-                    ZhongCanActivity.instance.refresh.recoveryLoad();
-                    ZhongCanActivity.instance.page=0;
-                    ZhongCanActivity.instance.getNetData(autoParam,getSort_State(),sub_cate_id,getMinPrice(),getMaxPrice());
-                    break;
-                case 2:
-                    autoParam="2";
-                    ZhongCanActivity.instance.isrefreshing=true;
-                    ZhongCanActivity.instance.refresh.recoveryLoad();
-                    ZhongCanActivity.instance.page=0;
-                    ZhongCanActivity.instance.getNetData(autoParam,getSort_State(),sub_cate_id,getMinPrice(),getMaxPrice());
-                    break;
-                case 3:
-                    autoParam="3";
-                    ZhongCanActivity.instance.isrefreshing=true;
-                    ZhongCanActivity.instance.refresh.recoveryLoad();
-                    ZhongCanActivity.instance.page=0;
-                    ZhongCanActivity.instance.getNetData(autoParam,getSort_State(),sub_cate_id,getMinPrice(),getMaxPrice());
-                    break;
-                case 4:
-                    autoParam="4";
-                    ZhongCanActivity.instance.isrefreshing=true;
-                    ZhongCanActivity.instance.refresh.recoveryLoad();
-                    ZhongCanActivity.instance.page=0;
-                    ZhongCanActivity.instance.getNetData(autoParam,getSort_State(),sub_cate_id,getMinPrice(),getMaxPrice());
-                    break;
-            }
             if (position != 0){
                 autoList.get(position-1).setState(1);
                 arrayAdapter.notifyDataSetChanged();
                 popWindow.dismiss();
             }
-
+            popWindow.dismiss();
         }
         );
         return popWindow;

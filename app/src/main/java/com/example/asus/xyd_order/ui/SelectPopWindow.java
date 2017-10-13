@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -46,16 +47,6 @@ public class SelectPopWindow extends PopupWindow {
         WindowManager.LayoutParams params = this.window.getAttributes();
         params.alpha = alphaNumb;
         this.window.setAttributes(params);
-    }
-    @Override
-    public void showAsDropDown(View anchor) {
-        if(Build.VERSION.SDK_INT >= 24){
-            Rect visibleFrame = new Rect();
-            anchor.getGlobalVisibleRect(visibleFrame);
-            int height = anchor.getResources().getDisplayMetrics().heightPixels - visibleFrame.bottom;
-            setHeight(height);
-        }
-        super.showAsDropDown(anchor);
     }
 
 }

@@ -8,12 +8,14 @@ import android.widget.TextView;
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseActivity;
 import com.example.asus.xyd_order.base.BaseArrayAdapter;
+import com.example.asus.xyd_order.dialog.ConfirmDialog;
 import com.example.asus.xyd_order.holder.Help_News_Holder;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.MutualBean;
 import com.example.asus.xyd_order.utils.ActivityFactory;
+import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +45,12 @@ public class Activity_Help_News extends BaseActivity
     public void myOnclick(View view) {
         switch (view.getId()){
             case R.id.tv_submit:
-                ActivityFactory.gotoAddHelpNews(context);
+                int state= (int) SharedPreferenceUtils.getParam(context,LoginActivity.CONFIRM_STATE,0);
+                if (state == 2){
+                    ActivityFactory.gotoAddHelpNews(context);
+                }else {
+                    ConfirmDialog dialog=new ConfirmDialog(Activity_Help_News.this);
+                }
                 break;
         }
     }

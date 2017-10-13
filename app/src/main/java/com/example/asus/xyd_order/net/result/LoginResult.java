@@ -3,7 +3,6 @@ package com.example.asus.xyd_order.net.result;
 /**
  * 这一类的entity 的定义就直接的放在一个包里面就行了
  *
- * Created by anylife.zlb@gmail.com on 2016/7/11.
  */
 public class LoginResult {
     private int user_id;
@@ -12,6 +11,16 @@ public class LoginResult {
     private String email;
     private String apitoken;
     private String avatar;
+    //1注册未完成 认证成功2
+    private int state;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
 
     public String getAvatar() {
         return avatar;

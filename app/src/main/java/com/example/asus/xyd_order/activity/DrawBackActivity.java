@@ -1,6 +1,7 @@
 package com.example.asus.xyd_order.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -14,15 +15,19 @@ import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseActivity;
 import com.example.asus.xyd_order.base.BaseArrayAdapter;
 import com.example.asus.xyd_order.controler.CategoryControl;
+import com.example.asus.xyd_order.dialog.ConfirmDialog;
 import com.example.asus.xyd_order.holder.TerminalHolder;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.TuishuiBean;
+import com.example.asus.xyd_order.selectcity.SelectCityActivity;
 import com.example.asus.xyd_order.ui.SelectPopWindow;
 import com.example.asus.xyd_order.utils.ActivityFactory;
+import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,11 +55,22 @@ public class DrawBackActivity extends BaseActivity {
     public void myOnclick(View view) {
         switch (view.getId()){
             case R.id.tv_submit:
-                ActivityFactory.gotoAddDrawBack(context);
+                int state= (int) SharedPreferenceUtils.getParam(DrawBackActivity.this, LoginActivity.CONFIRM_STATE,0);
+                if (state == 2){
+                    ActivityFactory.gotoAddDrawBack(context);
+                }else {
+                    ConfirmDialog dialog=new ConfirmDialog(DrawBackActivity.this);
+                }
+
                 break;
             case R.id.tv_month:
-                popWindow = control.getCountry(countryList);
-                popWindow.showAsDropDown(tv_month);
+//                popWindow = control.getCountry(countryList);
+//                popWindow.showAsDropDown(tv_month);
+                Intent intent=new Intent(getApplicationContext(),SelectCityActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable(SelectCityActivity.CITY_LIST, (Serializable) countryList);
+                intent.putExtras(bundle);
+                startActivityForResult(intent,0);
                 break;
         }
     }
@@ -196,5 +212,22 @@ public class DrawBackActivity extends BaseActivity {
 
                     }
                 });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == 1){
+            if (data == null){
+                return;
+            }
+            String regionsBean= data.getStringExtra(SelectCityActivity.COUNTRY_INFO);
+            tv_month.setText(regionsBean);
+            for (int i=0;i<countryList.size();i++){
+                if (countryList.get(i).getRegion_name().equals(regionsBean)){
+                    queryData(countryList.get(i).getRegion_id()+"");
+                }
+            }
+        }
     }
 }

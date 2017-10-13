@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:paddingLeft="8dp"
     android:id="@+id/rl_title"
     android:paddingRight="8dp"
     android:background="@color/tool_bar_color"
@@ -14,7 +13,7 @@
             android:layout_centerVertical="true"
             android:id="@+id/iv_back"
             android:src="@mipmap/icon_zhongcan_back"
-            android:layout_width="25dp"
+            android:layout_width="48dp"
             android:layout_height="wrap_content" />
     </RelativeLayout>
     <TextView

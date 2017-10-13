@@ -5,6 +5,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.adapter.ExpandableListviewAdapter;
 import com.example.asus.xyd_order.base.BaseActivity;
@@ -14,9 +15,11 @@ import com.example.asus.xyd_order.net.BaseApi;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.HttpResult;
+import com.example.asus.xyd_order.net.result.RestaurantDetailsBean;
 import com.example.asus.xyd_order.net.result.TuancanBean;
 import com.example.asus.xyd_order.ui.MyExpandListView;
 import com.example.asus.xyd_order.ui.MyListView;
+import com.example.asus.xyd_order.ui.SmartImageveiw;
 import com.example.asus.xyd_order.utils.ActivityFactory;
 import com.recker.flybanner.FlyBanner;
 
@@ -35,37 +38,28 @@ public class MultipleDetailsActivity extends BaseActivity {
 
     private MyListView mylistview;
 
-    List<String> groupList=new ArrayList<>();
-    List<String> childList=new ArrayList<>();
 
     List<TuancanBean.PriceListBean> tuanList=new ArrayList<>();
-    private FlyBanner flybanner;
+    private SmartImageveiw flybanner;
     private List<String> imgList=new ArrayList<>();
     private TextView btn_order;
     private BaseArrayAdapter adapter;
-    private String mer_id;
-    private String address;
-    private String res_name;
-    private TextView tv_name,tv_address,tv_price;
-    private TuancanBean bean;
+    private TextView tv_name,tv_address,tv_price,tv_details;
 
     private TuancanBean.PriceListBean selectedBean=null;
     private TextView tv_title;
-
+    private RestaurantDetailsBean.GroupMealBean groupMeal;
+    private String res_name;
     @Override
     public void myOnclick(View view) {
         switch (view.getId()){
             case R.id.btn_order:
-                for (int i=0;i<bean.getPrice_list().size();i++){
-                    if (bean.getPrice_list().get(i).isChecked()){
-                        selectedBean=bean.getPrice_list().get(i);
-                    }
-                }
-                if (selectedBean!=null){
-                    ActivityFactory.gotoOrder(context,"1",res_name,bean.getMeal_name(),selectedBean,bean.getImg_path(),bean.getMer_id()+"",null);
-                }else {
-                    toastShow("请选择团餐条目");
-                }
+                selectedBean=new TuancanBean.PriceListBean();
+                selectedBean.setMeal_name(groupMeal.getMeal_name());
+                selectedBean.setMeal_detail(groupMeal.getMeal_detail());
+                selectedBean.setMeal_price(groupMeal.getMeal_price());
+                selectedBean.setMp_id(groupMeal.getMeal_id());
+                    ActivityFactory.gotoOrder(context,"1",res_name,groupMeal.getMeal_name(),selectedBean,groupMeal.getImg_path(),groupMeal.getMeal_id()+"",null);
                 break;
 }
     }
@@ -75,6 +69,7 @@ public class MultipleDetailsActivity extends BaseActivity {
         ImageView iv_back= (ImageView) findViewById(R.id.iv_back);
         iv_back.setOnClickListener(v -> {onBackPressed();});
         tv_title = (TextView) findViewById(R.id.tv_title);
+        tv_title.setText(groupMeal.getMeal_name());
     }
 
     @Override
@@ -85,26 +80,25 @@ public class MultipleDetailsActivity extends BaseActivity {
 
     @Override
     public int getData() throws Exception {
-        mer_id = getIntent().getStringExtra("mer_id");
-//        "mer_id",m_id);
-//        intent.putExtra("address",address);
-//        intent.putExtra("res_name",res_
-        address = getIntent().getStringExtra("address");
         res_name = getIntent().getStringExtra("res_name");
-        getNetData();
-        for (int i=0;i<5;i++){
-            groupList.add("1");
-            childList.add("1");
-        }
+        //团餐id
+        groupMeal = (RestaurantDetailsBean.GroupMealBean) getIntent().getExtras().getSerializable("groupMeal");
+//        getNetData();
         return 0;
     }
 
     @Override
     public void initView() {
         tv_name= (TextView) findViewById(R.id.tv_name);
+        tv_name.setText(groupMeal.getMeal_name());
         tv_address= (TextView) findViewById(R.id.tv_address);
         tv_price= (TextView) findViewById(R.id.tv_price);
-        flybanner = (FlyBanner) findViewById(R.id.flybanner);
+        tv_price.setText(groupMeal.getMeal_price());
+        tv_details= (TextView) findViewById(R.id.tv_details);
+        tv_details.setText(groupMeal.getMeal_detail());
+        flybanner = (SmartImageveiw) findViewById(R.id.flybanner);
+        flybanner.setRatio(2.0f);
+        Glide.with(context).load(BaseApi.getBaseUrl()+groupMeal.getImg_path()).into(flybanner);
         btn_order = (TextView) findViewById(R.id.btn_order);
         mylistview = (MyListView) findViewById(R.id.lv_multiple);
         adapter = new BaseArrayAdapter(context, new BaseArrayAdapter.OnCreateViewHolderListener() {
@@ -114,7 +108,7 @@ public class MultipleDetailsActivity extends BaseActivity {
             }
         },tuanList);
         mylistview.setAdapter(adapter);
-
+        imgList.add(BaseApi.getBaseUrl()+groupMeal.getImg_path());
     }
 
     @Override
@@ -140,40 +134,38 @@ public class MultipleDetailsActivity extends BaseActivity {
     /**
      * 获取网络数据
      */
-    public void getNetData(){
-        Observable<HttpResult<TuancanBean>> result= ServiceApi.getInstance().getServiceContract().tuancanDetails(mer_id,apitoken);
-        result.map(new ResultFilter<>())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<TuancanBean>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(TuancanBean tuancanBean) {
-                        bean = tuancanBean;
-                        tv_title.setText(bean.getMeal_name());
-                        for (int i =0;i<tuancanBean.getPrice_list().size();i++){
-                            tuancanBean.getPrice_list().get(i).setMeal_name(tuancanBean.getMeal_name());
-                        }
-
-                        imgList.add(BaseApi.getBaseUrl()+tuancanBean.getImg_path());
-                        flybanner.setImagesUrl(imgList);
-
-                        tv_address.setText(address);
-                        tv_name.setText(res_name);
-
-                        tuanList.addAll(tuancanBean.getPrice_list());
-                        adapter.notifyDataSetChanged();
-
-                    }
-                });
-    }
+//    public void getNetData(){
+//        Observable<HttpResult<TuancanBean>> result= ServiceApi.getInstance().getServiceContract().tuancanDetails(mer_id,apitoken);
+//        result.map(new ResultFilter<>())
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Subscriber<TuancanBean>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(TuancanBean tuancanBean) {
+//                        bean = tuancanBean;
+//                        tv_title.setText(bean.getMeal_name());
+//                        for (int i =0;i<tuancanBean.getPrice_list().size();i++){
+//                            tuancanBean.getPrice_list().get(i).setMeal_name(tuancanBean.getMeal_name());
+//                        }
+//
+//                        imgList.add(BaseApi.getBaseUrl()+tuancanBean.getImg_path());
+//                        flybanner.setImagesUrl(imgList);
+//                        tv_name.setText(res_name);
+//
+//                        tuanList.addAll(tuancanBean.getPrice_list());
+//                        adapter.notifyDataSetChanged();
+//
+//                    }
+//                });
+//    }
 }

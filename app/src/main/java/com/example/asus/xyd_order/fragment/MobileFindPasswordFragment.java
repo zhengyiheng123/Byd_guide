@@ -1,5 +1,6 @@
 package com.example.asus.xyd_order.fragment;
 
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.asus.xyd_order.R;
+import com.example.asus.xyd_order.areacode.AreaCodeActivity;
 import com.example.asus.xyd_order.base.BaseFragment;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
@@ -57,9 +59,10 @@ public class MobileFindPasswordFragment extends BaseFragment {
     public void myOnclick(View view) {
         switch (view.getId()){
             case R.id.tv_country_code:
-                if (countryList.size()>0){
-                    showDialog(countryList);
-                }
+//                if (countryList.size()>0){
+//                    showDialog(countryList);
+//                }
+                startActivityForResult(new Intent(getActivity(), AreaCodeActivity.class),0);
                 break;
             case R.id.tv_getcode:
                 String phonenum=et_phonenum.getText().toString();
@@ -193,5 +196,12 @@ public class MobileFindPasswordFragment extends BaseFragment {
                         toastShow("修改成功");
                     }
                 });
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode ==1 && requestCode ==0){
+            tv_country_code.setText(data.getStringExtra("areacode"));
+        }
     }
 }

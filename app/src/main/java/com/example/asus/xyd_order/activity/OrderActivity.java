@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -28,6 +29,7 @@ import com.example.asus.xyd_order.net.result.ZhongcanOrderSuccessBean;
 import com.example.asus.xyd_order.ui.CircleImageView;
 import com.example.asus.xyd_order.ui.MyListView;
 import com.example.asus.xyd_order.utils.ActivityFactory;
+import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 import com.example.asus.xyd_order.utils.TimeUtils;
 import com.example.asus.xyd_order.utils.ToastUtils;
 
@@ -43,6 +45,8 @@ import java.util.List;
 
 import cn.qqtheme.framework.picker.DateTimePicker;
 import cn.qqtheme.framework.picker.OptionPicker;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -93,6 +97,7 @@ public class OrderActivity extends BaseActivity {
     private String singleCaidan;
     private Double price;
     private TimePickerView pvTime;
+    private CheckBox cb_check;
 
     /**
      * 日期选择框
@@ -165,14 +170,15 @@ public class OrderActivity extends BaseActivity {
                 break;
             case R.id.btn_order:
                 //团餐
+                if (!cb_check.isChecked()){
+                    ToastUtils.show(context,"请阅读并同意免责声明",0);
+                    return;
+                }
                 if (mode.equals("1")){
                     order_name=et_gname.getText().toString();
                     order_phone=et_g_phone.getText().toString();
                     if (!TextUtils.isEmpty(et_group_num.getText().toString())&&!TextUtils.isEmpty(time) && !TextUtils.isEmpty(order_name) && !TextUtils.isEmpty(order_phone) &&!TextUtils.isEmpty(pay_type)){
-                        order(et_group_num.getText().toString(),
-                                tv_num.getText().toString(),time,pay_type,mer_id,et_message.getText().toString(),
-                                Integer.valueOf(tv_num.getText().toString())*Double.valueOf(priceListBean.getMeal_price())+"",
-                                order_name,order_phone,"1",priceListBean.getMp_id()+"",tv_num.getText().toString(),"");
+                        order("1");
                     }else {
                         toastShow("请完善信息");
                     }
@@ -181,10 +187,7 @@ public class OrderActivity extends BaseActivity {
                     order_name=et_gname.getText().toString();
                     order_phone=et_g_phone.getText().toString();
                     if (!TextUtils.isEmpty(et_group_num.getText().toString())&&!TextUtils.isEmpty(time) && !TextUtils.isEmpty(order_name) && !TextUtils.isEmpty(order_phone) &&!TextUtils.isEmpty(pay_type)){
-                        order(et_group_num.getText().toString(),
-                                tv_num.getText().toString(),time,pay_type,mer_id,et_message.getText().toString(),
-                                price+"",
-                                order_name,order_phone,"2","","",singleCaidan);
+                        order("2");
                     }else {
                         toastShow("请完善信息");
                     }
@@ -261,7 +264,6 @@ public class OrderActivity extends BaseActivity {
                 jsonArray.put(tmpObj);
             }
             singleCaidan = jsonArray.toString();
-            Log.e("zyh",singleCaidan);
         }
         res_name = getIntent().getStringExtra("res_name");
         meal_name=getIntent().getStringExtra("meal_name");
@@ -273,14 +275,10 @@ public class OrderActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         //初始化时间选择器
         initTimePicker();
-        final Calendar ca = Calendar.getInstance();
-        mHour =ca.get(Calendar.HOUR_OF_DAY);
-        mMinute =ca.get(Calendar.MINUTE);
-        mYear = ca.get(Calendar.YEAR);
-        mMonth = ca.get(Calendar.MONTH);
-        mDay = ca.get(Calendar.DAY_OF_MONTH);
+
 
         mylistview = (MyListView) findViewById(R.id.mylistview);
         tv_timepicker = (TextView) findViewById(R.id.tv_timepicker);
@@ -292,7 +290,7 @@ public class OrderActivity extends BaseActivity {
         tv_total_Price= (TextView) findViewById(R.id.tv_total_Price);
         tv_all_money= (TextView) findViewById(R.id.tv_all_money);
         tv_paytype= (TextView) findViewById(R.id.tv_paytype);
-
+        cb_check = (CheckBox) findViewById(R.id.cb_check);
         rl_single = (RelativeLayout) findViewById(R.id.rl_single);
         rl_caipin= (RelativeLayout) findViewById(R.id.rl_caipin);
         iv_img_meal = (ImageView) findViewById(R.id.iv_img_meal);
@@ -300,8 +298,15 @@ public class OrderActivity extends BaseActivity {
         iv_release= (ImageView) findViewById(R.id.iv_release);
         tv_num= (EditText) findViewById(R.id.tv_num);
         et_g_phone= (EditText) findViewById(R.id.et_g_phone);
+        et_g_phone.setText((String)SharedPreferenceUtils.getParam(context,LoginActivity.USER_MOBILE,""));
         et_gname= (EditText) findViewById(R.id.et_gname);
+        et_gname.setText((String) SharedPreferenceUtils.getParam(context,LoginActivity.USER_NAME,""));
+        //获取当前时间
+        Date date=new Date(System.currentTimeMillis());
+        SimpleDateFormat    formatter    =   new    SimpleDateFormat    ("yyyyMMdd");
+        String curDate=formatter.format(date);
         et_group_num= (EditText) findViewById(R.id.et_group_num);
+        et_group_num.setText(curDate);
         et_message= (EditText) findViewById(R.id.et_message);
         tv_re_name.setText(res_name);
         Glide.with(context).load(BaseApi.getBaseUrl()+img_path).into(iv_img_meal);
@@ -315,10 +320,10 @@ public class OrderActivity extends BaseActivity {
         else if (mode!=null && mode.equals("1")){
             rl_caipin.setVisibility(View.GONE);
             mylistview.setVisibility(View.GONE);
-            tv_total_Price.setText("总价："+Integer.valueOf(tv_num.getText().toString())*Double.valueOf(priceListBean.getMeal_price())+"");
+            tv_total_Price.setText("总价："+priceListBean.getMeal_price());
             tv_meal_info.setText(meal_name+"  "+priceListBean.getMeal_price()+"/人");
             tv_single_price.setText("单价："+priceListBean.getMeal_price());
-            tv_all_money.setText("总价："+Integer.valueOf(tv_num.getText().toString())*Double.valueOf(priceListBean.getMeal_price())+"");
+            tv_all_money.setText("总价："+priceListBean.getMeal_price());
         }
     }
 
@@ -338,45 +343,31 @@ public class OrderActivity extends BaseActivity {
         iv_release.setOnClickListener(this);
         iv_add.setOnClickListener(this);
         tv_paytype.setOnClickListener(this);
-        tv_num.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!TextUtils.isEmpty(s)){
-                    int num=Integer.valueOf(s.toString());
-                    if (num<5){
-                        ToastUtils.show(context,"用餐人数不得少于5人",0);
-                        tv_num.setText("5");
-                        tv_num.setSelection(tv_num.getText().length());
-                    }else {
-                        if (mode.equals("1")){
-                            tv_total_Price.setText("总价："+num*Double.valueOf(priceListBean.getMeal_price()));
-                            tv_all_money.setText("总价："+num*Double.valueOf(priceListBean.getMeal_price()));
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
     }
+    private MultipartBody.Builder builder;
+    public RequestBody getBody(String meal_type){
+       return builder.addFormDataPart("apitoken",apitoken)
+                .addFormDataPart("group_num",et_group_num.getText().toString())
+                .addFormDataPart("seat_cost",tv_num.getText().toString())
+                .addFormDataPart("book_time",time)
+                .addFormDataPart("pay_type",pay_type)
+                .addFormDataPart("mer_id",mer_id)
+                .addFormDataPart("message",et_message.getText().toString())
+                .addFormDataPart("price",priceListBean.getMeal_price())
+                .addFormDataPart("user_name",et_gname.getText().toString())
+                .addFormDataPart("mobile",et_g_phone.getText().toString())
+                .addFormDataPart("meal_type",meal_type)
+//                .addFormDataPart("nums",tv_num.getText().toString())
+               .addFormDataPart("single_meal",TextUtils.isEmpty(singleCaidan) ?"":singleCaidan)
+                .build();
 
-
+    }
     /**
      * 预约
      */
-    private void order(String group_num,String seat_cost,String book_time,String pay_type,String mer_id,String message,
-                       String price,String user_name,String mobile,String meal_type,String mp_id,String nums,String single_meal){
+    private void order(String meal_type){
 
-        Observable<HttpResult<ZhongcanOrderSuccessBean>> result= ServiceApi.getInstance().getServiceContract().orderSuccess(apitoken,
-                group_num,seat_cost,book_time,pay_type,mer_id,message,price,user_name,mobile,meal_type,mp_id,nums,single_meal
-                );
+        Observable<HttpResult<ZhongcanOrderSuccessBean>> result= ServiceApi.getInstance().getServiceContract().orderSuccess(getBody(meal_type));
         result.map(new ResultFilter<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -439,6 +430,15 @@ public class OrderActivity extends BaseActivity {
                 .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
                 .setDecorView(null)
                 .build();
+
+
+
+        final Calendar ca = Calendar.getInstance();
+        mHour =ca.get(Calendar.HOUR_OF_DAY);
+        mMinute =ca.get(Calendar.MINUTE);
+        mYear = ca.get(Calendar.YEAR);
+        mMonth = ca.get(Calendar.MONTH);
+        mDay = ca.get(Calendar.DAY_OF_MONTH);
     }
     private String getDateAndTime(Date date) {//可根据需要自行截取数据显示
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");

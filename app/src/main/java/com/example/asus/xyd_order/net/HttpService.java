@@ -190,8 +190,8 @@ public interface HttpService {
     @POST("v1/user/register")
     Observable<HttpResult<RegisterBean>> register(@Field("reg_type")int reg_type
             ,@Field("mobile")String mobile
-            ,@Field("password")String password,
-                                                  @Field("email")String email
+            ,@Field("password")String password
+            ,@Field("email")String email
             ,@Field("captcha")int captcha
             ,@Field("area_code")String area_code
     );
@@ -507,13 +507,8 @@ public interface HttpService {
     /**
      *团餐预定
      */
-    @FormUrlEncoded
     @POST("v1/res_order")
-    Observable<HttpResult<ZhongcanOrderSuccessBean>> orderSuccess(@Field("apitoken")String apitoken,
-           @Field("group_num")String group_num,@Field("seat_cost")String seat_cost,@Field("book_time")String book_time,
-            @Field("pay_type")String pay_type,@Field("mer_id")String mer_id,@Field("message")String message,@Field("price")String price,
-             @Field("user_name")String user_name,@Field("mobile")String mobile,@Field("meal_type")String meal_type,@Field("mp_id")String mp_id,
-             @Field("nums")String nums,@Field("single_meal")String single_meal
+    Observable<HttpResult<ZhongcanOrderSuccessBean>> orderSuccess(@Body()RequestBody body
                                                                   );
     /**
      * 预定详情
@@ -771,6 +766,9 @@ public interface HttpService {
     /**
      * 景区订单退款
      */
+    @FormUrlEncoded
     @POST("v1/scene/order/refund")
     Observable<HttpResult> refundJingdian(@Field("apitoken") String apitoken,@Field("ord_id")String ord_id,@Field("cancel_content")String cancel_content);
+
+
 }

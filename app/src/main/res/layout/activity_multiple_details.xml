@@ -19,9 +19,10 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <com.recker.flybanner.FlyBanner
+        <com.example.asus.xyd_order.ui.SmartImageveiw
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
             android:id="@+id/flybanner"
             />
             <RelativeLayout
@@ -47,6 +48,7 @@
                 android:background="@color/line_color"
                 />
             <RelativeLayout
+                android:visibility="gone"
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="45dp">
@@ -76,8 +78,17 @@
                     android:src="@drawable/ic_right_forward"
                     android:layout_alignParentRight="true" />
             </RelativeLayout>
+            <TextView
+                android:background="@color/white"
+                android:id="@+id/tv_details"
+                android:paddingRight="8dp"
+                android:paddingLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
             <com.example.asus.xyd_order.ui.MyListView
                 android:layout_marginTop="8dp"
+                android:visibility="gone"
                 android:clickable="true"
                 android:choiceMode="singleChoice"
                 android:id="@+id/lv_multiple"

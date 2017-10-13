@@ -8,9 +8,12 @@ import android.widget.TextView;
 
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseActivity;
+import com.example.asus.xyd_order.dialog.ConfirmDialog;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.HttpResult;
+import com.example.asus.xyd_order.utils.ActivityFactory;
+import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,10 +35,15 @@ public class Activity_Suggestion extends BaseActivity {
     public void myOnclick(View view) {
         switch (view.getId()){
             case R.id.tv_submit:
-                if (TextUtils.isEmpty(et_suggestion.getText().toString())){
-                    return;
+                int state= (int) SharedPreferenceUtils.getParam(context, LoginActivity.CONFIRM_STATE,0);
+                if (state == 2){
+                    if (TextUtils.isEmpty(et_suggestion.getText().toString())){
+                        return;
+                    }
+                    submitSuggestion(et_suggestion.getText().toString());
+                }else {
+                    ConfirmDialog dialog=new ConfirmDialog(Activity_Suggestion.this);
                 }
-                submitSuggestion(et_suggestion.getText().toString());
                 break;
         }
     }

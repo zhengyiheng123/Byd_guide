@@ -43,7 +43,7 @@ public class MultipleHolder extends BaseViewHolder<RestaurantDetailsBean.GroupMe
     public void onBindViewHolder(final Context context, RestaurantDetailsBean.GroupMealBean s) {
         Glide.with(context).load(BaseApi.getBaseUrl()+s.getImg_path()).into(iv_img);
         tv_name.setText(s.getMeal_name());
-        tv_peer.setText(s.getMeal_price().get(0)+"/起");
+        tv_peer.setText(s.getMeal_price());
 //        radio.removeAllViews();
 //        for (int i=0;i<s.getMeal_price().size();i++){
 //            RadioButton radioButton=new RadioButton(context);

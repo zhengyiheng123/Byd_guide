@@ -106,6 +106,7 @@ public class FefundsActivity extends BaseActivity {
     }
     //退款景点
     private void refundjingdian(String message){
+        showDialog();
         Observable<HttpResult> result= ServiceApi.getInstance().getServiceContract().refundJingdian(apitoken,ord_id,message);
         result.map(new ResultFilter())
                 .subscribeOn(Schedulers.io())
@@ -113,17 +114,18 @@ public class FefundsActivity extends BaseActivity {
                 .subscribe(new Subscriber() {
                     @Override
                     public void onCompleted() {
-
+dismissDialog();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+dismissDialog();
                     }
 
                     @Override
                     public void onNext(Object o) {
-
+                        toastShow("退款申请已提交");
+finish();
                     }
                 });
     }

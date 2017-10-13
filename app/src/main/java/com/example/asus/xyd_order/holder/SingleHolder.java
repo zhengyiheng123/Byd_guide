@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.asus.xyd_order.R;
+import com.example.asus.xyd_order.activity.SingleChooseActivity;
 import com.example.asus.xyd_order.base.BaseViewHolder;
 import com.example.asus.xyd_order.net.BaseApi;
 import com.example.asus.xyd_order.net.result.RestaurantDetailsBean;
@@ -68,6 +69,7 @@ public class SingleHolder extends BaseViewHolder<RestaurantDetailsBean.SingleMea
                         return;
                     }
                 }
+                SingleChooseActivity.instance.countPrice();
                 break;
             case R.id.iv_jia:
                 num = tv_count.getText().toString().trim();
@@ -79,6 +81,7 @@ public class SingleHolder extends BaseViewHolder<RestaurantDetailsBean.SingleMea
                     tv_count.setText(count+"");
                     bean.setNums(count);
                 }
+                SingleChooseActivity.instance.countPrice();
                 break;
         }
     }

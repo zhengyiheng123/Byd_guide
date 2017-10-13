@@ -11,12 +11,14 @@ import com.bumptech.glide.Glide;
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseActivity;
 import com.example.asus.xyd_order.dialog.CatchSeccessDialog;
+import com.example.asus.xyd_order.dialog.ConfirmDialog;
 import com.example.asus.xyd_order.dialog.ContactDialog;
 import com.example.asus.xyd_order.net.BaseApi;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.Demand_Details_Bean;
 import com.example.asus.xyd_order.net.result.HttpResult;
+import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 import com.example.asus.xyd_order.utils.TimeUtils;
 
 import butterknife.Bind;
@@ -107,7 +109,12 @@ public class CatchOrdersActivity extends BaseActivity {
                 dialog.show();
                 break;
             case R.id.tv_catch_order:
-                taking();
+                int state= (int) SharedPreferenceUtils.getParam(CatchOrdersActivity.this, LoginActivity.CONFIRM_STATE,0);
+                if (state == 2){
+                    taking();
+                }else {
+                    ConfirmDialog dialog=new ConfirmDialog(CatchOrdersActivity.this);
+                }
                 break;
             case R.id.iv_img_hos:
                 break;

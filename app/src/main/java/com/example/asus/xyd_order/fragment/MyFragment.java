@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,9 +16,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.asus.xyd_order.R;
+import com.example.asus.xyd_order.activity.CatchOrdersActivity;
 import com.example.asus.xyd_order.activity.DetailsActivity;
+import com.example.asus.xyd_order.activity.LoginActivity;
 import com.example.asus.xyd_order.activity.PhotoActivity;
 import com.example.asus.xyd_order.base.BaseFragment;
+import com.example.asus.xyd_order.dialog.ConfirmDialog;
 import com.example.asus.xyd_order.net.BaseApi;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
@@ -78,13 +82,25 @@ public class MyFragment extends BaseFragment {
                 ActivityFactory.gotoJourny(context);
                 break;
             case R.id.rl_userinfo:
-                ActivityFactory.gotoUserInfo(context);
+                int state= (int) SharedPreferenceUtils.getParam(context, LoginActivity.CONFIRM_STATE,0);
+                if (state == 2){
+                    ActivityFactory.gotoUserInfo(context);
+                }else {
+                    ConfirmDialog dialog=new ConfirmDialog(getActivity());
+                }
+
                 break;
             case R.id.tv_my_guide_circle:
                 ActivityFactory.gotoMyGuideCircle(context);
                 break;
             case R.id.rl_address_manager:
-                ActivityFactory.gotoAddAddressList(context);
+                int confirm_state= (int) SharedPreferenceUtils.getParam(getActivity(), LoginActivity.CONFIRM_STATE,0);
+                if (confirm_state == 2){
+                    ActivityFactory.gotoAddAddressList(context);
+                }else {
+                    ConfirmDialog dialog=new ConfirmDialog(getActivity());
+                }
+
                 break;
             case R.id.rl_my_collect:
                 ActivityFactory.gotoMyCollect(context);

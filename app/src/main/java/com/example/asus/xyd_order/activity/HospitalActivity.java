@@ -1,6 +1,7 @@
 package com.example.asus.xyd_order.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseActivity;
 import com.example.asus.xyd_order.base.BaseArrayAdapter;
 import com.example.asus.xyd_order.controler.CategoryControl;
+import com.example.asus.xyd_order.dialog.ConfirmDialog;
 import com.example.asus.xyd_order.holder.HospitalItem;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
@@ -18,8 +20,12 @@ import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.HospitaiDetails;
 import com.example.asus.xyd_order.net.result.HospitalBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
+import com.example.asus.xyd_order.selectcity.SelectCityActivity;
 import com.example.asus.xyd_order.ui.SelectPopWindow;
+import com.example.asus.xyd_order.utils.ActivityFactory;
+import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,8 +51,6 @@ public class HospitalActivity extends BaseActivity {
     @Bind(R.id.iv_img)
     ImageView iv_img;
 
-    private CategoryControl control;
-    private SelectPopWindow popWindow;
 
     private List<HospitalBean.HospitalsBean> mList=new ArrayList<>() ;
     private BaseArrayAdapter adapter;
@@ -55,17 +59,26 @@ public class HospitalActivity extends BaseActivity {
     private List<CityListBean.RegionsBean> countryList=new ArrayList<>();
     @Override
     public void myOnclick(View view) {
+        Intent intent;
         switch (view.getId()){
             case R.id.iv_back:
                 onBackPressed();
                 break;
             case R.id.tv_month:
-                popWindow = control.getCountry(countryList);
-                popWindow.showAsDropDown(tv_month);
+                intent=new Intent(getApplicationContext(),SelectCityActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable(SelectCityActivity.CITY_LIST, (Serializable) countryList);
+                intent.putExtras(bundle);
+                startActivityForResult(intent,0);
                 break;
             case R.id.iv_img:
-                Intent intent=new Intent(context,Activity_AddHospital.class);
-                startActivity(intent);
+                int state= (int) SharedPreferenceUtils.getParam(HospitalActivity.this, LoginActivity.CONFIRM_STATE,0);
+                if (state == 2){
+                    intent=new Intent(context,Activity_AddHospital.class);
+                    startActivity(intent);
+                }else {
+                    ConfirmDialog dialog=new ConfirmDialog(HospitalActivity.this);
+                }
                 break;
         }
     }
@@ -84,16 +97,6 @@ public class HospitalActivity extends BaseActivity {
 
     @Override
     public int getData() throws Exception {
-        control = new CategoryControl(HospitalActivity.this);
-        control.setCountryItemClick(new CategoryControl.CountryItemClick() {
-            @Override
-            public void onItemClick(CityListBean.RegionsBean bean) {
-//                toastShow(bean.getRegion_name()+", "+bean.getRegion_id());
-                popWindow.dismiss();
-                tv_month.setText(bean.getRegion_name());
-                getNetData(bean.getRegion_id()+"");
-            }
-        });
         getNetData();
         return 0;
     }
@@ -193,5 +196,21 @@ public class HospitalActivity extends BaseActivity {
                         }
                     }
                 });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == 1){
+            if (data == null){
+                return;
+            }
+            String regionsBean= data.getStringExtra(SelectCityActivity.COUNTRY_INFO);
+            tv_month.setText(regionsBean);
+            for (int i=0;i<countryList.size();i++){
+                if (countryList.get(i).getRegion_name().equals(regionsBean)){
+                    getNetData(countryList.get(i).getRegion_id()+"");
+                }
+            }
+        }
     }
 }

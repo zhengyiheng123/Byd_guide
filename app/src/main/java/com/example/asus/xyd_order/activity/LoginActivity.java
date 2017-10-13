@@ -37,12 +37,18 @@ import rx.schedulers.Schedulers;
  */
 public class LoginActivity extends BaseActivity {
 
+    public static final String CONFIRM_STATE = "CONFIRM_STATE";
     private TextView tv_register,tv_forget;
     private EditText et_password,et_username;
     private Button btn_login;
     private String username;
     private String password;
     private CheckBox cb_remeber;
+    public static String USER_NAME="user_name";
+    public static String USER_MOBILE="user_phone";
+    public static String USER_EMAIL="user_email";
+    public static String USERNAME="username";
+    public static String PASSWORD="password";
     //记住密码
     private boolean isRemember;
 
@@ -74,6 +80,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void setToolbar() {
         ImageView iv_back= (ImageView) findViewById(R.id.iv_back);
+        iv_back.setVisibility(View.GONE);
         iv_back.setOnClickListener(v -> {onBackPressed();});
     }
 
@@ -85,8 +92,8 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public int getData() throws Exception {
-        username = (String) SharedPreferenceUtils.getParam(context,"username","");
-        password = (String) SharedPreferenceUtils.getParam(context,"password","");
+        username = (String) SharedPreferenceUtils.getParam(context,USERNAME,"");
+        password = (String) SharedPreferenceUtils.getParam(context,PASSWORD,"");
         return 1;
     }
 
@@ -143,11 +150,15 @@ public class LoginActivity extends BaseActivity {
 
                     @Override
                     public void onNext(LoginResult loginResult) {
-                        SharedPreferenceUtils.setParam(context,"username",et_username.getText().toString());
+                        SharedPreferenceUtils.setParam(context,CONFIRM_STATE,loginResult.getState());
+                        SharedPreferenceUtils.setParam(context,USERNAME,et_username.getText().toString());
+                        SharedPreferenceUtils.setParam(context,USER_NAME,loginResult.getUser_name());
+                        SharedPreferenceUtils.setParam(context,USER_MOBILE,loginResult.getMobile());
+                        SharedPreferenceUtils.setParam(context,USER_EMAIL,loginResult.getEmail());
                         if (isRemember){
-                            SharedPreferenceUtils.setParam(context,"password",et_password.getText().toString());
+                            SharedPreferenceUtils.setParam(context,PASSWORD,et_password.getText().toString());
                         }else {
-                            SharedPreferenceUtils.setParam(context,"password","");
+                            SharedPreferenceUtils.setParam(context,PASSWORD,"");
                         }
                         try {
                             initAlis(loginResult);

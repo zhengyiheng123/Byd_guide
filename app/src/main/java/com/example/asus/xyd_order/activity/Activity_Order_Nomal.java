@@ -33,12 +33,15 @@ import com.example.asus.xyd_order.net.result.ZhongcanOrderSuccessBean;
 import com.example.asus.xyd_order.ui.ChildViewPager;
 import com.example.asus.xyd_order.ui.MyListView;
 import com.example.asus.xyd_order.utils.ActivityFactory;
+import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cn.qqtheme.framework.picker.OptionPicker;
@@ -284,7 +287,12 @@ public class Activity_Order_Nomal extends BaseActivity {
         tv_nomal= (TextView) findViewById(R.id.tv_nomal);
         tv_group= (TextView) findViewById(R.id.tv_group);
         tv_paytype= (TextView) findViewById(R.id.tv_paytype);
+        //获取当前时间
+        Date date=new Date(System.currentTimeMillis());
+        SimpleDateFormat formatter    =   new    SimpleDateFormat    ("yyyyMMdd");
+        String curDate=formatter.format(date);
         et_group_num= (TextView) findViewById(R.id.et_group_num);
+        et_group_num.setText(curDate);
         tv_total_price= (TextView) findViewById(R.id.tv_total_price);
         tv_name= (TextView) findViewById(R.id.tv_name);
         tv_phoneNum= (TextView) findViewById(R.id.tv_phoneNum);
@@ -293,6 +301,8 @@ public class Activity_Order_Nomal extends BaseActivity {
 
         et_user_phone = (EditText) findViewById(R.id.et_user_phone);
         et_user_name = (EditText) findViewById(R.id.et_user_name);
+        et_user_name.setText((String)SharedPreferenceUtils.getParam(context,LoginActivity.USER_NAME,""));
+        et_user_phone.setText((String)SharedPreferenceUtils.getParam(context,LoginActivity.USER_MOBILE,""));
         ll_user_info = (LinearLayout) findViewById(R.id.ll_user_info);
 
         iv_driver_free = (ImageView) findViewById(R.id.iv_driver_free);
@@ -429,6 +439,7 @@ public class Activity_Order_Nomal extends BaseActivity {
                     @Override
                     public void onNext(ZhongcanOrderSuccessBean zhongcanOrderSuccessBean) {
 //                        Log.e("zyh","预定处成功,订单号："+zhongcanOrderSuccessBean.getOrd_id());
+                        finish();
                         ActivityFactory.gotoSuccessed(context,zhongcanOrderSuccessBean.getOrd_id());
                     }
                 });

@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.asus.xyd_order.R;
-import com.example.asus.xyd_order.activity.DetailsActivity;
 import com.example.asus.xyd_order.utils.NetworkState;
 import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 import com.example.asus.xyd_order.utils.ToastUtils;

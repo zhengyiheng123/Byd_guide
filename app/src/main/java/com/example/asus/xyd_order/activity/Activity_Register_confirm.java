@@ -1,6 +1,7 @@
 package com.example.asus.xyd_order.activity;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,7 +23,9 @@ import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.ConfirmUserInfo;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
+import com.example.asus.xyd_order.utils.SoftInputUtil;
 import com.example.asus.xyd_order.utils.TimeUtils;
+import com.example.asus.xyd_order.utils.ToastUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,6 +34,7 @@ import java.util.Date;
 
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.DateTimePicker;
+import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import rx.Observable;
@@ -46,8 +50,9 @@ public class Activity_Register_confirm extends BaseActivity {
     private RadioButton rb_have;
     private TextView tv_career_time,tv_birth,tv_next;
     private DatePicker datePicker;
-    private EditText et_realname,live_city,et_passport,et_phonenum,et_email,et_belong_company,service_type_desc;
-    private CheckBox cb_only_guide,cb_nine,cb_daba,cb_translate;
+    private EditText et_realname,live_city,et_passport,et_phonenum,et_email,
+            et_belong_company,service_type_desc;
+    private CheckBox cb_only_guide,cb_nine,cb_daba,cb_translate,cb_check;
     private RadioGroup rg_sex,rg_have_car;
     private MultipartBody.Builder builder;
 
@@ -67,6 +72,14 @@ public class Activity_Register_confirm extends BaseActivity {
     private String isInsurence="";
     private TimePickerView pvTime;
 
+    //邮箱key值
+    public static String EMAIL="email";
+    //手机号key值
+    public static String MOBILE_NUM="phone";
+    private String email;
+    private PromptDialog dialog;
+    private String phoneNum;
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -80,17 +93,44 @@ public class Activity_Register_confirm extends BaseActivity {
         switch (view.getId()){
             case R.id.tv_career_time:
 //                showDatePicker(tv_career_time);
+                initTimePicker(new boolean[]{true,false,false,false,false,false},"年","","","","","");
                 pvTime.show(tv_career_time);
                 break;
             case R.id.tv_birth:
 //                showDatePicker(tv_birth);
+                SoftInputUtil.hideSoftInput(context,tv_birth);
+                initTimePicker(new boolean[]{true,true,true,false,false,false},"年","月","日","","","");
                 pvTime.show(tv_birth);
                 break;
             case R.id.tv_next:
+                if (TextUtils.isEmpty(et_realname.getText().toString())){
+                    ToastUtils.show(context,"请输入真实姓名",0);
+                    return;
+                }
+                if (TextUtils.isEmpty(et_phonenum.getText().toString())){
+                    ToastUtils.show(context,"请输入手机号码",0);
+                    return;
+                }
+                if (TextUtils.isEmpty(et_email.getText().toString())){
+                    ToastUtils.show(context,"请输入邮箱",0);
+                    return;
+                }
+                if (attend_time.equals("")){
+                    ToastUtils.show(context,"请选择从业开始时间",0);
+                    return;
+                }
+                if (TextUtils.isEmpty(et_belong_company.getText().toString())){
+                    ToastUtils.show(context,"请输入所属旅行社",0);
+                    return;
+                }
+                if (!cb_check.isChecked()){
+                    ToastUtils.show(context,"请同意免责声明",0);
+                }
                 confirmInfo();
                 break;
             case R.id.tv_factory_time:
 //                selectCarDate();
+                SoftInputUtil.hideSoftInput(context,tv_factory_time);
                 pvTime.show(tv_factory_time);
                 break;
         }
@@ -113,6 +153,12 @@ public class Activity_Register_confirm extends BaseActivity {
     @Override
     public int getData() throws Exception {
         builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+//        Bundle bundle=getIntent().getExtras();
+//
+//        if (bundle!=null){
+//            email = bundle.getString(EMAIL);
+//            phoneNum = bundle.getString(MOBILE_NUM);
+//        }
         return 0;
     }
 
@@ -120,7 +166,7 @@ public class Activity_Register_confirm extends BaseActivity {
     public void initView() {
         //初始化所有布局
         iniaLizeView();
-        initTimePicker();
+        dialog = new PromptDialog(Activity_Register_confirm.this);
     }
 
     private void iniaLizeView() {
@@ -133,7 +179,10 @@ public class Activity_Register_confirm extends BaseActivity {
         et_passport= (EditText) findViewById(R.id.et_passport);
         live_city= (EditText) findViewById(R.id.live_city);
         et_phonenum= (EditText) findViewById(R.id.et_phonenum);
+        et_phonenum.setText((String) SharedPreferenceUtils.getParam(context,LoginActivity.USER_MOBILE,""));
         et_email= (EditText) findViewById(R.id.et_email);
+        et_email.setText((String)SharedPreferenceUtils.getParam(context,LoginActivity.USER_EMAIL,""));
+
         et_belong_company= (EditText) findViewById(R.id.et_belong_company);
         service_type_desc= (EditText) findViewById(R.id.service_type_desc);
         tv_factory_time = (TextView) findViewById(R.id.tv_factory_time);
@@ -142,12 +191,15 @@ public class Activity_Register_confirm extends BaseActivity {
         cb_insurence = (CheckBox) findViewById(R.id.cb_insurence);
         cb_daba= (CheckBox) findViewById(R.id.cb_daba);
         cb_nine= (CheckBox) findViewById(R.id.cb_nine);
+        cb_check= (CheckBox) findViewById(R.id.cb_check);
         cb_only_guide= (CheckBox) findViewById(R.id.cb_only_guide);
         cb_translate= (CheckBox) findViewById(R.id.cb_translate);
 
         rg_sex = (RadioGroup) findViewById(R.id.rg_sex);
         rg_have_car= (RadioGroup) findViewById(R.id.rg_have_car);
         ll_ishave_car = (LinearLayout) findViewById(R.id.ll_ishave_car);
+
+
     }
 
     @Override
@@ -195,7 +247,7 @@ public class Activity_Register_confirm extends BaseActivity {
      * 注册信息认证
      */
     private void confirmInfo(){
-        showDialog();
+        dialog.showLoading("正在提交，请稍后",false);
         Observable<HttpResult<ConfirmUserInfo>> result=
                 ServiceApi.getInstance().getServiceContract().confirmUserinfo(getrequestBody());
         result.map(new ResultFilter<>())
@@ -204,17 +256,18 @@ public class Activity_Register_confirm extends BaseActivity {
                 .subscribe(new Subscriber<ConfirmUserInfo>() {
                     @Override
                     public void onCompleted() {
-dismissDialog();
+                        dialog.dismissImmediately();
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        dialog.dismissImmediately();
                         toastShow(e.getMessage());
-                        dismissDialog();
                     }
 
                     @Override
                     public void onNext(ConfirmUserInfo confirmUserInfo) {
+                        SharedPreferenceUtils.setParam(context,LoginActivity.CONFIRM_STATE,confirmUserInfo.getState());
                         toastShow("注册完成");
                         finish();
                     }
@@ -277,14 +330,14 @@ dismissDialog();
     }
 
     //选择时间
-    private void initTimePicker() {
+    private void initTimePicker(boolean[] flags,String years,String month ,String day,String hours,String minutes,String seconds) {
         //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
         //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
         Calendar selectedDate = Calendar.getInstance();
         Calendar startDate = Calendar.getInstance();
-        startDate.set(1980, 0, 23);
+        startDate.set(1970, 0, 23);
         Calendar endDate = Calendar.getInstance();
-        endDate.set(2022, 11, 28);
+        endDate.set(2030, 11, 28);
         //时间选择器
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
@@ -303,8 +356,8 @@ dismissDialog();
             }
         })
                 //年月日时分秒 的显示与否，不设置则默认全部显示
-                .setType(new boolean[]{true, true, true, false, false, false})
-                .setLabel("年", "月", "日", "", "", "")
+                .setType(flags)
+                .setLabel(years, month, day, hours, minutes, seconds)
                 .isCenterLabel(false)
                 .setDividerColor(Color.DKGRAY)
                 .setContentSize(14)

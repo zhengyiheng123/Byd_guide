@@ -19,8 +19,6 @@
             android:layout_weight="0.5"
             android:layout_gravity="center_vertical"
             android:id="@+id/rl_search"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:background="@drawable/shape_search"
             android:layout_width="200dp"
             android:layout_height="30dp">
@@ -31,17 +29,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/icon_search"/>
-            <EditText
+            <AutoCompleteTextView
+                android:dropDownVerticalOffset="5dp"
+                android:completionThreshold="1"
+                android:textColor="@color/material_grey_700"
                 android:layout_toRightOf="@+id/iv_search"
                 android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_centerVertical="true"
-                android:cursorVisible="false"
-                android:hint="请输入商户名称"
+                android:cursorVisible="true"
+                android:hint="离我最近"
                 android:textSize="14sp"
                 android:textColorHint="@color/material_grey_400"
                 android:background="@null"
                 android:id="@+id/auto_text"
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content" />
             <ImageView
                 android:id="@+id/iv_clear"
@@ -64,64 +66,41 @@
             android:gravity="center"
             />
     </LinearLayout>
-    <LinearLayout
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/actionbarSize">
-        <RelativeLayout
-            android:id="@+id/rl_restaurant"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-            <TextView
-                android:textColor="@color/tool_bar_color"
-                android:id="@+id/tv_restaurant"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="餐饮"
-                />
-            <View
-                android:id="@+id/line_restaurant"
-                android:layout_alignParentBottom="true"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/tool_bar_color"
-                />
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/rl_attractions"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/tv_attractions"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="景区"
-                />
-            <View
-                android:id="@+id/line_attractions"
-                android:layout_alignParentBottom="true"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/background_color"
-                />
-        </RelativeLayout>
-    </LinearLayout>
-    <ScrollView
-        android:scrollbars="none"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:elevation="1dp"
+    <TextView
+        android:visibility="gone"
+        android:padding="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="插入"
+        android:id="@+id/tv_insert"
+        />
+    <TextView
+        android:visibility="gone"
+        android:padding="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查询"
+        android:id="@+id/tv_query"
+        />
+    <RelativeLayout
+        android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <com.example.asus.xyd_order.ui.ChildViewPager
-            android:focusable="true"
-            android:id="@+id/register_viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </ScrollView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="历史记录"
+            />
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_delete"
+            />
+    </RelativeLayout>
+    <com.example.asus.xyd_order.ui.FlowLayout
+        android:id="@+id/flow_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

@@ -155,13 +155,6 @@
                 android:paddingTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <!--<ImageView-->
-                    <!--android:layout_marginLeft="8dp"-->
-                    <!--android:id="@+id/imageview3"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:background="@mipmap/ic_menu"-->
-                    <!--/>-->
                 <TextView
                     android:layout_centerVertical="true"
                     android:drawablePadding="8dp"
@@ -211,7 +204,7 @@
                     android:drawableLeft="@mipmap/ic_screen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="取消条件"
+                    android:text="取消政策"
                     />
             </LinearLayout>
 

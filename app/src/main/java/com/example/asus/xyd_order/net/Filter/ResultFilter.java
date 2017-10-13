@@ -1,6 +1,7 @@
 package com.example.asus.xyd_order.net.Filter;
 
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.example.asus.xyd_order.activity.Activity_Register_confirm;
 import com.example.asus.xyd_order.activity.LoginActivity;
@@ -34,13 +35,6 @@ public class ResultFilter<T> implements Func1<HttpResult<T>,T> {
             APP.getCtx().startActivity(intent);
             SharedPreferenceUtils.clear(APP.getCtx());
             throw new ApiException("用户在另一个客户端登录");
-        }else if (tHttpResult.getCode() == 2){
-            LoginResult result= (LoginResult) tHttpResult.getData();
-            Intent intent=new Intent(APP.getCtx(), Activity_Register_confirm.class);
-            SharedPreferenceUtils.setParam(APP.getCtx(),"apitoken",result.getApitoken());
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            APP.getCtx().startActivity(intent);
-            throw new ApiException(tHttpResult.getMessage());
         }else if (tHttpResult.getCode() == -1){
             Intent intent=new Intent(APP.getCtx(),LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

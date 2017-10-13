@@ -36,7 +36,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cn.qqtheme.framework.picker.OptionPicker;
@@ -269,10 +271,15 @@ public class AttractionsOrderActivity extends BaseActivity {
         tv_address= (TextView) findViewById(R.id.tv_address);
         tv_paytype= (TextView) findViewById(R.id.tv_paytype);
 
+//获取当前时间
+        Date date=new Date(System.currentTimeMillis());
+        SimpleDateFormat formatter    =   new    SimpleDateFormat    ("yyyyMMdd");
+        String curDate=formatter.format(date);
 
         et_user_name = (EditText) findViewById(R.id.et_user_name);
         et_user_phone= (EditText) findViewById(R.id.et_user_phone);
         et_group_num= (EditText) findViewById(R.id.et_group_num);
+        et_group_num.setText(curDate);
         ll_address = (LinearLayout) findViewById(R.id.ll_address);
         ll_user_info= (LinearLayout) findViewById(R.id.ll_user_info);
         rg_get_ways= (RadioGroup) findViewById(R.id.rg_get_ways);

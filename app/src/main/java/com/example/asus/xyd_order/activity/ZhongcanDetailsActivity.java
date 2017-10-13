@@ -194,7 +194,7 @@ public class ZhongcanDetailsActivity extends BaseActivity {
     AdapterView.OnItemClickListener onItemClickListener=new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            ActivityFactory.goToMultipleDetails(context,bean1.getRes_id(),bean1.getAddress(),bean1.getRes_name());
+            ActivityFactory.goToMultipleDetails(context,bean1.getGroup_meal().get(i),bean1.getRes_name());
         }
     };
 

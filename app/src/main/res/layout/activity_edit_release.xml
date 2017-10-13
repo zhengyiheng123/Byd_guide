@@ -38,6 +38,7 @@
                         android:layout_height="30dp" />
 
                     <TextView
+                        android:textSize="12sp"
                         android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -54,6 +55,7 @@
                         android:background="@color/line_color" />
 
                     <TextView
+                        android:textSize="12sp"
                         android:id="@+id/tv_sex"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -69,6 +71,7 @@
                         android:background="@color/line_color" />
 
                     <TextView
+                        android:textSize="12sp"
                         android:id="@+id/tv_birth"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -228,7 +231,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:text="团队性质" />
+                    android:text="团队类型" />
 
                 <TextView
                     android:id="@+id/tv_team_type"
@@ -252,7 +255,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:text="服务内容" />
+                    android:text="工作种类" />
 
                 <TextView
                     android:id="@+id/tv_service_content"
@@ -275,8 +278,8 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
-                    android:text="目标国家" />
+                    android:layout_weight="0.25"
+                    android:text="选择地区范围" />
 
                 <TextView
                     android:id="@+id/tv_target_country"
@@ -323,8 +326,8 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
-                    android:text="服务范围" />
+                    android:layout_weight="0.2"
+                    android:text="发布范围" />
 
                 <TextView
                     android:id="@+id/tv_dmd_area"
@@ -557,7 +560,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true">
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true">
 
                     <ImageView
                         android:layout_width="20dp"

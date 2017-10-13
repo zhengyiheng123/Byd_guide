@@ -12,4 +12,5 @@
     <dimen name="spacing_major">15dp</dimen>
     <dimen name="side_letter_bar_letter_size">12sp</dimen>
     <dimen name="city_text_size">16sp</dimen>
+    <dimen name="area_code_group_height">30dp</dimen>
 </resources>

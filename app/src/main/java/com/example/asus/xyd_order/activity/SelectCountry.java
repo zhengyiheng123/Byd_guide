@@ -54,6 +54,7 @@ public class SelectCountry extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.tv_submit:
+                dataList.clear();
                 for ( int i =0;i<countriesList.size();i++){
                     if (countriesList.get(i).getState() == 1){
                         dataList.add(countriesList.get(i));
@@ -70,6 +71,7 @@ public class SelectCountry extends BaseActivity {
     @Override
     public void setToolbar() {
         tv_title.setText("选择目标国家");
+        iv_back.setVisibility(View.GONE);
         tv_submit.setVisibility(View.VISIBLE);
         tv_submit.setText("完成");
     }

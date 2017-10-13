@@ -59,18 +59,22 @@ public class Activity_AddHospital extends BaseActivity {
 
     @Bind(R.id.et_pass_experence)
     EditText et_pass_experence;
-    @Bind(R.id.et_hos_type)
-    EditText et_hos_type;
     @Bind(R.id.spinner)
     Spinner spinner;
+    @Bind(R.id.rg_hospital_type)
+    RadioGroup rg_hospital_type;
 
     @Bind(R.id.iv_select)
     ImageView iv_select;
     @Bind(R.id.iv_img_hos)
     ImageView iv_img_hos;
 
+    public String hospitalType ="综合大医院";//医院类型
+
+
     private MultipartBody.Builder builder;
     private ArrayAdapter<String> adapter;
+    private ArrayAdapter<String> adapter1;
 
     private List<String> mList=new ArrayList<>();
     private List<CityListBean.RegionsBean> cityList=new ArrayList<>();
@@ -139,12 +143,24 @@ public class Activity_AddHospital extends BaseActivity {
         spinner.setPrompt("请选择国家");
     }
 
+
     @Override
     public void setEvent() {
         iv_back.setOnClickListener(this);
         tv_submit.setOnClickListener(this);
         iv_select.setOnClickListener(this);
         iv_img_hos.setOnClickListener(this);
+        rg_hospital_type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+                if (i == R.id.rb_zonghe){
+                    hospitalType="综合大医院";
+                }else if (i == R.id.rb_shequ){
+                    hospitalType="社区诊所";
+                }
+            }
+        });
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -193,9 +209,8 @@ public class Activity_AddHospital extends BaseActivity {
         builder.addFormDataPart("hos_address",et_hos_address.getText().toString());
         builder.addFormDataPart("hos_phone",et_hos_phone.getText().toString());
         builder.addFormDataPart("time",et_time_desc.getText().toString());
-        builder.addFormDataPart("hos_type",et_hos_type.getText().toString());
+        builder.addFormDataPart("hos_type",hospitalType);
         builder.addFormDataPart("experience",et_pass_experence.getText().toString());
-        builder.addFormDataPart("img",apitoken);
         return builder.build();
     }
     /**

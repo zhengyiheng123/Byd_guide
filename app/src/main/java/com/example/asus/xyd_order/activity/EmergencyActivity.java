@@ -1,6 +1,7 @@
 package com.example.asus.xyd_order.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,9 +18,11 @@ import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.EmbassyBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
+import com.example.asus.xyd_order.selectcity.SelectCityActivity;
 import com.example.asus.xyd_order.ui.SelectPopWindow;
 import com.example.asus.xyd_order.utils.ActivityFactory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,23 +42,26 @@ public class EmergencyActivity extends BaseActivity  {
     private List<EmbassyBean.EmbassiesBean> mList=new ArrayList<>();
     private TextView tv_cancel_order,tv_procedure,tv_notice;
     private TextView tv_month;
-    private CategoryControl control;
     private SelectPopWindow popWindow;
     private BaseArrayAdapter adapter;
     private View view;
 
     @Override
     public void myOnclick(View view) {
+        Intent intent;
         switch (view.getId()){
             case R.id.tv_cancel_order:
                 ActivityFactory.gotoCustoms(context);
                 break;
             case R.id.tv_month:
-                popWindow = control.getCountry(countryList);
-                popWindow.showAsDropDown(tv_month);
+                intent=new Intent(getApplicationContext(),SelectCityActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable(SelectCityActivity.CITY_LIST, (Serializable) countryList);
+                intent.putExtras(bundle);
+                startActivityForResult(intent,0);
                 break;
             case R.id.tv_submit:
-                Intent intent=new Intent(getApplicationContext(),HospitalActivity.class);
+                intent=new Intent(getApplicationContext(),HospitalActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -84,15 +90,6 @@ public class EmergencyActivity extends BaseActivity  {
     @Override
     public int getData() throws Exception {
         getNetData();
-        control = new CategoryControl(EmergencyActivity.this);
-        control.setCountryItemClick(new CategoryControl.CountryItemClick() {
-            @Override
-            public void onItemClick(CityListBean.RegionsBean bean) {
-                popWindow.dismiss();
-                queryEmbassy(bean.getRegion_id()+"");
-                tv_month.setText(bean.getRegion_name());
-            }
-        });
         return 1;
     }
 
@@ -194,4 +191,20 @@ private void queryEmbassy(String region_id){
                 }
             });
 }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == 1){
+            if (data == null){
+                return;
+            }
+            String regionsBean= data.getStringExtra(SelectCityActivity.COUNTRY_INFO);
+            tv_month.setText(regionsBean);
+            for (int i=0;i<countryList.size();i++){
+                if (countryList.get(i).getRegion_name().equals(regionsBean)){
+                    queryEmbassy(countryList.get(i).getRegion_id()+"");
+                }
+            }
+        }
+    }
 }

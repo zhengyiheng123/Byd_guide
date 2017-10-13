@@ -73,5 +73,8 @@ dependencies {
 
     //spinner
     compile 'com.jaredrummler:material-spinner:1.1.0'
+    //国际区号选择
+    compile 'com.android.support:recyclerview-v7:25.0.0'
+    compile 'com.github.promeg:tinypinyin:1.0.0'
 
 }

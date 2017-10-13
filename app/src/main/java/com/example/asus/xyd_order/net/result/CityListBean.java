@@ -1,12 +1,13 @@
 package com.example.asus.xyd_order.net.result;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Zheng on 2017/7/12.
  */
 
-public class CityListBean {
+public class CityListBean implements Serializable{
 
     private List<RegionsBean> regions;
 
@@ -18,7 +19,13 @@ public class CityListBean {
         this.regions = regions;
     }
 
-    public static class RegionsBean {
+    public static class RegionsBean implements Serializable{
+        public RegionsBean(int region_id, String region_name, int region_pid) {
+            this.region_id = region_id;
+            this.region_name = region_name;
+            this.region_pid = region_pid;
+        }
+
         /**
          * region_id : 2
          * region_name : 法国

@@ -109,6 +109,11 @@ public class Myorder_Fragment extends BaseFragment {
                         mList.clear();
                         mList.addAll(myOrderBean.getOrders());
                         adapter.notifyDataSetChanged();
+                        if (num.equals("-1")){
+                            if (mList.size()>0){
+                                MyOrdersActivity.instance.setMsgRedPoint();
+                            }
+                        }
                     }
                 });
     }

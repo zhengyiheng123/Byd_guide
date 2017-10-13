@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,12 +60,13 @@ public class Activity_ReleaseDemand extends BaseActivity {
     private EditText et_phonenum,et_tuan_num,et_lvxingshe,et_details,et_route_details,et_total_money,et_name;
     private TextView tv_commit,tv_paytype,tv_dmd_area,tv_team_type,tv_service_content,tv_level,tv_start,tv_end,tv_target_country,tv_file;
     private TextView tv_date;
+    private CheckBox cb_check;
     private OptionPicker picker;
     private LinearLayout mLlContainer;
     private MultipartBody.Builder builder;
     private int group_type;
     private int service_type;
-    private int level_req;
+    private int level_req=0;
     private int dmd_area;
     private int pay_type;
     private List<String> teamList;
@@ -72,7 +74,7 @@ public class Activity_ReleaseDemand extends BaseActivity {
     private List<String> levelList;
     private List<String> payList;
     private List<String> areaList;
-    private String countryId;
+    private String countryId="";
     private ImageView iv_img_hos;
     private TimePickerView pvTime;
     //开始时间
@@ -80,6 +82,8 @@ public class Activity_ReleaseDemand extends BaseActivity {
     //结束时间
     private String endTime;
 
+    public static String COUNTRY_NAME="Country_Name";
+    public static String COUNTRY_ID="country_id";
     @Override
     public void myOnclick(View view) {
         switch (view.getId()){
@@ -174,7 +178,7 @@ public class Activity_ReleaseDemand extends BaseActivity {
     public void setToolbar() {
         ImageView iv_back= (ImageView) findViewById(R.id.iv_back);
         TextView tv_title= (TextView) findViewById(R.id.tv_title);
-        tv_title.setText("发布需求");
+        tv_title.setText("寻车寻导");
         iv_back.setOnClickListener(v -> {onBackPressed();});
     }
 
@@ -202,6 +206,7 @@ public class Activity_ReleaseDemand extends BaseActivity {
         serviceList.add("其他");
         levelList = new ArrayList<>();
 //        "一级","二级","三级","四级","五级"
+        levelList.add("无限制");
         levelList.add("一级");
         levelList.add("二级");
         levelList.add("三级");
@@ -229,27 +234,56 @@ public class Activity_ReleaseDemand extends BaseActivity {
     public void initView() {
         initTimePicker();
         tv_commit= (TextView) findViewById(R.id.tv_commit);
-        tv_team_type = (TextView) findViewById(R.id.tv_team_type);
+        //工作种类设置默认值
         tv_service_content= (TextView) findViewById(R.id.tv_service_content);
+        tv_service_content.setText(serviceList.get(0));
+        service_type=1;
+        //服务人员级别默认值
         tv_level= (TextView) findViewById(R.id.tv_level);
+        tv_level.setText("无限制");
+
         tv_end= (TextView) findViewById(R.id.tv_end);
+        //设置默认开始时间
         tv_start= (TextView) findViewById(R.id.tv_start);
+        tv_start.setText(TimeUtils.stampToDateSdemand1(TimeUtils.getTime()));
+        startTime=TimeUtils.getTime();
         tv_date = (TextView) findViewById(R.id.tv_date);
         tv_file= (TextView) findViewById(R.id.tv_file);
         tv_paytype= (TextView) findViewById(R.id.tv_paytype);
         tv_target_country= (TextView) findViewById(R.id.tv_target_country);
+        if (TextUtils.isEmpty((String)SharedPreferenceUtils.getParam(context,COUNTRY_NAME,""))){
+            tv_target_country.setText("请选择");
+        }else {
+            tv_target_country.setText((String)SharedPreferenceUtils.getParam(context,COUNTRY_NAME,""));
+        }
+        countryId=(String) SharedPreferenceUtils.getParam(context,COUNTRY_ID,"");
         mLlContainer = (LinearLayout) findViewById(R.id.ll_container);
+        //服务范围设置默认值
         tv_dmd_area= (TextView) findViewById(R.id.tv_dmd_area);
+        tv_dmd_area.setText(areaList.get(2));
+        dmd_area=3;
 
         et_name= (EditText) findViewById(R.id.et_name);
+        et_name.setText((String) SharedPreferenceUtils.getParam(context,LoginActivity.USER_NAME,""));
         et_phonenum = (EditText) findViewById(R.id.et_phonenum);
+        //获取当前时间
+        Date date=new Date(System.currentTimeMillis());
+        SimpleDateFormat    formatter    =   new    SimpleDateFormat    ("yyyyMMdd");
+        String curDate=formatter.format(date);
         et_tuan_num= (EditText) findViewById(R.id.et_tuan_num);
+        //设置团号默认值
+        et_tuan_num.setText(curDate);
         et_lvxingshe= (EditText) findViewById(R.id.et_lvxingshe);
+        //团队类型设置默认值
         tv_team_type = (TextView) findViewById(R.id.tv_team_type);
+        tv_team_type.setText(teamList.get(1));
+        group_type=2;
         et_details= (EditText) findViewById(R.id.et_details);
         et_total_money= (EditText) findViewById(R.id.et_total_money);
         et_route_details= (EditText) findViewById(R.id.et_route_details);
         iv_img_hos = (ImageView) findViewById(R.id.iv_img_hos);
+
+        cb_check= (CheckBox) findViewById(R.id.cb_check);
 
     }
 
@@ -324,6 +358,7 @@ public class Activity_ReleaseDemand extends BaseActivity {
                     .addFormDataPart("group_num",et_tuan_num.getText().toString())
                     .addFormDataPart("service_type",service_type+"")
                     .addFormDataPart("target_country",countryId)
+
                     .addFormDataPart("level_req",level_req+"")
                     .addFormDataPart("dmd_area",dmd_area+"")
                     .addFormDataPart("start_time", startTime)
@@ -337,7 +372,12 @@ public class Activity_ReleaseDemand extends BaseActivity {
     }
     //创建订单
     private void createDemand(){
+        if (!cb_check.isChecked()){
+            ToastUtils.show(context,"请同意免责声明",0);
+            return;
+        }
         showDialog();
+
         Observable<HttpResult<CreateDemand>> result= ServiceApi.getInstance().getServiceContract().createDemand(getBody());
         result.map(new ResultFilter<>())
                 .subscribeOn(Schedulers.io())
@@ -378,13 +418,21 @@ public class Activity_ReleaseDemand extends BaseActivity {
                 }else {
                     countryStr=countryStr+","+countriesBeen.get(i).getRegion_name();
                 }
-                tv_target_country.setText(countryStr);
+
                 if (TextUtils.isEmpty(countryId)){
                     countryId = (countriesBeen.get(i).getRegion_id()+"");
                 }else {
                     countryId = (countryId+","+countriesBeen.get(i).getRegion_id()+"");
                 }
             }
+            if (TextUtils.isEmpty(countryStr)){
+                tv_target_country.setText("请选择");
+            }else {
+                tv_target_country.setText(countryStr);
+            }
+
+            SharedPreferenceUtils.setParam(context,COUNTRY_NAME,countryStr);
+            SharedPreferenceUtils.setParam(context,COUNTRY_ID,countryId);
         }
     }
     //选择时间

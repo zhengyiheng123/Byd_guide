@@ -88,15 +88,16 @@ public class Ticket_List_Activity extends BaseActivity {
         lv_ticket_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(context,SelectTicketActivity.class);
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("ticket",mList.get(i));
-                intent.putExtras(bundle);
-                intent.putExtra("group_start",data.getGroup_start()+"");
-                intent.putExtra("date",data.getDate());
-                intent.putExtra("scene_id",scene_id);
-                intent.putExtra("route_id",route_id);
-                startActivity(intent);
+                    //暂时停用
+//                Intent intent=new Intent(context,SelectTicketActivity.class);
+//                Bundle bundle=new Bundle();
+//                bundle.putSerializable("ticket",mList.get(i));
+//                intent.putExtras(bundle);
+//                intent.putExtra("group_start",data.getGroup_start()+"");
+//                intent.putExtra("date",data.getDate());
+//                intent.putExtra("scene_id",scene_id);
+//                intent.putExtra("route_id",route_id);
+//                startActivity(intent);
             }
         });
     }

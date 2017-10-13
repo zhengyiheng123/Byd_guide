@@ -137,7 +137,7 @@ public class RestaurantDetailsBean {
         this.time = time;
     }
 
-    public static class GroupMealBean {
+    public static class GroupMealBean  implements Serializable{
         /**
          * img_path : /uploads/20170421/9c4cd4441a22010eb169479977cd2c39.png
          * meal_id : 1
@@ -148,7 +148,16 @@ public class RestaurantDetailsBean {
         private String img_path;
         private int meal_id;
         private String meal_name;
-        private List<String> meal_price;
+        private String meal_detail;
+        private String meal_price;
+
+        public String getMeal_detail() {
+            return meal_detail;
+        }
+
+        public void setMeal_detail(String meal_detail) {
+            this.meal_detail = meal_detail;
+        }
 
         public String getImg_path() {
             return img_path;
@@ -174,11 +183,11 @@ public class RestaurantDetailsBean {
             this.meal_name = meal_name;
         }
 
-        public List<String> getMeal_price() {
+        public String getMeal_price() {
             return meal_price;
         }
 
-        public void setMeal_price(List<String> meal_price) {
+        public void setMeal_price(String meal_price) {
             this.meal_price = meal_price;
         }
     }

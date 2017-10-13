@@ -1,7 +1,10 @@
 package com.example.asus.xyd_order.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -75,7 +78,7 @@ public class EmailRegisterFragment extends BaseFragment {
     @Override
     public void initView(View v) {
         countdown = (CountdownButton) v.findViewById(R.id.countdown);
-        countdown.setCount(120);
+        countdown.setCount(90);
         et_email = (EditText) v.findViewById(R.id.et_email);
         et_code= (EditText) v.findViewById(R.id.et_code);
         et_password= (EditText) v.findViewById(R.id.et_password);
@@ -97,6 +100,28 @@ public class EmailRegisterFragment extends BaseFragment {
     public void setEvent() {
         countdown.setOnClickListener(this);
         tv_next.setOnClickListener(this);
+        et_code.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!TextUtils.isEmpty(charSequence.toString())){
+                    et_password.setEnabled(true);
+                    et_repassword.setEnabled(true);
+                }else {
+                    et_password.setEnabled(false);
+                    et_repassword.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     /**
@@ -155,8 +180,8 @@ public class EmailRegisterFragment extends BaseFragment {
                         registerBean1 = registerBean;
                         SharedPreferenceUtils.setParam(context,"apitoken",registerBean.getApitoken());
                         getActivity().finish();
-                        Intent intent=new Intent(getActivity(), Activity_Register_confirm.class);
-                        getActivity().startActivity(intent);
+//                        Intent intent=new Intent(getActivity(), Activity_Register_confirm.class);
+//                        getActivity().startActivity(intent);
                     }
                 });
     }

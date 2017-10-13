@@ -276,7 +276,7 @@ public class Activity_Edit_Release extends BaseActivity {
     public void setToolbar() {
         ImageView iv_back= (ImageView) findViewById(R.id.iv_back);
         TextView tv_title= (TextView) findViewById(R.id.tv_title);
-        tv_title.setText("需求订单");
+        tv_title.setText("编辑需求");
         iv_back.setOnClickListener(v -> onBackPressed());
         tv_submit.setText("保存");
     }
@@ -472,7 +472,7 @@ public class Activity_Edit_Release extends BaseActivity {
                         userInfoBean = bean.getReply_user_info();
                         if (userInfoBean !=null){
                             Glide.with(context).load(BaseApi.getBaseUrl()+ userInfoBean.getAvatar()).into(iv_head);
-                            tv_name.setText(userInfoBean.getUser_name());
+                            tv_name.setText("接单人："+userInfoBean.getUser_name());
                             int gender= userInfoBean.getGender();
                             if (gender == 1){
                                 tv_sex.setText("性别：男");
@@ -813,6 +813,11 @@ public class Activity_Edit_Release extends BaseActivity {
                 }else {
                     countryId = (countryId+","+countriesBeen.get(i).getRegion_id()+"");
                 }
+            }
+            if (TextUtils.isEmpty(countryStr)){
+                tv_target_country.setText("请选择");
+            }else {
+                tv_target_country.setText(countryStr);
             }
         }
     }

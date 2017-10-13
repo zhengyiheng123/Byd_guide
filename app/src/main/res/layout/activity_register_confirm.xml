@@ -76,6 +76,7 @@
                         android:orientation="horizontal">
 
                         <RadioButton
+                            android:checked="true"
                             android:id="@+id/rb_male"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -251,7 +252,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="请选择从业时间"
+                        android:text="从业开始年份"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -269,11 +270,11 @@
                     android:paddingLeft="8dp">
 
                     <TextView
+                        android:drawableLeft="@mipmap/ic_star"
+                        android:drawablePadding="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="14dp"
-                        android:drawablePadding="8dp"
                         android:text="所属旅行社：" />
 
                     <EditText
@@ -319,6 +320,7 @@
                         android:orientation="horizontal">
 
                         <CheckBox
+                            android:checked="true"
                             android:id="@+id/cb_only_guide"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -446,6 +448,7 @@
                             android:textColor="@color/material_grey_800" />
 
                         <RadioButton
+                            android:checked="true"
                             android:id="@+id/rb_dont_have"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -570,17 +573,16 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true">
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                    <CheckBox
+                        android:checked="true"
+                        android:id="@+id/cb_check"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/shape_circle"></ImageView>
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/ic_choose"></ImageView>
+                        android:button="@null"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/checkbox"
+                        android:layout_alignParentRight="true"
+                        />
                 </FrameLayout>
             </RelativeLayout>
 

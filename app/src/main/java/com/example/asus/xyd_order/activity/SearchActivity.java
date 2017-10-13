@@ -1,8 +1,14 @@
 package com.example.asus.xyd_order.activity;
 
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -10,14 +16,23 @@ import android.widget.TextView;
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.adapter.RegisterAdapter;
 import com.example.asus.xyd_order.base.BaseActivity;
+import com.example.asus.xyd_order.base.BaseArrayAdapter;
 import com.example.asus.xyd_order.base.BaseFragment;
+import com.example.asus.xyd_order.db.DBAdapter;
 import com.example.asus.xyd_order.fragment.AttractionsFragment;
 import com.example.asus.xyd_order.fragment.RestaurantFragment;
+import com.example.asus.xyd_order.holder.CityHistoryHolder;
+import com.example.asus.xyd_order.holder.CityHolder;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
+import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.SerchResult;
 import com.example.asus.xyd_order.ui.ChildViewPager;
+import com.example.asus.xyd_order.ui.FlowLayout;
+import com.example.asus.xyd_order.ui.SelectPopWindow;
+import com.example.asus.xyd_order.utils.Myutils;
+import com.example.asus.xyd_order.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,30 +51,29 @@ public class SearchActivity extends BaseActivity {
     @Bind(R.id.iv_back)
     ImageView iv_back;
     @Bind(R.id.auto_text)
-    EditText auto_text;
+    AutoCompleteTextView auto_text;
     @Bind(R.id.tv_search)
     TextView tv_search;
-    @Bind(R.id.tv_restaurant)
-    TextView tv_restaurant;
-    @Bind(R.id.line_restaurant)
-    View line_restaurant;
+    @Bind(R.id.flow_history)
+    FlowLayout flow_history;
+    @Bind(R.id.iv_delete)
+    ImageView iv_delete;
+    @Bind(R.id.tv_insert)
+    TextView tv_insert;
+    @Bind(R.id.tv_query)
+    TextView tv_query;
 
-    @Bind(R.id.tv_attractions)
-    TextView tv_attractions;
+    List<CityListBean.RegionsBean> cityListHistory=new ArrayList<>();
+    private List<CityListBean.RegionsBean> cityList;
+    private DBAdapter db;
 
-    @Bind(R.id.line_attractions)
-    View line_attractions;
-
-    @Bind(R.id.rl_restaurant)
-    RelativeLayout rl_restaurant;
-    @Bind(R.id.rl_attractions)
-    RelativeLayout rl_attractions;
-    @Bind(R.id.register_viewpager)
-    ChildViewPager register_viewpager;
-    private List<BaseFragment> fragmentList;
-    private RegisterAdapter adapter;
-    private List<SerchResult.RestaurantsBean> restaurantsList;
-    private List<SerchResult.ScenesBean> seceeList;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (db!=null){
+            db.close();
+        }
+    }
 
     @Override
     public void myOnclick(View view) {
@@ -69,24 +83,21 @@ public class SearchActivity extends BaseActivity {
                 break;
             case R.id.tv_search:
                 if (!TextUtils.isEmpty(auto_text.getText().toString())){
-                    search(auto_text.getText().toString());
+
                 }else {
-                    toastShow("请输入商户名称");
                 }
                 break;
-            case R.id.rl_attractions:
-                tv_restaurant.setTextColor(getResources().getColor(R.color.material_grey_800));
-                line_restaurant.setBackgroundColor(getResources().getColor(R.color.white));
-                tv_attractions.setTextColor(getResources().getColor(R.color.tool_bar_color));
-                line_attractions.setBackgroundColor(getResources().getColor(R.color.tool_bar_color));
-                register_viewpager.setCurrentItem(1,false);
+            case R.id.iv_delete:
+                cityList.clear();
+                flow_history.removeAllViews();
+                addView();
                 break;
-            case R.id.rl_restaurant:
-                tv_restaurant.setTextColor(getResources().getColor(R.color.tool_bar_color));
-                line_restaurant.setBackgroundColor(getResources().getColor(R.color.tool_bar_color));
-                tv_attractions.setTextColor(getResources().getColor(R.color.material_grey_800));
-                line_attractions.setBackgroundColor(getResources().getColor(R.color.white));
-                register_viewpager.setCurrentItem(0,false);
+            case R.id.tv_insert:
+                db.insert(1,"俄罗斯");
+                break;
+            case R.id.tv_query:
+                List<CityListBean.RegionsBean> mList=db.getAllContacts();
+                ToastUtils.show(context,"名字："+mList.get(0).getRegion_name(),0);
                 break;
         }
     }
@@ -108,45 +119,50 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        db = new DBAdapter(this);
+        db.open();
+        initListPopwindow();
+        for (int i=0;i<10;i++){
+            cityListHistory.add(new CityListBean.RegionsBean(1,"法国苏黎世",0));
+        }
+        addView();
     }
 
     @Override
     public void setEvent() {
         tv_search.setOnClickListener(this);
-        rl_attractions.setOnClickListener(this);
-        rl_restaurant.setOnClickListener(this);
+        iv_delete.setOnClickListener(this);
+        tv_insert.setOnClickListener(this);
+        tv_query.setOnClickListener(this);
     }
-    /**获取网络数据
-     *
-     */
-    private void search(String mer_name){
-        showDialog();
-        Observable<HttpResult<SerchResult>> result= ServiceApi.getInstance().getServiceContract().seach(apitoken,mer_name);
-        result.map(new ResultFilter<>())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<SerchResult>() {
-                    @Override
-                    public void onCompleted() {
-                        dismissDialog();
-                    }
+    //初始化下拉选择框
+    private void initListPopwindow() {
+        cityList = new ArrayList<>();
+        for (int i=0;i<10;i++){
+            if (i == 0){
+                cityList.add(new CityListBean.RegionsBean(1,"离我最近",2));
+                continue;
+            }
+            cityList.add(new CityListBean.RegionsBean(1,"法国",2));
+        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        toastShow(e.getMessage());
-                        dismissDialog();
-                    }
+        String[] citys=new String[]{"法国","日本","俄罗斯","法兰西","发布拉诺","俄国","尼日利亚"};
+        ArrayAdapter adapter=new ArrayAdapter(context,R.layout.simpe_text,citys);
+        auto_text.setAdapter(adapter);
+    }
 
-                    @Override
-                    public void onNext(SerchResult serchResult) {
-                        restaurantsList = serchResult.getRestaurants();
-                        seceeList = serchResult.getScenes();
-                        fragmentList = new ArrayList<>();
-                        fragmentList.add(new RestaurantFragment(restaurantsList));
-                        fragmentList.add(new AttractionsFragment(seceeList));
-                        adapter = new RegisterAdapter(getSupportFragmentManager(),fragmentList);
-                        register_viewpager.setAdapter(adapter);
-                    }
-                });
+    //循环添加子控件
+    private void addView(){
+        for (int i=0;i<cityList.size();i++){
+            ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(Myutils.Dp2Px(context,8),Myutils.Dp2Px(context,8),Myutils.Dp2Px(context,8),Myutils.Dp2Px(context,8));
+            TextView textView=new TextView(context);
+            textView.setPadding(Myutils.Dp2Px(context,12),Myutils.Dp2Px(context,4),Myutils.Dp2Px(context,12),Myutils.Dp2Px(context,4));
+            textView.setTextColor(getResources().getColor(R.color.white));
+            textView.setText(cityList.get(i).getRegion_name());
+            textView.setGravity(Gravity.CENTER);
+            textView.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_next));
+            flow_history.addView(textView,lp);
+        }
     }
 }

@@ -426,7 +426,7 @@
     </ScrollView>
     <TextView
         android:layout_gravity="bottom"
-        android:background="@color/tool_bar_color"
+        android:background="@color/material_grey_500"
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionBarSize"
         android:id="@+id/tv_order"

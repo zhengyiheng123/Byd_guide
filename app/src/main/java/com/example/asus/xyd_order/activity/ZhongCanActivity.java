@@ -75,7 +75,7 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
     //筛选条件  1|大巴停车场,2|停车场,3|大巴临时上长下客
 
     //经营特色
-    private String sub_cate_id;
+    private String sub_cate_id="";
     private String park = "";
     //人均价格下限
     private String price_start ="";
@@ -101,17 +101,57 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
                 cancelBg();
                 setBg(tv_shaixuan,rl_shaixuan);
                 control.getShaixuan().showPop(tv_shaixuan,0,0);
-//                startActivity(new Intent( getApplicationContext(),FilterActivity.class));
                 break;
             case R.id.tv_allcategory:
                 cancelBg();
                 setBg(tv_allcategory,rl_all);
                 control.getAllCategoryPop().showAsDropDown(tv_allcategory,0,0);
+                control.SetAllCategoryInterface(new CategoryControl.AllCategoryInterface() {
+                    @Override
+                    public void AllCagetoryClick(int position, List<CategoryBean.SubCategoriesBean> bean) {
+                        if (position == 0){
+                            sub_cate_id="";
+                            onRefresh();
+                            tv_allcategory.setText("全部分类");
+                        }else {
+                            sub_cate_id=bean.get(position-1).getSub_cate_id()+"";
+                            onRefresh();
+                            tv_allcategory.setText(bean.get(position-1).getCate_name());
+                        }
+                    }
+                });
                 break;
             case R.id.auto_sort:
                 cancelBg();
                 setBg(auto_sort,rl_auto);
                 control.getAutoPop().showAsDropDown(auto_sort,0,0);
+                control.SetAutoInterface(new CategoryControl.AutoCategoryInterface() {
+                    @Override
+                    public void AutoCategoryClick(int position, List<CategoryBean.SubCategoriesBean> bean) {
+                        if (position == 0){
+                            auto_sort.setText("智能排序");
+                            autoParam = "";
+                            onRefresh();
+                            return;
+                        }
+                        switch (position){
+                            case 1:
+                                autoParam ="1";
+                                break;
+                            case 2:
+                                autoParam ="2";
+                                break;
+                            case 3:
+                                autoParam ="3";
+                                break;
+                            case 4:
+                                autoParam ="4";
+                                break;
+                        }
+                        auto_sort.setText(bean.get(position-1).getCate_name());
+                        onRefresh();
+                    }
+                });
                 break;
         }
     }
@@ -225,7 +265,7 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
         isrefreshing=false;
         refresh.setLoading(true);
         page=page+1;
-        getNetData(control.getAutoParam(),control.getSort_State(),control.getSub_cate_id(),control.getMaxPrice(),control.getMinPrice());
+        getNetData(autoParam,control.getSort_State(),sub_cate_id,control.getMaxPrice(),control.getMinPrice());
     }
 
     @Override
@@ -240,8 +280,6 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
         refresh.recoveryLoad();
         page=0;
         park=control.getSort_State();
-        autoParam=control.getAutoParam();
-        sub_cate_id=control.getSub_cate_id();
         price_start=control.getMinPrice();
         price_end=control.getMaxPrice();
         seat_start="";

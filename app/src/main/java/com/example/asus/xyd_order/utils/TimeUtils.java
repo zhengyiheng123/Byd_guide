@@ -93,6 +93,17 @@ public class TimeUtils {
     /*
 * 将时间戳转换为时间
 */
+    public static String stampToDateSdemand1(String s){
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH");
+        long lt = new Long(s);
+        Date date = new Date(lt*1000L);
+        res = simpleDateFormat.format(date);
+        return res;
+    }
+    /*
+* 将时间戳转换为时间
+*/
     public static String stampToDateSs(String s){
         String res;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
@@ -111,5 +122,14 @@ public class TimeUtils {
         Date date = new Date(lt);
         res = simpleDateFormat.format(date);
         return res;
+    }
+    public static String getTime(){
+
+        long time=System.currentTimeMillis()/1000;//获取系统时间的10位的时间戳
+
+        String  str=String.valueOf(time);
+
+        return str;
+
     }
 }

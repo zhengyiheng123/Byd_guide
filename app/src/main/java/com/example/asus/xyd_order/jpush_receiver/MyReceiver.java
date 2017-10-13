@@ -111,18 +111,18 @@ public class MyReceiver extends BroadcastReceiver {
 		return sb.toString();
 	}
 	
-	//send msg to MainActivity
+	//send msg to AreaCodeActivity
 //	private void processCustomMessage(Context context, Bundle bundle) {
-//		if (MainActivity.isForeground) {
+//		if (AreaCodeActivity.isForeground) {
 //			String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
 //			String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-//			Intent msgIntent = new Intent(MainActivity.MESSAGE_RECEIVED_ACTION);
-//			msgIntent.putExtra(MainActivity.KEY_MESSAGE, message);
+//			Intent msgIntent = new Intent(AreaCodeActivity.MESSAGE_RECEIVED_ACTION);
+//			msgIntent.putExtra(AreaCodeActivity.KEY_MESSAGE, message);
 //			if (!ExampleUtil.isEmpty(extras)) {
 //				try {
 //					JSONObject extraJson = new JSONObject(extras);
 //					if (extraJson.length() > 0) {
-//						msgIntent.putExtra(MainActivity.KEY_EXTRAS, extras);
+//						msgIntent.putExtra(AreaCodeActivity.KEY_EXTRAS, extras);
 //					}
 //				} catch (JSONException e) {
 //

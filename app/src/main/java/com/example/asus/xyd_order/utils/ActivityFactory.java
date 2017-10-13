@@ -152,12 +152,13 @@ public static void gotoMain(Context context){
     /**
      * 跳转到团餐详情页面
      */
-    public static void goToMultipleDetails(Context context,String m_id,String address,String res_name){
+    public static void goToMultipleDetails(Context context,RestaurantDetailsBean.GroupMealBean groupMeal,String res_name){
         intent=new Intent(context, MultipleDetailsActivity.class);
-        intent.putExtra("mer_id",m_id);
-        intent.putExtra("address",address);
-        intent.putExtra("res_name",res_name);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("groupMeal",groupMeal);
+        intent.putExtra("res_name",res_name);
+        intent.putExtras(bundle);
         context.startActivity(intent);
     }
     /**

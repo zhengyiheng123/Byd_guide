@@ -182,7 +182,7 @@
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="管理收获地址"
+            android:text="管理收货地址"
             android:drawableLeft="@mipmap/ic_address"
             android:drawablePadding="8dp"
             />
@@ -191,6 +191,6 @@
             android:layout_height="wrap_content"
             android:background="@mipmap/ic_arrow_rigth_gray"
             android:layout_alignParentEnd="true"
-            />
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 </LinearLayout>

@@ -15,10 +15,8 @@ import android.widget.ImageView;
 
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseActivity;
-import com.example.asus.xyd_order.base.BaseFragmentTemp;
 import com.example.asus.xyd_order.net.HttpCallBack;
 import com.example.asus.xyd_order.net.ServiceApi;
-import com.example.asus.xyd_order.net.result.FirstResult;
 import com.example.asus.xyd_order.net.upload.MultipartBuilder;
 
 import java.io.ByteArrayOutputStream;

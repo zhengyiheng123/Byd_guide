@@ -10,6 +10,16 @@ public class ConfirmUserInfo {
     private String avatar;
     private String mobile;
     private String email;
+    //1注册未完成 认证成功2
+    private int state;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;

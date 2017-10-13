@@ -204,10 +204,10 @@
                     android:layout_alignParentBottom="true"
                     />
                 <TextView
+                    android:gravity="right"
                     android:id="@+id/tv_timepicker"
-                    android:text="请选择时间"
-                    android:layout_alignParentEnd="true"
-                    android:layout_width="wrap_content"
+                    android:text=""
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </RelativeLayout>
             <RelativeLayout
@@ -228,9 +228,10 @@
                     />
                 <TextView
                     android:id="@+id/tv_paytype"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:gravity="right"
                     android:layout_height="wrap_content"
-                    android:text="选择"
+                    android:text=""
                     android:layout_alignParentRight="true"
                     />
                 <RadioGroup
@@ -383,19 +384,18 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <ImageView
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true">
+                    <CheckBox
+                        android:checked="true"
+                        android:id="@+id/cb_check"
                         android:layout_centerVertical="true"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:background="@drawable/shape_circle"
-                        ></ImageView>
-                    <ImageView
-                        android:layout_centerVertical="true"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:background="@drawable/ic_choose"
-                        ></ImageView>
+                        android:button="@null"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/checkbox"
+                        android:layout_alignParentRight="true"
+                        />
                 </FrameLayout>
             </RelativeLayout>
             <RelativeLayout

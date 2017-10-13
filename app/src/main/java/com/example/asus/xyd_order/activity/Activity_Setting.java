@@ -32,11 +32,11 @@ public class Activity_Setting extends BaseActivity {
                 ActivityFactory.gotoAboutUs(context);
                 break;
             case R.id.tv_logout:
-                String username= (String) SharedPreferenceUtils.getParam(context,"username","");
-                String password= (String) SharedPreferenceUtils.getParam(context,"password","");
+                String username= (String) SharedPreferenceUtils.getParam(context,LoginActivity.USERNAME,"");
+                String password= (String) SharedPreferenceUtils.getParam(context,LoginActivity.PASSWORD,"");
                 SharedPreferenceUtils.clear(context);
-                SharedPreferenceUtils.setParam(context,"username",username);
-                SharedPreferenceUtils.setParam(context,"password",password);
+                SharedPreferenceUtils.setParam(context,LoginActivity.USERNAME,username);
+                SharedPreferenceUtils.setParam(context,LoginActivity.PASSWORD,password);
                 ActivityFactory.goToLogin(context);
                 finish();
                 MainActivity.instance.finish();

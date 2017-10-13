@@ -33,6 +33,13 @@ public class SingleChooseActivity extends BaseActivity {
     private String logo;
     private String res_id;
     private TextView tv_empty;
+    public static SingleChooseActivity instance;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        instance=this;
+    }
 
     @Override
     public void myOnclick(View view) {
@@ -98,5 +105,12 @@ public class SingleChooseActivity extends BaseActivity {
                 return new SingleHolder();
             }
         }, mlist));
+    }
+    public void countPrice(){
+        Double totalPrice=0.0;
+        for (int i=0;i<mlist.size();i++){
+            totalPrice = totalPrice+mlist.get(i).getNums()*mlist.get(i).getMeal_price();
+        }
+        btn_order.setText("预定"+totalPrice);
     }
 }

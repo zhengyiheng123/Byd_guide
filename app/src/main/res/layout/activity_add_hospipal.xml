@@ -34,7 +34,7 @@
                 <Spinner
                     android:id="@+id/spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></Spinner>
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
                 android:paddingLeft="16dp"
@@ -53,7 +53,7 @@
                     android:id="@+id/et_hos_name"
                     android:textSize="14sp"
                     android:textColor="@color/material_grey_700"
-                    android:hint="请填写医院名称"
+                    android:hint="请填写医院名称或上传医院图片"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -123,6 +123,12 @@
                     android:lines="4"
                     />
             </LinearLayout>
+            <TextView
+                android:layout_marginLeft="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="选择图片"
+                />
             <LinearLayout
                 android:padding="8dp"
                 android:orientation="horizontal"
@@ -144,26 +150,47 @@
                     />
             </LinearLayout>
             <LinearLayout
-                android:layout_marginTop="8dp"
                 android:background="@color/white"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/actionBarSize">
                 <TextView
+                    android:gravity="center_vertical"
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="医院性质："
                     />
-                <EditText
-
-                    android:id="@+id/et_hos_type"
-                    android:textSize="14sp"
-                    android:textColor="@color/material_grey_700"
-                    android:hint="请填写医院性质"
+                <RadioGroup
+                    android:gravity="right"
+                    android:orientation="horizontal"
+                    android:id="@+id/rg_hospital_type"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    >
+                    <RadioButton
+                        android:id="@+id/rb_zonghe"
+                        android:checked="true"
+                        android:textColor="@color/text_color_black"
+                        android:button="@null"
+                        android:text="综合大医院"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/selecter_zhifufangshi"
+                        />
+                    <RadioButton
+                        android:id="@+id/rb_shequ"
+                        android:layout_marginLeft="16dp"
+                        android:textColor="@color/text_color_black"
+                        android:button="@null"
+                        android:text="社区诊所"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/selecter_zhifufangshi"
+                        />
+                </RadioGroup>
             </LinearLayout>
             <LinearLayout
                 android:background="@color/white"

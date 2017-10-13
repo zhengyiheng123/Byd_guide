@@ -85,7 +85,8 @@
         <!--医院详情-->
         <activity android:name=".activity.Activity_HospitalDetails"/>
         <!--搜索界面-->
-        <activity android:name=".activity.SearchActivity"/>
+        <activity android:name=".activity.SearchActivity"
+            />
         <!--我接的单-->
         <activity android:name=".activity.Activity_MyOrdersGeted"/>
         <!--景点门票-->
@@ -355,6 +356,9 @@
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity android:name=".activity.Activity_Train_Success" />
+        <activity android:name=".areacode.AreaCodeActivity" />
+        <activity android:name=".selectcity.SelectCityActivity" />
+        <activity android:name=".selectcity.SelectCountryActivity" />
     </application>
 
 </manifest>

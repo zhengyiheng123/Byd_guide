@@ -3,6 +3,8 @@ package com.example.asus.xyd_order.fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import com.example.asus.xyd_order.activity.Activity_Register_confirm;
 import com.example.asus.xyd_order.activity.LoginActivity;
 import com.example.asus.xyd_order.activity.RegisterActivity;
 import com.example.asus.xyd_order.activity.SelectRoutes;
+import com.example.asus.xyd_order.areacode.AreaCodeActivity;
 import com.example.asus.xyd_order.base.BaseFragment;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
@@ -63,12 +66,9 @@ public class MobileRegisterFragment extends BaseFragment {
     public void myOnclick(View view) {
         switch (view.getId()){
             case R.id.tv_country_code:
-                if (countryList.size()>0){
-                    showDialog(countryList);
-                }
+                startActivityForResult(new Intent(getActivity(), AreaCodeActivity.class),0);
                 break;
             case R.id.tv_next:
-//                startActivity(new Intent(getActivity(), Activity_Register_confirm.class));
                 if (!(TextUtils.isEmpty(et_phonenum.getText().toString()) || TextUtils.isEmpty(et_code.getText().toString())
                         ||TextUtils.isEmpty(et_password.getText().toString()) || TextUtils.isEmpty(et_repassword.getText().toString()))){
                     if (!et_password.getText().toString().equals(et_repassword.getText().toString())){
@@ -92,7 +92,7 @@ public class MobileRegisterFragment extends BaseFragment {
                 if (!TextUtils.isEmpty(phonenum)){
                     if (StringUtils.isNumber(tv_country_code.getText().toString())){
                         counddown.startDown();
-                        getCode(phonenum);
+                        getCode(phonenum,tv_country_code.getText().toString());
                     }else {
                         toastShow("请选择国际区号");
                     }
@@ -104,29 +104,17 @@ public class MobileRegisterFragment extends BaseFragment {
                 break;
         }
     }
-    private void  showDialog(List<String> mlist){
-        OptionPicker optionPicker=new OptionPicker(getActivity(),mlist);
-        optionPicker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
-            @Override
-            public void onOptionPicked(int index, String item) {
-                String[] items = item.split("\\+");
-                countryCode = items[1];
-                tv_country_code.setText(countryCode);
-            }
-        });
-        optionPicker.show();
-    }
     @Override
     public void initView(View v) {
         initAsset();
         tv_country_code = (TextView) v.findViewById(R.id.tv_country_code);
         tv_next = (TextView) v.findViewById(R.id.tv_next);
         counddown= (CountdownButton) v.findViewById(R.id.countdown);
-        counddown.setCount(120);
+        counddown.setCount(90);
         et_phonenum = (EditText) v.findViewById(R.id.et_phonenum);
         et_code= (EditText) v.findViewById(R.id.et_code);
         et_password= (EditText) v.findViewById(R.id.et_password);
-        et_repassword= (EditText) v.findViewById(R.id.et_password);
+        et_repassword= (EditText) v.findViewById(R.id.et_repassword);
     }
 
     private void   initAsset() {
@@ -171,6 +159,28 @@ public class MobileRegisterFragment extends BaseFragment {
         tv_country_code.setOnClickListener(this);
         counddown.setOnClickListener(this);
         tv_next.setOnClickListener(this);
+        et_code.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!TextUtils.isEmpty(charSequence.toString())){
+                    et_password.setEnabled(true);
+                    et_repassword.setEnabled(true);
+                }else {
+                    et_password.setEnabled(false);
+                    et_repassword.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
 
@@ -179,7 +189,7 @@ public class MobileRegisterFragment extends BaseFragment {
      */
     private void register(String mobile,String code,String password){
         showDialog();
-        Observable<HttpResult<RegisterBean>> result= ServiceApi.getInstance().getServiceContract().register(1, mobile, password,"",Integer.valueOf(code),countryCode);
+        Observable<HttpResult<RegisterBean>> result= ServiceApi.getInstance().getServiceContract().register(1, mobile, password,"",Integer.valueOf(code),tv_country_code.getText().toString());
         result.map(new ResultFilter<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -200,17 +210,17 @@ public class MobileRegisterFragment extends BaseFragment {
                         registerBean1 = registerBean;
                         SharedPreferenceUtils.setParam(context,"apitoken",registerBean.getApitoken());
                         getActivity().finish();
-                        Intent intent=new Intent(getActivity(), Activity_Register_confirm.class);
-                        getActivity().startActivity(intent);
+//                        Intent intent=new Intent(getActivity(), Activity_Register_confirm.class);
+//                        getActivity().startActivity(intent);
                     }
                 });
     }
     /**
      * 获取验证码
      */
-    private void getCode(String mobile){
+    private void getCode(String mobile,String country_code){
         showDialog();
-        Observable<HttpResult<CodeBean>> result=ServiceApi.getInstance().getServiceContract().getCode(1,mobile,countryCode,"");
+        Observable<HttpResult<CodeBean>> result=ServiceApi.getInstance().getServiceContract().getCode(1,mobile,country_code,"");
         result.map(new ResultFilter())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -232,7 +242,12 @@ public class MobileRegisterFragment extends BaseFragment {
                     }
                 });
     }
-    public String getToken(){
-        return registerBean1.getApitoken();
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode ==1 && requestCode ==0){
+            tv_country_code.setText(data.getStringExtra("areacode"));
+        }
     }
 }

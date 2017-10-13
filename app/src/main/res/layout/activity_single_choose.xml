@@ -36,7 +36,7 @@
     android:background="@color/tool_bar_color"
     android:layout_width="match_parent"
     android:layout_height="@dimen/actionBarSize"
-    android:text="立即预定"
+    android:text="预定"
     />
     <RelativeLayout
         android:visibility="gone"

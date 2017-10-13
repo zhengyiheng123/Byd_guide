@@ -7,8 +7,10 @@ import android.widget.TextView;
 
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.activity.CatchOrdersActivity;
+import com.example.asus.xyd_order.activity.LoginActivity;
 import com.example.asus.xyd_order.base.BaseViewHolder;
 import com.example.asus.xyd_order.dialog.CatchSeccessDialog;
+import com.example.asus.xyd_order.dialog.ConfirmDialog;
 import com.example.asus.xyd_order.fragment.CatchOrdersFragment;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
@@ -169,7 +171,12 @@ public class CatchViewHolder extends BaseViewHolder<TakingOrderBean.DemandsBean>
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_catch:
-                taking();
+                int state= (int) SharedPreferenceUtils.getParam(activity, LoginActivity.CONFIRM_STATE,0);
+                if (state == 2){
+                    taking();
+                }else {
+                    ConfirmDialog dialog=new ConfirmDialog(activity);
+                }
                 break;
         }
     }

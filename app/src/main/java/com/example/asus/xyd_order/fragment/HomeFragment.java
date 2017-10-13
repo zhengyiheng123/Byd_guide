@@ -2,17 +2,17 @@ package com.example.asus.xyd_order.fragment;
 
 import android.content.Intent;
 import android.graphics.Paint;
-import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.os.Build;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,26 +21,28 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.asus.xyd_order.R;
+import com.example.asus.xyd_order.activity.LoginActivity;
 import com.example.asus.xyd_order.activity.SearchActivity;
 import com.example.asus.xyd_order.activity.TestWebActivity;
 import com.example.asus.xyd_order.app.APP;
 import com.example.asus.xyd_order.base.BaseArrayAdapter;
-import com.example.asus.xyd_order.base.BaseFragmentTemp;
 import com.example.asus.xyd_order.base.BaseFragment;
-import com.example.asus.xyd_order.entity.MyorderEntity;
-import com.example.asus.xyd_order.entity.NewsEntity;
-import com.example.asus.xyd_order.holder.Category_Home_Holder;
+import com.example.asus.xyd_order.dialog.ConfirmDialog;
+import com.example.asus.xyd_order.holder.CityHolder;
 import com.example.asus.xyd_order.holder.HomeNewsHolder;
 import com.example.asus.xyd_order.net.BaseApi;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
+import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.HomePage;
 import com.example.asus.xyd_order.net.result.HttpResult;
+import com.example.asus.xyd_order.selectcity.SelectCountryActivity;
 import com.example.asus.xyd_order.ui.MyListView;
 import com.example.asus.xyd_order.utils.ActivityFactory;
+import com.example.asus.xyd_order.utils.Myutils;
+import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 import com.example.asus.xyd_order.utils.TimeUtils;
 import com.recker.flybanner.FlyBanner;
-import com.zhy.magicviewpager.transformer.ScaleInTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,18 +74,23 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private RelativeLayout rl_news;
     private List<HomePage.BannersBean> homeList;
     private BaseArrayAdapter helpAdapter;
+    private TextView auto_text;
 
     @Override
     public void myOnclick(View view) {
     switch (view.getId()){
         case R.id.ll_location:
-            ActivityFactory.gotoLocation(context);
+//            ActivityFactory.gotoLocation(context);
+            startActivity(new Intent(getActivity(), SelectCountryActivity.class));
             break;
         case R.id.my_news:
 
             break;
         case R.id.rl_news:
 
+            break;
+        case R.id.auto_text:
+//            initListPopwindow(auto_text);
             break;
         case R.id.tv_send:
             ActivityFactory.gotoAddHelpNews(context);
@@ -121,6 +128,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 //        initViewPager(v);
     }
     private void iniLizeView(View v) {
+        auto_text = (TextView) v.findViewById(R.id.auto_text);
         tv_send= (ImageView) v.findViewById(R.id.tv_send);
         tv_home_place= (TextView) v.findViewById(R.id.tv_home_place);
         tv_mer_name= (TextView) v.findViewById(R.id.tv_mer_name);
@@ -298,7 +306,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     ActivityFactory.gotoAttraction(context);
                     break;
                 case 3:
-                    ActivityFactory.gotoReleaseDemand(context);
+                    int state= (int) SharedPreferenceUtils.getParam(getActivity(), LoginActivity.CONFIRM_STATE,0);
+                    if (state == 2){
+                        ActivityFactory.gotoReleaseDemand(context);
+                    }else {
+                        ConfirmDialog dialog=new ConfirmDialog(getActivity());
+                    }
                     break;
                 case 4:
                     ActivityFactory.gotoDrawback(context);
@@ -358,8 +371,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
                         newsEntityList.clear();
                         newsEntityList.add(homePage.getMutual_message());
+//                        if (homePage.getMutual_message().ge)
                         helpAdapter.notifyDataSetChanged();
                     }
                 });
     }
+
 }

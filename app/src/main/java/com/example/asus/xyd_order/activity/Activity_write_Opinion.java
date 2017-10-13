@@ -161,7 +161,9 @@ public class Activity_write_Opinion extends BaseActivity {
     @Override
     public void initView() {
         ButterKnife.bind(this);
-        if(!TextUtils.isEmpty(commentType)){
+        if(!TextUtils.isEmpty(to_user_id)){
+            tv_add_friend.setVisibility(View.VISIBLE);
+        }else {
             tv_add_friend.setVisibility(View.GONE);
         }
     }

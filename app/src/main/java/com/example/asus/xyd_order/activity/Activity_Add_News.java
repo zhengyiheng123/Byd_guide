@@ -8,9 +8,11 @@ import android.widget.TextView;
 
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseActivity;
+import com.example.asus.xyd_order.dialog.ConfirmDialog;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.HttpResult;
+import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 
 import butterknife.Bind;
 import rx.Observable;
@@ -33,7 +35,13 @@ public class Activity_Add_News extends BaseActivity {
         switch (view.getId()){
             case R.id.tv_submit:
                 if(!TextUtils.isEmpty(et_content.getText().toString())){
-                    sendMutual(et_content.getText().toString());
+                    int state= (int) SharedPreferenceUtils.getParam(context,LoginActivity.CONFIRM_STATE,0);
+                    if (state == 2){
+                        sendMutual(et_content.getText().toString());
+                    }else {
+                        ConfirmDialog dialog=new ConfirmDialog(Activity_Add_News.this);
+                    }
+
                 }else {
                     toastShow("请填写内容");
                 }
@@ -75,6 +83,7 @@ public class Activity_Add_News extends BaseActivity {
      * 发表互助消息
      */
     private void sendMutual(String context){
+        showDialog();
         Observable<HttpResult> result= ServiceApi.getInstance().getServiceContract().sendMutualData(apitoken,context);
         result.map(new ResultFilter())
                 .subscribeOn(Schedulers.io())
@@ -82,12 +91,13 @@ public class Activity_Add_News extends BaseActivity {
                 .subscribe(new Subscriber() {
                     @Override
                     public void onCompleted() {
-
+                        dismissDialog();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         toastShow(e.getMessage());
+                        dismissDialog();
                     }
 
                     @Override

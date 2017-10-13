@@ -6,17 +6,35 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:background="@color/material_blue_50"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="请选择城市"
-            android:background="@color/white"
-            android:textColor="@color/tool_bar_color"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
-            android:id="@+id/tv_month"
-            android:gravity="center"
-            />
+            android:layout_height="@dimen/actionbarSize">
+            <View
+                android:background="@color/white"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/tv_month"
+                android:gravity="center"
+                android:text="选择国家"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <View
+                android:background="@color/white"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/tv_sort_distance"
+                android:gravity="center"
+                android:text="距离优先"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
     </RelativeLayout>
     <ListView
         android:padding="16dp"

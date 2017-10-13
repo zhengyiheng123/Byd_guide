@@ -242,9 +242,10 @@
                     />
                 <TextView
                     android:id="@+id/tv_paytype"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:gravity="right"
                     android:layout_height="wrap_content"
-                    android:text="选择"
+                    android:text=""
                     android:layout_alignParentRight="true"
                     />
             </RelativeLayout>

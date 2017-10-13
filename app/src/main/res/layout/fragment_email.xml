@@ -68,6 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionbarSize">
         <EditText
+            android:enabled="false"
             android:id="@+id/et_password"
             android:drawablePadding="16dp"
             android:textSize="14sp"
@@ -89,6 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionbarSize">
         <EditText
+            android:enabled="false"
             android:inputType="textEmailAddress"
             android:id="@+id/et_repassword"
             android:drawablePadding="16dp"
