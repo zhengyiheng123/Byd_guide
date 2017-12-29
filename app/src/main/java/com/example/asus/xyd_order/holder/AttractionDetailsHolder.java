@@ -57,6 +57,9 @@ public class AttractionDetailsHolder extends BaseViewHolder<BaseTicketBean> impl
         int num=0;
         switch (view.getId()){
             case R.id.iv_add:
+                if (bean.getNums()>=bean.getTicket_nums()){
+                    return;
+                }
                 num=Integer.valueOf(tv_num.getText().toString());
                 num=num+1;
                 bean.setTotalPrice(num*Double.valueOf(bean.getPrice()));
@@ -65,6 +68,9 @@ public class AttractionDetailsHolder extends BaseViewHolder<BaseTicketBean> impl
                 Activity_Order_Nomal.instance.upDataCounts();
                 break;
             case R.id.iv_release:
+                if (bean.getNums()>=bean.getTicket_nums()){
+                    return;
+                }
                 num=Integer.valueOf(tv_num.getText().toString());
                 if (num>0){
                     num=num-1;

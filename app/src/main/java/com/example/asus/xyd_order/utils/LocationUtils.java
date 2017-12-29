@@ -29,6 +29,7 @@ import com.example.asus.xyd_order.utils.common.PermissionResult;
 import java.util.List;
 
 import cn.leo.photopicker.pick.PermissionUtil;
+import retrofit2.http.POST;
 
 /**
  * Created by Zheng on 2017/7/28.
@@ -92,14 +93,16 @@ public class LocationUtils {
             if (location != null) {
                 //不为空,显示地理位置经纬度
                 if (location!=null){
-                    return  new LandL(location.getLongitude(),location.getLatitude());
+                    PositionUtil.Gps gps= PositionUtil.gcj02_To_Bd09(location.getLatitude(),location.getLongitude());
+                    return  new LandL(gps.getWgLon(),gps.getWgLat());
                 }
                 return null;
             }else {
                 locationProvider= LocationManager.NETWORK_PROVIDER;
                 location=locationManager.getLastKnownLocation(locationProvider);
                 if (location!=null){
-                    return  new LandL(location.getLongitude(),location.getLatitude());
+                    PositionUtil.Gps gps= PositionUtil.gcj02_To_Bd09(location.getLatitude(),location.getLongitude());
+                    return  new LandL(gps.getWgLon(),gps.getWgLat());
                 }
                 return null;
             }

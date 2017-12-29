@@ -2,14 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ListView
-        android:layout_marginTop="8dp"
+    <com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lv_finish"
-        android:dividerHeight="8dp"
-        android:divider="@color/transparent"
-        />
+        android:id="@+id/refresh"
+        android:layout_height="wrap_content">
+        <ListView
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lv_finish"
+            android:dividerHeight="8dp"
+            android:divider="@color/transparent"
+            />
+    </com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout>
+
     <TextView
         android:id="@+id/tv_empty"
         android:visibility="gone"

@@ -61,12 +61,20 @@ public class TuancanBean {
          * meal_price : 222.00
          * meal_detail : 很好
          */
-
+        private String img_path;
         private boolean isChecked;
         private String meal_name;
         private int mp_id;
         private String meal_price;
         private String meal_detail;
+
+        public String getImg_path() {
+            return img_path;
+        }
+
+        public void setImg_path(String img_path) {
+            this.img_path = img_path;
+        }
 
         public void setChecked(boolean checked) {
             isChecked = checked;

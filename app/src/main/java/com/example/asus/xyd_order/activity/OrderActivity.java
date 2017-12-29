@@ -1,11 +1,7 @@
 package com.example.asus.xyd_order.activity;
 
-import android.app.Dialog;
 import android.graphics.Color;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -57,14 +53,12 @@ import rx.schedulers.Schedulers;
  */
 public class OrderActivity extends BaseActivity {
     //时间选择弹出框
-    private Dialog dateDialog, timeDialog;
     private MyListView mylistview;
     private List<RestaurantDetailsBean.SingleMealBean> mList=new ArrayList<>();
     private TextView tv_timepicker;
     private TextView btn_order,tv_re_name,tv_meal_info,tv_single_price,tv_total_Price,tv_all_money,tv_paytype,tv_single_jiage;
     private EditText tv_num,et_gname,et_g_phone,et_group_num,et_message;
     private RelativeLayout rl_single,rl_caipin;
-    private final static int DATA_MODE=1;
     private int mHour;
     private int mMinute;
     private int mYear;
@@ -98,40 +92,8 @@ public class OrderActivity extends BaseActivity {
     private Double price;
     private TimePickerView pvTime;
     private CheckBox cb_check;
+    private int meal_id=0;
 
-    /**
-     * 日期选择框
-     */
-    private void datePicker(){
-        cn.qqtheme.framework.picker.DatePicker datePicker=new cn.qqtheme.framework.picker.DatePicker(OrderActivity.this, DateTimePicker.YEAR_MONTH_DAY);
-        datePicker.show();
-        datePicker.setOnDatePickListener(new cn.qqtheme.framework.picker.DatePicker.OnYearMonthDayPickListener() {
-            @Override
-            public void onDatePicked(String year, String month, String day) {
-                String date=year+"."+month+"."+day;
-                timePicker(date);
-            }
-        });
-    }
-    /**
-     * 时间选择框
-     *
-     */
-    private void timePicker(String date){
-        timePicker = new cn.qqtheme.framework.picker.TimePicker(OrderActivity.this, cn.qqtheme.framework.picker.TimePicker.HOUR_24);
-        timePicker.show();
-        timePicker.setOnTimePickListener(new cn.qqtheme.framework.picker.TimePicker.OnTimePickListener() {
-            @Override
-            public void onTimePicked(String hour, String minute) {
-                tv_timepicker.setText(date+" "+hour+":"+minute);
-                try {
-                    time= TimeUtils.dateToStampsss(date+" "+hour+":"+minute).substring(0,10);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
     @Override
     public void myOnclick(View view) {
         switch (view.getId()){
@@ -164,8 +126,6 @@ public class OrderActivity extends BaseActivity {
                 picker.show();
                 break;
             case R.id.tv_timepicker:
-//                showDateDialog(DateUtil.getDateForString("2017-02-28"));
-//                showDialog(DATA_MODE);
                 pvTime.show();
                 break;
             case R.id.btn_order:
@@ -238,10 +198,18 @@ public class OrderActivity extends BaseActivity {
     @Override
     public int getData() throws Exception {
         mode = getIntent().getStringExtra("mode");
+        res_name = getIntent().getStringExtra("res_name");
+        mer_id = getIntent().getStringExtra("mer_id");
         if (mode.equals("1")){
-
+            priceListBean = (TuancanBean.PriceListBean) getIntent().getSerializableExtra("price_bean");
+            meal_name=priceListBean.getMeal_name();
+            img_path=priceListBean.getImg_path();
+            meal_id = priceListBean.getMp_id();
+            price=Double.parseDouble(priceListBean.getMeal_price());
         }else if(mode.equals("0")){
             restList = (List<RestaurantDetailsBean.SingleMealBean>) getIntent().getSerializableExtra("templist");
+            img_path=getIntent().getStringExtra("img_path");
+            res_name=getIntent().getStringExtra("res_name");
             mList.clear();
             mList.addAll(restList);
             price = 0.0;
@@ -250,7 +218,7 @@ public class OrderActivity extends BaseActivity {
                 tempPrice=restList.get(i).getMeal_price()*restList.get(i).getNums();
                 price = price +tempPrice;
             }
-//            Log.e("zyh",price+"价格");
+
             JSONArray jsonArray=new JSONArray();
             JSONObject tmpObj=null;
             for (int i=0;i<restList.size();i++){
@@ -265,11 +233,6 @@ public class OrderActivity extends BaseActivity {
             }
             singleCaidan = jsonArray.toString();
         }
-        res_name = getIntent().getStringExtra("res_name");
-        meal_name=getIntent().getStringExtra("meal_name");
-        img_path=getIntent().getStringExtra("img_path");
-        mer_id = getIntent().getStringExtra("mer_id");
-        priceListBean = (TuancanBean.PriceListBean) getIntent().getSerializableExtra("price_bean");
         return 0;
     }
 
@@ -346,6 +309,7 @@ public class OrderActivity extends BaseActivity {
     }
     private MultipartBody.Builder builder;
     public RequestBody getBody(String meal_type){
+
        return builder.addFormDataPart("apitoken",apitoken)
                 .addFormDataPart("group_num",et_group_num.getText().toString())
                 .addFormDataPart("seat_cost",tv_num.getText().toString())
@@ -353,11 +317,12 @@ public class OrderActivity extends BaseActivity {
                 .addFormDataPart("pay_type",pay_type)
                 .addFormDataPart("mer_id",mer_id)
                 .addFormDataPart("message",et_message.getText().toString())
-                .addFormDataPart("price",priceListBean.getMeal_price())
+                .addFormDataPart("price",price+"")
                 .addFormDataPart("user_name",et_gname.getText().toString())
                 .addFormDataPart("mobile",et_g_phone.getText().toString())
                 .addFormDataPart("meal_type",meal_type)
-//                .addFormDataPart("nums",tv_num.getText().toString())
+               .addFormDataPart("mp_id",meal_id+"")
+                .addFormDataPart("nums",tv_num.getText().toString())
                .addFormDataPart("single_meal",TextUtils.isEmpty(singleCaidan) ?"":singleCaidan)
                 .build();
 

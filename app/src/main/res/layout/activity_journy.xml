@@ -9,11 +9,4 @@
         android:id="@+id/lv_route"
         android:divider="@color/line_color"
         />
-    <TextView
-        android:layout_centerInParent="true"
-        android:id="@+id/tv_empty"
-        android:visibility="gone"
-        android:text="没有数据！"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 </LinearLayout>

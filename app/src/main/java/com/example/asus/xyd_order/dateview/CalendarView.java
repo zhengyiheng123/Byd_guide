@@ -140,11 +140,11 @@ public class CalendarView extends View {
                 // 可选，继续判断是否是点击过的
                 if(!mSelectedDates.contains(getSelData(mSelYear, mSelMonth, mDays[row][column]))){
                     // 没有点击过，绘制默认背景6
-                            canvas.drawBitmap(mBgNotOptBitmap, startX - ((int)(mBgOptBitmap.getWidth() / 3.0)), startY - ((int)(mBgNotOptBitmap.getHeight() / 1.4) ), mPaint);
+                            canvas.drawBitmap(mBgNotOptBitmap, startX - ((int)(mBgOptBitmap.getWidth() / 3.6)), startY - ((int)(mBgNotOptBitmap.getHeight() / 1.4) ), mPaint);
                     mPaint.setColor(mDayPressedColor);
                 }else{
                     // 点击过，绘制点击过的背景
-                    canvas.drawBitmap(mBgOptBitmap, startX- ((int)(mBgOptBitmap.getWidth() / 3.0)), startY - ((int)(mBgOptBitmap.getHeight() / 1.4) ), mPaint);
+                    canvas.drawBitmap(mBgOptBitmap, startX- ((int)(mBgOptBitmap.getWidth() / 3.6)), startY - ((int)(mBgOptBitmap.getHeight() / 1.4) ), mPaint);
                     mPaint.setColor(mDayPressedColor);
                 }
                 // 绘制天数

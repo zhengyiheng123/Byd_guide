@@ -47,7 +47,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="我的需求"
+            android:text="我发布的需求"
             android:drawableTop="@mipmap/ic_my_order"
             />
             <TextView

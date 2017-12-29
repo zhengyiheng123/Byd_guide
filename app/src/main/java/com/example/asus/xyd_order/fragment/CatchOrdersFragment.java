@@ -43,6 +43,7 @@ public class CatchOrdersFragment extends BaseFragment implements SwipeRefreshLay
 
     //正在刷新
     private boolean isRefreshing;
+    private TextView tv_empty;
 
     @Override
     public void myOnclick(View view) {
@@ -51,14 +52,26 @@ public class CatchOrdersFragment extends BaseFragment implements SwipeRefreshLay
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        if (isVisibleToUser)
+        {
+            refreshLayout.setRefreshing(true);
+            onRefresh();
+        }
+    }
+
+    @Override
     public void initView(View v) {
         ImageView iv_back= (ImageView) v.findViewById(R.id.iv_back);
         iv_back.setVisibility(View.GONE);
+        TextView tv_title= (TextView) v.findViewById(R.id.tv_title);
+        tv_title.setText("去接单");
         initListView(v);
     }
 
     private void initListView(View v) {
         lv_catchorders = (ListView) v.findViewById(R.id.lv_catchorders);
+        tv_empty = (TextView) v.findViewById(R.id.tv_empty);
         refreshLayout = (RefreshLayout) v.findViewById(R.id.refresh);
         refreshLayout.setColorSchemeColors(context.getResources().getColor(R.color.material_blue_600),
                 context.getResources().getColor(R.color.tool_bar_color));
@@ -127,6 +140,11 @@ public class CatchOrdersFragment extends BaseFragment implements SwipeRefreshLay
                             dataList.addAll(takingOrderBean.getDemands());
                             arrayAdapter.notifyDataSetChanged();
                             refreshLayout.setRefreshing(false);
+                            if (takingOrderBean.getDemands().size()<=0){
+                                tv_empty.setVisibility(View.VISIBLE);
+                            }else {
+                                tv_empty.setVisibility(View.GONE);
+                            }
                         }
                     }
                 });

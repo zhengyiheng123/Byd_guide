@@ -55,6 +55,9 @@ public class Item_SiteHolder extends BaseViewHolder<BaseTicketRouteBean.TicketsB
         int num=0;
         switch (view.getId()){
             case R.id.iv_add:
+                if (bean.getNums()>=bean.getTicket_nums()){
+                    return;
+                }
                 num=Integer.valueOf(tv_num.getText().toString());
                 num=num+1;
                 tv_num.setText(num+"");
@@ -64,6 +67,9 @@ public class Item_SiteHolder extends BaseViewHolder<BaseTicketRouteBean.TicketsB
                 SiteDisplayActivity.instance.updateTitle();
                 break;
             case R.id.iv_release:
+                if (bean.getNums()>=bean.getTicket_nums()){
+                    return;
+                }
                 num=Integer.valueOf(tv_num.getText().toString());
                 if (num>0){
                     num=num-1;

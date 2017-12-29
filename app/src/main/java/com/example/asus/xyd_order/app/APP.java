@@ -5,7 +5,10 @@ import android.app.Application;
 import android.content.Context;
 
 import com.example.asus.xyd_order.net.result.CityListBean;
+import com.example.asus.xyd_order.net.result.PushEntity;
+import com.example.asus.xyd_order.net.result.RegionsBean;
 import com.example.asus.xyd_order.utils.NetworkState;
+import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 import com.example.asus.xyd_order.utils.ToastUtils;
 
 import java.util.LinkedList;
@@ -18,7 +21,8 @@ import cn.jpush.android.api.JPushInterface;
  */
 public class APP extends Application {
     private static APP myApplication = null;
-
+    public static String REGION_NAME="region_name";
+    public static String REGION_ID="region_id";
     public static APP getApplication() {
         return myApplication;
     }
@@ -29,14 +33,32 @@ public class APP extends Application {
         return ctx;
     }
 
-    public CityListBean.RegionsBean cityBean;
+    public RegionsBean cityBean;
 
-    public CityListBean.RegionsBean getCityBean() {
-        return cityBean;
+    public RegionsBean getCityBean() {
+        String region_name= (String) SharedPreferenceUtils.getParam(getApplicationContext(),REGION_NAME,"");
+        int region_id= (int) SharedPreferenceUtils.getParam(getApplicationContext(),REGION_ID,-1);
+        if (cityBean==null){
+            cityBean=new RegionsBean();
+        }
+        cityBean.setOriginal_name(region_name);
+        cityBean.setRegion_id(region_id);
+        if (region_id == -1){
+            return null;
+        }else {
+            return cityBean;
+        }
     }
 
-    public  void setCityBean(CityListBean.RegionsBean cityBean) {
-        this.cityBean = cityBean;
+    public  void setCityBean(RegionsBean cityBean) {
+        if (cityBean==null){
+            SharedPreferenceUtils.setParam(getApplicationContext(),REGION_NAME,"");
+            SharedPreferenceUtils.setParam(getApplicationContext(),REGION_ID,-1);
+        }else {
+            SharedPreferenceUtils.setParam(getApplicationContext(),REGION_NAME,cityBean.getOriginal_name());
+            SharedPreferenceUtils.setParam(getApplicationContext(),REGION_ID,cityBean.getRegion_id());
+        }
+
     }
 
     @Override

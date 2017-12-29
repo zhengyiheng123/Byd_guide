@@ -32,7 +32,7 @@ public class Demand_Details_Bean {
      * user_id : 34
      * user_name : 33333333
      */
-
+    private String people_number;
     private String company;
     private int dmd_area;
     private String dmd_desc;
@@ -55,6 +55,14 @@ public class Demand_Details_Bean {
     private String user_name;
     private List<String> countries;
     private List<CountryListBean> country_list;
+
+    public String getPeople_number() {
+        return people_number;
+    }
+
+    public void setPeople_number(String people_number) {
+        this.people_number = people_number;
+    }
 
     public String getCompany() {
         return company;

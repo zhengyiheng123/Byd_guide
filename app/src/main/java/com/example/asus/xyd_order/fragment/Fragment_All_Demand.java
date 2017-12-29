@@ -1,6 +1,7 @@
 package com.example.asus.xyd_order.fragment;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,6 +17,7 @@ import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.MyDemandBean;
+import com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout;
 import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 
 import java.util.ArrayList;
@@ -29,11 +31,12 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Zheng on 2017/3/13.
  */
-public class Fragment_All_Demand extends BaseFragment {
+public class Fragment_All_Demand extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
 
     private ListView lv_all;
     private List<MyDemandBean.DemandsBean> mList;
     private AllOrderAdapter adapter;
+    private RefreshLayout refresh;
 
     /**
      * 获取网络数据
@@ -48,11 +51,13 @@ public class Fragment_All_Demand extends BaseFragment {
                 .subscribe(new Subscriber<MyDemandBean>() {
                     @Override
                     public void onCompleted() {
+                        refresh.setRefreshing(false);
 dismissDialog();
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        refresh.setRefreshing(false);
 dismissDialog();
                     }
 
@@ -75,11 +80,13 @@ dismissDialog();
     }
 
     private void initListView(View v) {
+        refresh = (RefreshLayout) v.findViewById(R.id.refresh);
         lv_all = (ListView) v.findViewById(R.id.lv_all);
         TextView empty= (TextView) v.findViewById(R.id.tv_empty);
         lv_all.setEmptyView(empty);
         adapter=new AllOrderAdapter(mList,getActivity());
-        lv_all.setAdapter(adapter);
+        refresh.setAdapter(adapter,lv_all);
+        refresh.setOnRefreshListener(this);
     }
 
     @Override
@@ -96,7 +103,7 @@ dismissDialog();
     @Override
     public void onResume() {
         super.onResume();
-        getNetData();
+        onRefresh();
     }
 
     @Override
@@ -112,4 +119,8 @@ dismissDialog();
         });
     }
 
+    @Override
+    public void onRefresh() {
+        getNetData();
+    }
 }

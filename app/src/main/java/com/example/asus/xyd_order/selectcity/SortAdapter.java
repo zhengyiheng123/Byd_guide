@@ -91,4 +91,5 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer {
     public Object[] getSections() {
         return null;
     }
+
 }

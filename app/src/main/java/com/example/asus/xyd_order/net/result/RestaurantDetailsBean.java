@@ -142,9 +142,8 @@ public class RestaurantDetailsBean {
          * img_path : /uploads/20170421/9c4cd4441a22010eb169479977cd2c39.png
          * meal_id : 1
          * meal_name : 黑椒牛柳
-         * meal_price : ["222.00","333.00","666.00"]
+         * meal_price : 222.0
          */
-
         private String img_path;
         private int meal_id;
         private String meal_name;

@@ -68,7 +68,7 @@ public class CancelActivity extends BaseActivity {
         ImageView iv_back= (ImageView) findViewById(R.id.iv_back);
         iv_back.setOnClickListener(view -> onBackPressed());
         TextView tv_title= (TextView) findViewById(R.id.tv_title);
-        tv_title.setText("取消条件");
+        tv_title.setText("取消订单");
         et_cancel_condition = (EditText) findViewById(R.id.et_cancel_condition);
         tv_submit = (TextView) findViewById(R.id.tv_submit);
         tv_submit.setVisibility(View.VISIBLE);

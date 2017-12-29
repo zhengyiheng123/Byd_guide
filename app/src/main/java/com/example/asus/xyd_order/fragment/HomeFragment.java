@@ -104,8 +104,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             ActivityFactory.gotoMyOrder_News(context);
             break;
         case R.id.rl_search:
-            Intent intent=new Intent(context, SearchActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(getActivity(), SelectCountryActivity.class));
             break;
     }
     }
@@ -162,9 +161,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public void onResume() {
         super.onResume();
         if (APP.getApplication().getCityBean()!=null){
-            tv_home_place.setText(APP.getApplication().getCityBean().getRegion_name());
+            auto_text.setText(APP.getApplication().getCityBean().getOriginal_name());
         }else {
-            tv_home_place.setText("城市");
+            auto_text.setText("离我最近");
         }
         onRefresh();
     }
@@ -209,7 +208,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     List<HomePage.MutualMessageBean> newsEntityList=new ArrayList<>();
     @Override
     public int initData() {
-        getNetData();
         return 1;
 
     }

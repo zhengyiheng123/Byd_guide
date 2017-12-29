@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.net.result.CityListBean;
+import com.example.asus.xyd_order.net.result.RegionsBean;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,13 +36,13 @@ public class SelectCityActivity extends AppCompatActivity implements View.OnClic
     private Toolbar toolbar;
     private ImageView iv_back;
     //城市名称临时集合
-    private List<CityListBean.RegionsBean> countryList;
+    private List<RegionsBean> countryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
-        countryList = (List<CityListBean.RegionsBean>) getIntent().getSerializableExtra(CITY_LIST);
+        countryList = (List<RegionsBean>) getIntent().getSerializableExtra(CITY_LIST);
         sourceDataList=new ArrayList<>();
         for (int i = 0; i< countryList.size(); i++){
             sourceDataList.add(countryList.get(i).getRegion_name());

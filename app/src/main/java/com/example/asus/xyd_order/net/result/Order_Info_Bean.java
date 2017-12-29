@@ -1,12 +1,13 @@
 package com.example.asus.xyd_order.net.result;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Zheng on 2017/7/11.
  */
 
-public class Order_Info_Bean {
+public class Order_Info_Bean implements Serializable{
 
     /**
      * add_time : 1499823236

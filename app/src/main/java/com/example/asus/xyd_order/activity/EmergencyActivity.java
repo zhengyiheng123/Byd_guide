@@ -18,6 +18,7 @@ import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.EmbassyBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
+import com.example.asus.xyd_order.net.result.RegionsBean;
 import com.example.asus.xyd_order.selectcity.SelectCityActivity;
 import com.example.asus.xyd_order.ui.SelectPopWindow;
 import com.example.asus.xyd_order.utils.ActivityFactory;
@@ -36,7 +37,7 @@ import rx.schedulers.Schedulers;
  */
 public class EmergencyActivity extends BaseActivity  {
 
-    private List<CityListBean.RegionsBean> countryList=new ArrayList<>();
+    private List<RegionsBean> countryList=new ArrayList<>();
 
     private ListView lv_sonsulte;
     private List<EmbassyBean.EmbassiesBean> mList=new ArrayList<>();

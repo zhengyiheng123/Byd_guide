@@ -1,5 +1,6 @@
 package com.example.asus.xyd_order.activity;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.JingdianBean;
+import com.example.asus.xyd_order.net.result.RegionsBean;
 import com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout;
 import com.example.asus.xyd_order.ui.MyListView;
 import com.example.asus.xyd_order.ui.SelectPopWindow;
@@ -43,6 +45,7 @@ public class AttractionsActivity extends BaseActivity implements SwipeRefreshLay
     private List<JingdianBean.ScenesBean> mList=new ArrayList<>();
     private BaseArrayAdapter arrayAdapter;
     private RefreshLayout refresh;
+
     //是否正在刷新
     private boolean isRefreshing;
     //经度
@@ -58,10 +61,14 @@ public class AttractionsActivity extends BaseActivity implements SwipeRefreshLay
     private TextView tv_sort_distance;
     private TextView tv_price_down;
     private String region_id;
+    private ImageView iv_img;
 
     @Override
     public void myOnclick(View view) {
         switch (view.getId()){
+            case R.id.iv_img:
+                startActivity(new Intent(getApplicationContext(),JingDianActivity.class));
+                break;
             case R.id.tv_travel_time:
                 sort_state="1";
                 onRefresh();
@@ -93,7 +100,7 @@ public class AttractionsActivity extends BaseActivity implements SwipeRefreshLay
 
     @Override
     public int getData() throws Exception {
-        CityListBean.RegionsBean cityBean= APP.getApplication().getCityBean();
+        RegionsBean cityBean= APP.getApplication().getCityBean();
         if (cityBean!=null){
             region_id = cityBean.getRegion_id()+"";
         }else {
@@ -140,10 +147,14 @@ public class AttractionsActivity extends BaseActivity implements SwipeRefreshLay
         tv_sort_distance = (TextView) findViewById(R.id.tv_sort_distance);
         tv_price_down = (TextView) findViewById(R.id.tv_price_down);
         refresh = (RefreshLayout) findViewById(R.id.refresh);
+        iv_img = (ImageView) findViewById(R.id.iv_img);
+        iv_img.setVisibility(View.VISIBLE);
+        iv_img.setImageResource(R.mipmap.icon_zhongcan_search);
     }
 
     @Override
     public void setEvent() {
+        iv_img.setOnClickListener(this);
         tv_travel_time.setOnClickListener(this);
         refresh.setOnLoadListener(this);
         tv_price_down.setOnClickListener(this);

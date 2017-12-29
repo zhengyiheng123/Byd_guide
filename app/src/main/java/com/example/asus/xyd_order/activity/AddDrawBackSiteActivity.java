@@ -26,6 +26,7 @@ import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.CountryBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
+import com.example.asus.xyd_order.net.result.RegionsBean;
 import com.example.asus.xyd_order.ui.SmartImageveiw;
 import com.nanchen.compresshelper.CompressHelper;
 
@@ -55,7 +56,7 @@ public class AddDrawBackSiteActivity extends BaseActivity {
     private Spinner country_spinner;
 
     private List<String> mList=new ArrayList<>();
-    private List<CityListBean.RegionsBean> cityList=new ArrayList<>();
+    private List<RegionsBean> cityList=new ArrayList<>();
     private ArrayAdapter adapter;
     private ImageView iv_select_draw,iv_img_draw,iv_select_tamp,iv_img_stamp;
     private TextView tv_select,tv_select_tuishui,tv_back_address;

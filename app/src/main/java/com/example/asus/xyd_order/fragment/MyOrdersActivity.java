@@ -116,7 +116,7 @@ public class MyOrdersActivity extends BaseActivity {
 
     }
     //设置待付款小红点
-    public void setMsgRedPoint(){
-        tablayout.setMsgToast(2,true);
+    public void setMsgRedPoint(boolean msg){
+        tablayout.setMsgToast(2,msg);
     }
 }

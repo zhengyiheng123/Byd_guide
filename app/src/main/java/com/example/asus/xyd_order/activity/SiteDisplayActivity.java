@@ -3,6 +3,7 @@ package com.example.asus.xyd_order.activity;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -29,6 +30,7 @@ import com.example.asus.xyd_order.ui.MyExpandListView;
 import com.example.asus.xyd_order.ui.MyListView;
 import com.example.asus.xyd_order.ui.SmartImageveiw;
 import com.example.asus.xyd_order.utils.ActivityFactory;
+import com.example.asus.xyd_order.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +64,7 @@ public class SiteDisplayActivity extends BaseActivity {
     private SmartImageveiw smart_head;
     private TextView tv_cancel_desc,tv_group,tv_nomal,tv_totalmoney,btn_order_now;
     private RouteDetails bean;
+    private CheckBox cb_check;
 
 
     public static SiteDisplayActivity instance;
@@ -99,6 +102,10 @@ public class SiteDisplayActivity extends BaseActivity {
             case R.id.tv_peer:
                 break;
             case R.id.btn_order_now:
+//                if (!cb_check.isChecked()){
+//                    ToastUtils.showShort(context,"请同意免责申明");
+//                    return;
+//                }
                 //团体票总数
                 int groupCount=0;
                 List<BaseTicketRouteBean> groupTemp=new ArrayList<>();

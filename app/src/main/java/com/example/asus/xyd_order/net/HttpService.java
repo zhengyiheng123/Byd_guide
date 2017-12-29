@@ -47,6 +47,7 @@ import com.example.asus.xyd_order.net.result.NoticeBean;
 import com.example.asus.xyd_order.net.result.Order_Info_Bean;
 import com.example.asus.xyd_order.net.result.PayParam;
 import com.example.asus.xyd_order.net.result.QueryData;
+import com.example.asus.xyd_order.net.result.RegionsBean;
 import com.example.asus.xyd_order.net.result.RegisterBean;
         import com.example.asus.xyd_order.net.result.RestaurantBean;
         import com.example.asus.xyd_order.net.result.RestaurantDetailsBean;
@@ -207,7 +208,8 @@ public interface HttpService {
      */
     @FormUrlEncoded
     @POST("v1/user/login")
-    Observable<HttpResult<LoginResult>> login(@Field("user_name")String user_name,@Field("password")String password);
+    //phone_type手机类型  ios和android
+    Observable<HttpResult<LoginResult>> login(@Field("user_name")String user_name,@Field("password")String password,@Field("phone_type")String phone_type);
     /**
      * 修改密码
      */
@@ -508,8 +510,7 @@ public interface HttpService {
      *团餐预定
      */
     @POST("v1/res_order")
-    Observable<HttpResult<ZhongcanOrderSuccessBean>> orderSuccess(@Body()RequestBody body
-                                                                  );
+    Observable<HttpResult<ZhongcanOrderSuccessBean>> orderSuccess(@Body()RequestBody body);
     /**
      * 预定详情
      */
@@ -770,5 +771,22 @@ public interface HttpService {
     @POST("v1/scene/order/refund")
     Observable<HttpResult> refundJingdian(@Field("apitoken") String apitoken,@Field("ord_id")String ord_id,@Field("cancel_content")String cancel_content);
 
+    /**
+     * 搜索餐厅信息
+     */
+    @GET("v1/restaurant/find")
+    Observable<HttpResult<RestaurantBean>> find(@Query("apitoken")String apitoken,@Query("key_word")String key_word);
 
+    /**
+     *搜索景点信息
+     */
+    @GET("v1/scene/find")
+    Observable<HttpResult<JingdianBean>> findJingdian(@Query("apitoken")String apitoken,@Query("key_word")String key_word);
+
+
+    /**
+     * 城市模糊查询接口
+     */
+    @GET("v1/mer_query")
+    Observable<HttpResult<CityListBean>> merQuery(@Query("apitoken")String apitoken,@Query("query_name")String query_name);
 }

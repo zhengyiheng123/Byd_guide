@@ -10,6 +10,7 @@
         android:id="@+id/refresh"
         android:layout_height="wrap_content">
         <ListView
+            android:listSelector="@color/transparent"
             android:layout_marginTop="8dp"
             android:dividerHeight="8dp"
             android:id="@+id/lv_myorder_news"

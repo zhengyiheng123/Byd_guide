@@ -12,7 +12,7 @@
         android:id="@+id/et_cancel_condition"
         android:background="@color/white"
         android:lines="3"
-        android:hint="请输入取消条件"
+        android:hint="请输入取消原因"
         />
 
 </LinearLayout>

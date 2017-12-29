@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.ListView;
 
 import com.example.asus.xyd_order.net.result.CityListBean;
+import com.example.asus.xyd_order.net.result.RegionsBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class DBAdapter {
 
     static final String KEY_ROWID = "id";
     static final String KEY_NAME = "city_name";
+    static final String KEY_NAME2 = "cn_name";
     static final String TAG = "DBAdapter";
 
     static final String DATABASE_NAME = "MyDB";
@@ -94,12 +96,12 @@ public class DBAdapter {
         db.execSQL("delete from "+DATABASE_TABLE);
     }
     //retreves all the contacts
-    public List<CityListBean.RegionsBean> getAllContacts()
+    public List<RegionsBean> getAllContacts()
     {
-        List<CityListBean.RegionsBean> cityListBean=new ArrayList<>();
+        List<RegionsBean> cityListBean=new ArrayList<>();
         Cursor cursor=db.query(DATABASE_TABLE, new String[]{ KEY_ROWID,KEY_NAME}, null, null, null, null, null);
         while (cursor.moveToNext()){
-            cityListBean.add(new CityListBean.RegionsBean(cursor.getInt(cursor.getColumnIndex(KEY_ROWID)),cursor.getString(cursor.getColumnIndex(KEY_NAME)),0));
+            cityListBean.add(new RegionsBean(cursor.getInt(cursor.getColumnIndex(KEY_ROWID)),cursor.getString(cursor.getColumnIndex(KEY_NAME)),0,cursor.getString(cursor.getColumnIndex(KEY_NAME))));
         }
         return cityListBean;
     }

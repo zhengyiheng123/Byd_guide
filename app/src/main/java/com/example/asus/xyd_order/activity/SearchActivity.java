@@ -27,6 +27,7 @@ import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
+import com.example.asus.xyd_order.net.result.RegionsBean;
 import com.example.asus.xyd_order.net.result.SerchResult;
 import com.example.asus.xyd_order.ui.ChildViewPager;
 import com.example.asus.xyd_order.ui.FlowLayout;
@@ -63,8 +64,8 @@ public class SearchActivity extends BaseActivity {
     @Bind(R.id.tv_query)
     TextView tv_query;
 
-    List<CityListBean.RegionsBean> cityListHistory=new ArrayList<>();
-    private List<CityListBean.RegionsBean> cityList;
+    List<RegionsBean> cityListHistory=new ArrayList<>();
+    private List<RegionsBean> cityList;
     private DBAdapter db;
 
     @Override
@@ -91,12 +92,13 @@ public class SearchActivity extends BaseActivity {
                 cityList.clear();
                 flow_history.removeAllViews();
                 addView();
+                db.deleteAll();
                 break;
             case R.id.tv_insert:
-                db.insert(1,"俄罗斯");
+                ToastUtils.showShort(context,db.insert(2,"俄罗斯")+"");
                 break;
             case R.id.tv_query:
-                List<CityListBean.RegionsBean> mList=db.getAllContacts();
+                List<RegionsBean> mList=db.getAllContacts();
                 ToastUtils.show(context,"名字："+mList.get(0).getRegion_name(),0);
                 break;
         }
@@ -123,7 +125,7 @@ public class SearchActivity extends BaseActivity {
         db.open();
         initListPopwindow();
         for (int i=0;i<10;i++){
-            cityListHistory.add(new CityListBean.RegionsBean(1,"法国苏黎世",0));
+//            cityListHistory.add(new RegionsBean(1,"法国苏黎世",0));
         }
         addView();
     }
@@ -140,10 +142,10 @@ public class SearchActivity extends BaseActivity {
         cityList = new ArrayList<>();
         for (int i=0;i<10;i++){
             if (i == 0){
-                cityList.add(new CityListBean.RegionsBean(1,"离我最近",2));
+//                cityList.add(new RegionsBean(1,"离我最近",2));
                 continue;
             }
-            cityList.add(new CityListBean.RegionsBean(1,"法国",2));
+//            cityList.add(new RegionsBean(1,"法国",2));
         }
 
         String[] citys=new String[]{"法国","日本","俄罗斯","法兰西","发布拉诺","俄国","尼日利亚"};

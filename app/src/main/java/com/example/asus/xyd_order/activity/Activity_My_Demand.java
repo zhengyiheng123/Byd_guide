@@ -52,9 +52,6 @@ public class Activity_My_Demand extends BaseActivity {
         iv_back.setOnClickListener(v -> {onBackPressed();});
         tv_title = (TextView) findViewById(R.id.tv_title);
         tv_title.setText("我发布的需求");
-//        tv_submit= (TextView) findViewById(R.id.tv_submit);
-//        tv_submit.setVisibility(View.VISIBLE);
-//        tv_submit.setText("添加");
     }
 
     @Override
@@ -93,14 +90,10 @@ public class Activity_My_Demand extends BaseActivity {
         viewpager.setCurrentItem(1);
         viewpager.setOffscreenPageLimit(1);
         tablayout.setTabMode(TabLayout.MODE_FIXED);
-//        tablayout.addTab(tablayout.newTab().setText(titleList.get(0)));
-//        tablayout.addTab(tablayout.newTab().setText(titleList.get(1)));
-//        tablayout.addTab(tablayout.newTab().setText(titleList.get(2)));
-//        tablayout.addTab(tablayout.newTab().setText(titleList.get(3)));
-//        tablayout.addTab(tablayout.newTab().setText(titleList.get(4)));
         DemandPagerAdapter adapter=new DemandPagerAdapter(getSupportFragmentManager(),fragmentList,titleList);
         viewpager.setAdapter(adapter);
         tablayout.setupWithViewPager(viewpager);
+        viewpager.setCurrentItem(1);
         tablayout.setTabsFromPagerAdapter(adapter);
     }
 

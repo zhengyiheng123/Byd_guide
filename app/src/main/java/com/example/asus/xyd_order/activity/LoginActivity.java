@@ -2,6 +2,8 @@ package com.example.asus.xyd_order.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.LoginResult;
 import com.example.asus.xyd_order.utils.ActivityFactory;
 import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
+import com.example.asus.xyd_order.utils.ToastUtils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -132,7 +135,7 @@ public class LoginActivity extends BaseActivity {
      */
     private void login(String username,String password){
         showDialog();
-        Observable<HttpResult<LoginResult>> result= ServiceApi.getInstance().getServiceContract().login(username,password);
+        Observable<HttpResult<LoginResult>> result= ServiceApi.getInstance().getServiceContract().login(username,password,"android");
         result.map(new ResultFilter<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -144,68 +147,72 @@ public class LoginActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        toastShow(e.getMessage());
+                        ToastUtils.showShort(context,e.getMessage());
                         dismissDialog();
                     }
 
                     @Override
                     public void onNext(LoginResult loginResult) {
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, "helpd_user_"+loginResult.getUser_id()));
                         SharedPreferenceUtils.setParam(context,CONFIRM_STATE,loginResult.getState());
                         SharedPreferenceUtils.setParam(context,USERNAME,et_username.getText().toString());
                         SharedPreferenceUtils.setParam(context,USER_NAME,loginResult.getUser_name());
                         SharedPreferenceUtils.setParam(context,USER_MOBILE,loginResult.getMobile());
                         SharedPreferenceUtils.setParam(context,USER_EMAIL,loginResult.getEmail());
+                        SharedPreferenceUtils.setParam(context,"apitoken",loginResult.getApitoken());
+                        SharedPreferenceUtils.setParam(context,"user_id",loginResult.getUser_id());
+                        SharedPreferenceUtils.setParam(context,"user_name",loginResult.getUser_name());
+                        SharedPreferenceUtils.setParam(context,"isLogin",true);
+                        SharedPreferenceUtils.setParam(context,"avatar",loginResult.getAvatar());
                         if (isRemember){
                             SharedPreferenceUtils.setParam(context,PASSWORD,et_password.getText().toString());
                         }else {
                             SharedPreferenceUtils.setParam(context,PASSWORD,"");
                         }
-                        try {
-                            initAlis(loginResult);
-                        } catch (NoSuchAlgorithmException e) {
-                            e.printStackTrace();
-                        }
+                        ActivityFactory.gotoMain(context);
                     }
                 });
 
     }
 
-    /**
-     * 设置极光推送Alis
-     */
-    public void initAlis(LoginResult loginResult) throws NoSuchAlgorithmException {
-//        String alis=getMD5("helpd_user_"+ali);
-//        Log.e("zyh","别名："+loginResult.getUser_id());
-        showDialog();
-        JPushInterface.setAlias(getApplicationContext(), "helpd_user_"+loginResult.getUser_id(), new TagAliasCallback() {
-            @Override
-            public void gotResult(int i, String s, Set<String> set) {
-                if (i != 0){
-                    toastShow("别名错误");
-                }else {
-                    SharedPreferenceUtils.setParam(context,"apitoken",loginResult.getApitoken());
-                    SharedPreferenceUtils.setParam(context,"user_id",loginResult.getUser_id());
-                    SharedPreferenceUtils.setParam(context,"user_name",loginResult.getUser_name());
-                    SharedPreferenceUtils.setParam(context,"isLogin",true);
-                    SharedPreferenceUtils.setParam(context,"avatar",loginResult.getAvatar());
-                    ActivityFactory.gotoMain(context);
-                    finish();
-                }
-                dismissDialog();
+    private static final int MSG_SET_ALIAS = 1001;
+    private final Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case MSG_SET_ALIAS:
+                    Log.d("Login", "Set alias in handler.");
+                    // 调用 JPush 接口来设置别名。
+                    JPushInterface.setAlias(context,(String) msg.obj,mAliasCallback);
+                    break;
+                default:
+                    Log.i("Login", "Unhandled msg - " + msg.what);
             }
-        });
-    }
-    public static String getMD5(String val) throws NoSuchAlgorithmException {
-        MessageDigest md5 = MessageDigest.getInstance("MD5");
-        md5.update(val.getBytes());
-        byte[] m = md5.digest();//加密
-        return getString(m);
-    }
-    private static String getString(byte[] b){
-        StringBuffer sb = new StringBuffer();
-        for(int i = 0; i < b.length; i ++){
-            sb.append(b[i]);
         }
-        return sb.toString();
-    }
+    };
+    //设置别名
+    private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
+        @Override
+        public void gotResult(int code, String alias, Set<String> tags) {
+            String logs;
+            switch (code) {
+                case 0:
+                    logs = "Set tag and alias success";
+                    Log.i("Login", logs);
+                    ToastUtils.showShort(context,"登录成功");
+                    // 建议这里往 SharePreference 里写一个成功设置的状态。成功设置一次后，以后不必再次设置了。
+                    break;
+                case 6002:
+                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
+                    Log.i("Login", logs);
+                    // 延迟 60 秒来调用 Handler 设置别名
+                    mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
+                    break;
+                default:
+                    logs = "Failed with errorCode = " + code;
+                    Log.i("Login", logs);
+            }
+        }
+    };
 }

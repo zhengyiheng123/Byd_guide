@@ -52,7 +52,7 @@ public class SingleChooseActivity extends BaseActivity {
                     }
                 }
                 if (tempList.size()>0){
-                    ActivityFactory.gotoOrder(context,"0",res_name,"",null,logo,res_id,tempList);
+                    ActivityFactory.gotoOrderSingle(context,"0",res_name,logo,res_id,tempList);
                 }else {
                     toastShow("请选择条目");
                 }

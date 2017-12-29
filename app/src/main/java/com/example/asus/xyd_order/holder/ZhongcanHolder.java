@@ -40,7 +40,11 @@ public class ZhongcanHolder extends BaseViewHolder<RestaurantBean.RestaurantsBea
         Glide.with(context).load(BaseApi.getBaseUrl()+s.getLogo_path()).into(iv_img);
         tv_name.setText(s.getRes_name());
         if (s.getDistance()!=null){
-            tv_distance.setText("距您"+s.getDistance()+"米");
+            if (Double.valueOf(s.getDistance())/1000 == 0){
+                tv_distance.setVisibility(View.GONE);
+            }else {
+                tv_distance.setText("距您"+(Double.valueOf(s.getDistance())/1000)+"千米");
+            }
         }
         switch (s.getMeal_type()){
             case 1:

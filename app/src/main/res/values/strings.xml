@@ -12,6 +12,7 @@
     <string name="locating">正在定位</string>
     <string name="located_failed">定位失败</string>
     <string name="hot_city">热门城市</string>
+    <string name="my_closest">离我最近</string>
 
     <string-array name="area_code">
         <item>Afghanistan +93</item>

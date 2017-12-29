@@ -63,7 +63,8 @@ public class Activity_Geted_Orders_Details extends BaseActivity {
 
     @Bind(R.id.tv_company)
     TextView tv_company;
-
+    @Bind(R.id.tv_peoplenum)
+    TextView tv_peoplenum;
     @Bind(R.id.tv_time)
     TextView tv_time;
 
@@ -216,6 +217,7 @@ public class Activity_Geted_Orders_Details extends BaseActivity {
                         tv_all_money.setText("总报价："+bean.getPrice());
                         tv_company.setText("所属旅行社："+bean.getCompany());
                         tv_details.setText(bean.getDmd_desc());
+                        tv_peoplenum.setText("人数或座位数："+bean.getPeople_number());
                         tv_publish_man.setText("发布人："+bean.getUser_name());
                         tv_time.setText("开始/结束:"+ TimeUtils.stampToDateS(bean.getStart_time()+"")+"——"+TimeUtils.stampToDateS(bean.getEnd_time()+""));
                         StringBuffer countrys = new StringBuffer("目标国家：");
@@ -225,6 +227,9 @@ public class Activity_Geted_Orders_Details extends BaseActivity {
                             tv_country.setText(countrys);
                         int level=bean.getLevel_req();
                         switch (level){
+                            case 0:
+                                tv_level.setText("无级别限制");
+                                break;
                             case 1:
                                 tv_level.setText("一级");
                                 break;

@@ -16,6 +16,7 @@ import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
+import com.example.asus.xyd_order.net.result.RegionsBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ import rx.schedulers.Schedulers;
 public class CityActivity extends BaseActivity {
 
     private ListView lv_city;
-    private List<CityListBean.RegionsBean> cityList;
+    private List<RegionsBean> cityList;
     private BaseArrayAdapter adapter;
     private View view;
 
@@ -83,7 +84,7 @@ public class CityActivity extends BaseActivity {
         },cityList);
         lv_city.setAdapter(adapter);
     }
-    private CityListBean.RegionsBean cityBean;
+    private RegionsBean cityBean;
     @Override
     public void setEvent() {
         lv_city.setOnItemClickListener((adapterView, view1, i, l) -> {

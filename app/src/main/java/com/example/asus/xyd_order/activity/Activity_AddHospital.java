@@ -19,6 +19,7 @@ import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
+import com.example.asus.xyd_order.net.result.RegionsBean;
 import com.nanchen.compresshelper.CompressHelper;
 
 import java.io.File;
@@ -77,7 +78,7 @@ public class Activity_AddHospital extends BaseActivity {
     private ArrayAdapter<String> adapter1;
 
     private List<String> mList=new ArrayList<>();
-    private List<CityListBean.RegionsBean> cityList=new ArrayList<>();
+    private List<RegionsBean> cityList=new ArrayList<>();
     //国家id
     private String region_id;
     private String pat;

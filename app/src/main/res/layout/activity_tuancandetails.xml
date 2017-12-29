@@ -35,7 +35,7 @@
             <com.recker.flybanner.FlyBanner
                 android:id="@+id/banner_1"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"/>
+                android:layout_height="170dp"/>
             <RelativeLayout
                 android:background="@color/white"
                 android:layout_width="match_parent"

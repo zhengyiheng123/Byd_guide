@@ -61,7 +61,7 @@ public class Activity_Register_confirm extends BaseActivity {
     private String nine_sidao;
     private String translate;
     //性别
-    private String sex="";
+    private String sex="1";
     //从业日期
     private String attend_time="";
     private LinearLayout ll_ishave_car;
@@ -268,6 +268,9 @@ public class Activity_Register_confirm extends BaseActivity {
                     @Override
                     public void onNext(ConfirmUserInfo confirmUserInfo) {
                         SharedPreferenceUtils.setParam(context,LoginActivity.CONFIRM_STATE,confirmUserInfo.getState());
+                        SharedPreferenceUtils.setParam(context,"user_id",confirmUserInfo.getUser_id());
+                        SharedPreferenceUtils.setParam(context,"user_name",confirmUserInfo.getUser_name());
+                        SharedPreferenceUtils.setParam(context,"isLogin",true);
                         toastShow("注册完成");
                         finish();
                     }

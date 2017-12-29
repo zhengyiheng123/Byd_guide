@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 <include layout="@layout/include_details_title"/>
     <ScrollView
+        android:layout_marginTop="@dimen/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
@@ -36,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/iv_img_meal" />
+                    android:layout_toRightOf="@+id/iv_img_meal" />
                 <TextView
                     android:id="@+id/tv_meal_info"
                     android:layout_marginLeft="8dp"
@@ -313,8 +314,7 @@
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    />
+                    android:layout_alignParentRight="true" />
             </RelativeLayout>
             <RelativeLayout
                 android:gravity="center_vertical"
@@ -341,8 +341,7 @@
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    />
+                    android:layout_alignParentRight="true" />
             </RelativeLayout>
             <RelativeLayout
                 android:visibility="gone"
@@ -398,40 +397,39 @@
                         />
                 </FrameLayout>
             </RelativeLayout>
-            <RelativeLayout
-                android:padding="8dp"
-                android:background="@color/white"
-                android:layout_gravity="bottom"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <TextView
-                    android:id="@+id/tv_all_money"
-                    android:textColor="@color/tool_bar_color"
-                    android:textSize="15sp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="总计:--元"
-                    />
-                <TextView
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingBottom="4dp"
-                    android:paddingTop="4dp"
-                    android:clickable="true"
-                    android:id="@+id/btn_order"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/material_grey_200"
-                    android:background="@drawable/shape_order_now"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/actionbarSize"
-                    android:text="立即预定"
-                    />
-            </RelativeLayout>
         </LinearLayout>
         <!--</com.lany.msv.MultiStateView>-->
     </ScrollView>
-</LinearLayout>
+    <RelativeLayout
+        android:padding="8dp"
+        android:background="@color/white"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/tv_all_money"
+            android:textColor="@color/tool_bar_color"
+            android:textSize="15sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总计:--元"
+            />
+        <TextView
+            android:gravity="center"
+            android:textSize="16sp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            android:clickable="true"
+            android:id="@+id/btn_order"
+            android:textColor="@color/material_grey_200"
+            android:background="@drawable/shape_order_now"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/actionbarSize"
+            android:text="立即预定"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+</FrameLayout>

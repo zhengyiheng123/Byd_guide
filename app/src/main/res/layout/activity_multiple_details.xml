@@ -38,7 +38,7 @@
                 <TextView
                     android:visibility="gone"
                     android:text="距离我1KM"
-                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </RelativeLayout>
@@ -79,7 +79,7 @@
                     android:layout_alignParentRight="true" />
             </RelativeLayout>
             <TextView
-                android:background="@color/white"
+                android:layout_marginLeft="32dp"
                 android:id="@+id/tv_details"
                 android:paddingRight="8dp"
                 android:paddingLeft="8dp"

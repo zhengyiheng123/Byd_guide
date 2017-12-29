@@ -1,6 +1,7 @@
 package com.example.asus.xyd_order.fragment;
 
 import android.annotation.SuppressLint;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,6 +17,7 @@ import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.MyOrderBean;
+import com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout;
 import com.example.asus.xyd_order.utils.ActivityFactory;
 import com.example.asus.xyd_order.utils.StringUtils;
 
@@ -32,8 +34,9 @@ import rx.schedulers.Schedulers;
  */
 
 @SuppressLint("ValidFragment")
-public class Myorder_Fragment extends BaseFragment {
+public class Myorder_Fragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
     private String num;
+    private RefreshLayout refresh;
 
     public Myorder_Fragment(String num){
         this.num=num;
@@ -50,12 +53,13 @@ public class Myorder_Fragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        getNetData();
+        onRefresh();
     }
 
     @Override
     public void initView(View view) {
         lv_all = (ListView) view.findViewById(R.id.lv_all);
+        refresh = (RefreshLayout) view.findViewById(R.id.refresh);
         TextView tv_empty= (TextView) view.findViewById(R.id.tv_empty);
         lv_all.setEmptyView(tv_empty);
         adapter = new BaseArrayAdapter(context, new BaseArrayAdapter.OnCreateViewHolderListener() {
@@ -64,7 +68,8 @@ public class Myorder_Fragment extends BaseFragment {
                 return new MyOrder_All_Holder();
             }
         },mList);
-        lv_all.setAdapter(adapter);
+        refresh.setAdapter(adapter,lv_all);
+        refresh.setOnRefreshListener(this);
     }
 
     @Override
@@ -96,12 +101,14 @@ public class Myorder_Fragment extends BaseFragment {
                     @Override
                     public void onCompleted() {
                         dismissDialog();
+                        refresh.setRefreshing(false);
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         toastShow(e.getMessage());
                         dismissDialog();
+                        refresh.setRefreshing(false);
                     }
 
                     @Override
@@ -109,12 +116,19 @@ public class Myorder_Fragment extends BaseFragment {
                         mList.clear();
                         mList.addAll(myOrderBean.getOrders());
                         adapter.notifyDataSetChanged();
-                        if (num.equals("-1")){
+                        if (num.equals("1")){
                             if (mList.size()>0){
-                                MyOrdersActivity.instance.setMsgRedPoint();
+                                MyOrdersActivity.instance.setMsgRedPoint(true);
+                            }else {
+                                MyOrdersActivity.instance.setMsgRedPoint(false);
                             }
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onRefresh() {
+        getNetData();
     }
 }

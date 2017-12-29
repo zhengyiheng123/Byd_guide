@@ -54,8 +54,6 @@ import rx.schedulers.Schedulers;
  */
 public class ZhongcanDetailsActivity extends BaseActivity {
     //初始化控件
-    private ChildViewPager vp_zhongcan_details;
-    private List<BaseFragment> fragmentList;
     private FlyBanner banner_1;
     private ArrayList<String> bannerList = new ArrayList<>();
     private ScrollView sc_zhongcan;
@@ -194,7 +192,7 @@ public class ZhongcanDetailsActivity extends BaseActivity {
     AdapterView.OnItemClickListener onItemClickListener=new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            ActivityFactory.goToMultipleDetails(context,bean1.getGroup_meal().get(i),bean1.getRes_name());
+            ActivityFactory.goToMultipleDetails(context,bean1.getGroup_meal().get(i),bean1.getRes_name(),bean1.getRes_id()+"");
         }
     };
 

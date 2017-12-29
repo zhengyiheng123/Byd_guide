@@ -42,6 +42,7 @@
         android:name=".app.APP"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -75,7 +76,9 @@
         <!--发送消息-->
         <activity android:name=".activity.SendMessageActivity"/>
         <!--预定结束-->
-        <activity android:name=".activity.ConfirmOrderActivity"/>
+        <activity android:name=".activity.ConfirmOrderActivity"
+            android:launchMode="singleTask"
+            />
         <!--取消预订页面-->
         <activity android:name=".activity.CancelOrderActivity"/>
         <!--单选页面-->
@@ -252,10 +255,20 @@
         <!-- Rich push 核心功能 since 2.0.6-->
         <activity
             android:name="cn.jpush.android.ui.PopWinActivity"
-            android:theme="@style/MyDialog"
-            android:exported="false">
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@style/MyDialog">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.example.asus.xyd_order" />
+            </intent-filter>
         </activity>
-
+        <!-- Required SDK核心功能-->
+        <service
+            android:name="cn.jpush.android.service.DownloadService"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
         <!-- Required SDK核心功能-->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
@@ -283,7 +296,12 @@
                 <action android:name="cn.jpush.android.intent.PUSH_TIME" />
             </intent-filter>
         </service>
-
+        <!-- since 3.0.9 Required SDK 核心功能-->
+        <provider
+            android:authorities="com.example.asus.xyd_order.DataProvider"
+            android:name="cn.jpush.android.service.DataProvider"
+            android:exported="true"
+            />
         <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
         <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
         <service
@@ -359,6 +377,8 @@
         <activity android:name=".areacode.AreaCodeActivity" />
         <activity android:name=".selectcity.SelectCityActivity" />
         <activity android:name=".selectcity.SelectCountryActivity" />
+        <activity android:name=".activity.CantingActivity" />
+        <activity android:name=".activity.JingDianActivity" />
     </application>
 
 </manifest>

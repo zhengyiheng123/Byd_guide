@@ -6,10 +6,8 @@ package com.example.asus.xyd_order.net;
  */
 public class BaseApi {
     public static boolean isDebug = true;
-//    public static String baseTestUrl="http://toefl21.xiaomajj.com/service/";
-//    public static String baseTestUrl="https://123.56.67.225:6443/";
-//    public static String baseTestUrl="http://192.168.1.30:6080/";
-    public static String baseOnlineUrl="http://helpd.firelord.xin/";
+//    public static String baseOnlineUrl="http://helpd.cinyida.com/";
+    public static String baseOnlineUrl="http://helpd.longxiangshengwu.com/";
 
     /**
      * 返回baseurl

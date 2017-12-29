@@ -131,33 +131,47 @@ public static void gotoMain(Context context){
         context.startActivity(intent);
     }
     /**
-     * 跳转到预定页面
+     * 跳转到团餐预定界面
      */
-    public static void gotoOrder(Context context, String mode, String res_name, String meal_name, TuancanBean.PriceListBean bean,String img_path,String mer_id,List<RestaurantDetailsBean.SingleMealBean> templist){
+    public static void gotoOrder(Context context, String mode, String res_name, TuancanBean.PriceListBean bean,String res_id){
         intent=new Intent(context, OrderActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         //mode 1团餐   0单点
         intent.putExtra("mode",mode);
-        List<RestaurantDetailsBean.SingleMealBean> tempList=templist;
-        intent.putExtra("templist",(Serializable) templist);
-        intent.putExtra("mer_id",mer_id);
         intent.putExtra("res_name",res_name);
-        intent.putExtra("meal_name",meal_name);
-        intent.putExtra("img_path",img_path);
+        intent.putExtra("mer_id",res_id);
         Bundle bundle=new Bundle();
         bundle.putSerializable("price_bean",bean);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
     /**
+     * 跳转到单点预定界面
+     */
+    public static void gotoOrderSingle(Context context, String mode, String res_name, String img_path,String mer_id,List<RestaurantDetailsBean.SingleMealBean> templist){
+        intent=new Intent(context, OrderActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //mode 1团餐   0单点
+        intent.putExtra("mode",mode);
+        intent.putExtra("templist",(Serializable) templist);
+        intent.putExtra("mer_id",mer_id);
+        intent.putExtra("res_name",res_name);
+        intent.putExtra("img_path",img_path);
+        Bundle bundle=new Bundle();
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
+
+    /**
      * 跳转到团餐详情页面
      */
-    public static void goToMultipleDetails(Context context,RestaurantDetailsBean.GroupMealBean groupMeal,String res_name){
+    public static void goToMultipleDetails(Context context,RestaurantDetailsBean.GroupMealBean groupMeal,String res_name,String res_id){
         intent=new Intent(context, MultipleDetailsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle bundle=new Bundle();
         bundle.putSerializable("groupMeal",groupMeal);
         intent.putExtra("res_name",res_name);
+        intent.putExtra("res_id",res_id);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }

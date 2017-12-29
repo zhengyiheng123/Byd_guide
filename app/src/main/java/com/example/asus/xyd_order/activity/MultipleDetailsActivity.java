@@ -50,6 +50,8 @@ public class MultipleDetailsActivity extends BaseActivity {
     private TextView tv_title;
     private RestaurantDetailsBean.GroupMealBean groupMeal;
     private String res_name;
+    private String res_id;
+
     @Override
     public void myOnclick(View view) {
         switch (view.getId()){
@@ -59,7 +61,8 @@ public class MultipleDetailsActivity extends BaseActivity {
                 selectedBean.setMeal_detail(groupMeal.getMeal_detail());
                 selectedBean.setMeal_price(groupMeal.getMeal_price());
                 selectedBean.setMp_id(groupMeal.getMeal_id());
-                    ActivityFactory.gotoOrder(context,"1",res_name,groupMeal.getMeal_name(),selectedBean,groupMeal.getImg_path(),groupMeal.getMeal_id()+"",null);
+                selectedBean.setImg_path(groupMeal.getImg_path());
+                ActivityFactory.gotoOrder(context,"1",res_name,selectedBean,res_id);
                 break;
 }
     }
@@ -80,10 +83,12 @@ public class MultipleDetailsActivity extends BaseActivity {
 
     @Override
     public int getData() throws Exception {
+        //餐厅名称
         res_name = getIntent().getStringExtra("res_name");
+        //餐厅id
+        res_id = getIntent().getStringExtra("res_id");
         //团餐id
         groupMeal = (RestaurantDetailsBean.GroupMealBean) getIntent().getExtras().getSerializable("groupMeal");
-//        getNetData();
         return 0;
     }
 

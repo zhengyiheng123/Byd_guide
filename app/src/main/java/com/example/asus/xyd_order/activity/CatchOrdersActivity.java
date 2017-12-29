@@ -189,6 +189,9 @@ public class CatchOrdersActivity extends BaseActivity {
                         tv_country.setText(countrys);
                         int level=bean.getLevel_req();
                         switch (level){
+                            case 0:
+                                tv_level.setText("无级别限制");
+                                break;
                             case 1:
                                 tv_level.setText("一级");
                                 break;

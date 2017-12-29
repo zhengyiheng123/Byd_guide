@@ -31,7 +31,7 @@ public class ConfirmDialog extends AlertDialog.Builder {
                 dialogInterface.dismiss();
             }
         });
-        setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        setPositiveButton("去认证", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 context.startActivity(new Intent(context, Activity_Register_confirm.class) );

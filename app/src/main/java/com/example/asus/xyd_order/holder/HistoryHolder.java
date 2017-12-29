@@ -22,6 +22,8 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 /**
  * Created by Zheng on 2017/6/26.
  */
@@ -137,6 +139,7 @@ public class HistoryHolder extends BaseViewHolder<History_Mode.SamplesBean> impl
             case R.id.republish:
                 Intent intent=new Intent(context, Activity_Sample_Details.class);
                 intent.putExtra("ds_id",bean.getDs_id()+"");
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
                 break;
         }

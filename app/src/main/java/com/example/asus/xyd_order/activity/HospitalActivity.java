@@ -20,6 +20,7 @@ import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.HospitaiDetails;
 import com.example.asus.xyd_order.net.result.HospitalBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
+import com.example.asus.xyd_order.net.result.RegionsBean;
 import com.example.asus.xyd_order.selectcity.SelectCityActivity;
 import com.example.asus.xyd_order.ui.SelectPopWindow;
 import com.example.asus.xyd_order.utils.ActivityFactory;
@@ -56,7 +57,7 @@ public class HospitalActivity extends BaseActivity {
     private BaseArrayAdapter adapter;
     private TextView tv_month;
 
-    private List<CityListBean.RegionsBean> countryList=new ArrayList<>();
+    private List<RegionsBean> countryList=new ArrayList<>();
     @Override
     public void myOnclick(View view) {
         Intent intent;

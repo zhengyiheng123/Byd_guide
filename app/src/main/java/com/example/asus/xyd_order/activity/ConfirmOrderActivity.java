@@ -1,5 +1,7 @@
 package com.example.asus.xyd_order.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -9,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseActivity;
 import com.example.asus.xyd_order.dialog.CommonDialog;
+import com.example.asus.xyd_order.fragment.MyOrdersActivity;
 import com.example.asus.xyd_order.net.BaseApi;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
@@ -23,6 +26,8 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
  * Created by Zheng on 2017/2/27.
@@ -84,15 +89,30 @@ public class ConfirmOrderActivity extends BaseActivity {
 
     @Bind(R.id.tv_title)
     TextView tv_title;
+
+    @Bind(R.id.tv_pay_now)
+    TextView tv_pay_now;
     private String ord_id;
+    private Intent intent;
+    private Order_Info_Bean bean;
+    private Order_Info_Bean bean1;
 
 
     @Override
     public void myOnclick(View view) {
         switch (view.getId()){
             case R.id.tv_cancel_order:
-                commonDialog = new CommonDialog(ConfirmOrderActivity.this, R.style.MyDialog);
-                commonDialog.show();
+//                commonDialog = new CommonDialog(ConfirmOrderActivity.this, R.style.MyDialog);
+//                commonDialog.show();
+                Intent intent=new Intent(getApplicationContext(),CancelActivity.class);
+                intent.putExtra("ord_id",bean1.getOrd_id()+"");
+                intent.putExtra("cancel_type","1");
+                startActivity(intent);
+                break;
+            case R.id.tv_pay_now:
+                intent =new Intent(context, MyOrdersActivity.class);
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 break;
         }
     }
@@ -123,6 +143,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     @Override
     public void setEvent() {
         tv_cancel_order.setOnClickListener(this);
+        tv_pay_now.setOnClickListener(this);
         iv_bacl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,6 +180,7 @@ public class ConfirmOrderActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Order_Info_Bean order_info_bean) {
+                        bean1 = order_info_bean;
                         if(order_info_bean.getMeal_type().equals("2")){
                             rl_single.setVisibility(View.GONE);
                         }
@@ -211,6 +233,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                                 case 1:
                                     tv_order_status.setText("待付款");
                                     tv_order_info.setText("商家已接单，请尽快付款");
+                                    tv_pay_now.setVisibility(View.VISIBLE);
                                     break;
                                 case 2:
                                     tv_order_status.setText("已付款");

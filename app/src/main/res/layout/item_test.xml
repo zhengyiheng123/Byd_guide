@@ -10,7 +10,7 @@
         android:layout_marginTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="团号：9090909"
+        android:text="团号："
         android:id="@+id/tv_groupnum" />
     <TextView
         android:paddingBottom="4dp"
@@ -45,7 +45,7 @@
             android:id="@+id/tv_country"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="法国"
+            android:text=""
             />
         <View
             android:layout_marginRight="16dp"
@@ -58,7 +58,7 @@
             android:id="@+id/tv_service_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="公务"
+            android:text=""
             />
         <View
             android:layout_marginRight="16dp"
@@ -71,7 +71,7 @@
             android:id="@+id/tv_car_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="9座司导"
+        android:text=""
         />
         <View
             android:layout_marginRight="16dp"
@@ -84,7 +84,7 @@
             android:id="@+id/tv_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="二级"
+            android:text=""
             />
     </LinearLayout>
     <TextView
@@ -95,7 +95,7 @@
         android:layout_below="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="开始：9:00--20:00"
+        android:text="开始："
         android:layout_alignStart="@+id/linearLayout2"
         android:layout_alignEnd="@+id/linearLayout2"
         android:id="@+id/tv_time"
@@ -107,7 +107,7 @@
         android:layout_below="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="订单号:8080808"
+        android:text="订单号:"
         android:layout_alignStart="@+id/tv_time"
         android:layout_alignLeft="@+id/tv_time" />
 </RelativeLayout>

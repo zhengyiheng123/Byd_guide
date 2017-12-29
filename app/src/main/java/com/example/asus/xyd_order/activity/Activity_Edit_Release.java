@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.bumptech.glide.Glide;
 import com.example.asus.xyd_order.R;
 import com.example.asus.xyd_order.base.BaseActivity;
+import com.example.asus.xyd_order.eventbus.PushData;
 import com.example.asus.xyd_order.net.BaseApi;
 import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
@@ -26,12 +28,16 @@ import com.example.asus.xyd_order.net.result.Demand_Details_Bean;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.PushEntity;
 import com.example.asus.xyd_order.ui.CircleImageView;
+import com.example.asus.xyd_order.utils.NotiUtils;
 import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 import com.example.asus.xyd_order.utils.TimeUtils;
 import com.example.asus.xyd_order.utils.ToastUtils;
 import com.example.asus.xyd_order.utils.common.PermissionManager;
 import com.example.asus.xyd_order.utils.common.PermissionResult;
 import com.nanchen.compresshelper.CompressHelper;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.text.ParseException;
@@ -159,11 +165,22 @@ public class Activity_Edit_Release extends BaseActivity {
     LinearLayout ll_ord_status;
     @Bind(R.id.et_ord_status)
     EditText et_ord_status;
+    @Bind(R.id.tv_seats)
+    EditText tv_seats;
     private ImageView iv_call,iv_message;
     private Demand_Details_Bean.ReplyUserInfoBean userInfoBean;
     private TimePickerView pvTime;
     private String startTime;
     private String endTime;
+
+    public  static Activity_Edit_Release instance;
+    private PushEntity entity;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        instance=this;
+    }
 
     @Override
     public void myOnclick(View view) {
@@ -276,7 +293,7 @@ public class Activity_Edit_Release extends BaseActivity {
     public void setToolbar() {
         ImageView iv_back= (ImageView) findViewById(R.id.iv_back);
         TextView tv_title= (TextView) findViewById(R.id.tv_title);
-        tv_title.setText("编辑需求");
+        tv_title.setText("需求详情");
         iv_back.setOnClickListener(v -> onBackPressed());
         tv_submit.setText("保存");
     }
@@ -286,11 +303,32 @@ public class Activity_Edit_Release extends BaseActivity {
         return R.layout.activity_edit_release;
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+    @Subscribe
+    public void onEvent(PushData data){
+        PushEntity entity=data.getEntity();
+        entity.getOrd_status();
+        Log.e("zyh","返回数据：订单状态："+entity.getOrd_status()+" 订单id："+entity.getOrd_id());
+    }
     @Override
     public int getData() throws Exception {
-        dmd_id = getIntent().getStringExtra("dmd_id");
-        ord_status = getIntent().getStringExtra("ord_status");
+
+        //注册eventbus
+        EventBus.getDefault().register(this);
+        entity = (PushEntity) getIntent().getSerializableExtra(NotiUtils.PUSH_DATA);
+            if (entity !=null){
+                dmd_id=entity.getOrd_id();
+                ord_status=entity.getOrd_status();
+            }else {
+                dmd_id = getIntent().getStringExtra("dmd_id");
+                ord_status = getIntent().getStringExtra("ord_status");
+            }
+
+//        Log.e("zyh","普通订单详情页：订单号："+entity.getOrd_id()+" ,"+"订单状态："+entity.getOrd_status());
 //        ord_status 订单状态 -2|发布者取消 -1|接受者取消 0|待接单 1|已被接单 2|已完成 3|已评价
         builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         token = (String) SharedPreferenceUtils.getParam(context,"apitoken","");
@@ -355,6 +393,9 @@ public class Activity_Edit_Release extends BaseActivity {
                     break;
                 case 0:
                     //待接单
+                    et_phonenum.setEnabled(true);
+                    et_total_money.setEnabled(true);
+                    et_lvxingshe.setEnabled(true);
                     ll_ord_status.setVisibility(View.VISIBLE);
                     et_ord_status.setText("待接单");
                     tv_submit.setVisibility(View.VISIBLE);
@@ -404,6 +445,7 @@ public class Activity_Edit_Release extends BaseActivity {
                     .addFormDataPart("service_type",service_type+"")
                     .addFormDataPart("target_country",countryId)
                     .addFormDataPart("level_req",level_req+"")
+                    .addFormDataPart("people_numer",tv_seats.getText().toString())
                     .addFormDataPart("dmd_area",dmd_area+"")
                     .addFormDataPart("start_time",startTime)
                     .addFormDataPart("end_time",endTime)
@@ -416,32 +458,8 @@ public class Activity_Edit_Release extends BaseActivity {
         return builder.build();
     }
     private void inialize() {
-        ll_user_info = (LinearLayout) findViewById(R.id.ll_user_info);
-        tv_cancel= (TextView) findViewById(R.id.tv_cancel);
         iv_call = (ImageView) findViewById(R.id.iv_call);
         iv_message= (ImageView) findViewById(R.id.iv_message);
-        tv_name= (TextView) findViewById(R.id.tv_name);
-        et_name= (EditText) findViewById(R.id.et_name);
-        tv_phone= (TextView) findViewById(R.id.tv_phone);
-        et_phonenum = (EditText) findViewById(R.id.et_phonenum);
-        et_tuan_num= (EditText) findViewById(R.id.et_tuan_num);
-        et_lvxingshe= (EditText) findViewById(R.id.et_lvxingshe);
-        tv_team_type = (TextView) findViewById(R.id.tv_team_type);
-        tv_birth= (TextView) findViewById(R.id.tv_birth);
-        et_details= (EditText) findViewById(R.id.et_details);
-        et_total_money= (EditText) findViewById(R.id.et_total_money);
-        et_route_details= (EditText) findViewById(R.id.et_route_details);
-        tv_service_content= (TextView) findViewById(R.id.tv_service_content);
-        tv_sex= (TextView) findViewById(R.id.tv_sex);
-        tv_target_country= (TextView) findViewById(R.id.tv_target_country);
-        tv_level= (TextView) findViewById(R.id.tv_level);
-        tv_start= (TextView) findViewById(R.id.tv_start);
-        tv_end= (TextView) findViewById(R.id.tv_end);
-        tv_file= (TextView) findViewById(R.id.tv_file);
-        mLlContainer = (LinearLayout) findViewById(R.id.ll_container);
-        tv_paytype= (TextView) findViewById(R.id.tv_paytype);
-        tv_dmd_area= (TextView) findViewById(R.id.tv_dmd_area);
-        iv_head = (CircleImageView) findViewById(R.id.iv_head);
 
     }
 
@@ -517,6 +535,7 @@ public class Activity_Edit_Release extends BaseActivity {
 
                         et_total_money.setText(bean.getPrice());
                         et_tuan_num.setText(bean.getGroup_num());
+                        tv_seats.setText(bean.getPeople_number()==null?"":bean.getPeople_number());
                         int dmd_area1=bean.getDmd_area();
                         dmd_area=dmd_area1;
                         switch (dmd_area1){
@@ -587,6 +606,9 @@ public class Activity_Edit_Release extends BaseActivity {
                         int level_req1=bean.getLevel_req();
                         level_req=level_req1;
                         switch (level_req1){
+                            case 0:
+                                tv_level.setText("无级别要求");
+                                break;
                             case 1:
                                 tv_level.setText("一级");
                                 break;

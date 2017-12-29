@@ -447,20 +447,19 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true">
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true">
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                    <CheckBox
+                        android:checked="true"
+                        android:id="@+id/cb_check"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/shape_circle"></ImageView>
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/ic_choose"></ImageView>
+                        android:button="@null"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/checkbox"
+                        android:layout_alignParentRight="true"
+                        />
                 </FrameLayout>
             </RelativeLayout>
         </LinearLayout>

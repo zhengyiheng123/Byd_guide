@@ -47,7 +47,6 @@ public class AttractionDetailsNomal extends BaseActivity {
     private FlyBanner flybanner;
     private RatingBar ratingbar;
 
-    private String mer_id="";
     private BaseArrayAdapter commentAdapter;
     private JingDianDetails bean;
     private ImageView iv_img;
@@ -59,7 +58,7 @@ public class AttractionDetailsNomal extends BaseActivity {
         switch (view.getId()){
             case R.id.tv_order:
                 if (bean.getIs_bookable() == 1){
-                    ActivityFactory.selectRoutes(context,mer_id);
+                    ActivityFactory.selectRoutes(context,scene_id);
                 }else {
                     toastShow("当前景点为窗口售票");
                 }
@@ -178,7 +177,6 @@ public class AttractionDetailsNomal extends BaseActivity {
                             flybanner.setImagesUrl(bannerList);
                         }
                         flybanner.startAutoPlay();
-                        mer_id=jingDianDetails.getScene_id()+"";
                         tv_title.setText(jingDianDetails.getScene_name());
                         tv_name.setText(jingDianDetails.getScene_name());
                         tv_address.setText(jingDianDetails.getAddress());
@@ -199,7 +197,7 @@ public class AttractionDetailsNomal extends BaseActivity {
      * 获取评论列表信息
      */
     private void getComments(){
-        Observable<HttpResult<CommentBean>> result=ServiceApi.getInstance().getServiceContract().commentJingquList(apitoken,mer_id);
+        Observable<HttpResult<CommentBean>> result=ServiceApi.getInstance().getServiceContract().commentJingquList(apitoken,scene_id);
         result.map(new ResultFilter<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

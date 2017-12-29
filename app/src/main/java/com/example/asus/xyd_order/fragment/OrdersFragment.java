@@ -48,6 +48,8 @@ public class OrdersFragment extends BaseFragment {
         inializeView(view);
         ImageView iv_back= (ImageView) view.findViewById(R.id.iv_back);
         iv_back.setVisibility(View.GONE);
+        TextView tv_title= (TextView) view.findViewById(R.id.tv_title);
+        tv_title.setText("订单");
     }
 
     private void inializeView(View v) {

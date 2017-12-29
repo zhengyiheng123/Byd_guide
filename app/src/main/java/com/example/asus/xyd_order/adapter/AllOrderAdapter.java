@@ -127,6 +127,9 @@ public class AllOrderAdapter extends BaseAdapter implements View.OnClickListener
             holder.tv_cancel_state.setVisibility(View.VISIBLE);
         }
         switch (level){
+            case 0:
+                holder.tv_level.setText("无级别");
+                break;
             case 1:
                 holder.tv_level.setText("一级");
                 break;
@@ -220,8 +223,6 @@ public class AllOrderAdapter extends BaseAdapter implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.cancel:
-//                CommonDialog dialog=new CommonDialog(context,R.style.MyDialog);
-//                dialog.show();
                 AlertDialog.Builder builder=new AlertDialog.Builder(context);
                 builder.setMessage("确认取消吗");
                 builder.setNegativeButton("取消", (dialog, which) -> {dialog.dismiss();});
@@ -297,7 +298,8 @@ public class AllOrderAdapter extends BaseAdapter implements View.OnClickListener
      */
     private void cancel(View view){
 //        ToastUtils.show(context,view.getTag()+"",0);
-        Observable<HttpResult> result= ServiceApi.getInstance().getServiceContract().cancelDemand(token,mList.get((int)view.getTag()).getDmd_id()+"");
+        String dmd_id=mList.get((int)view.getTag()).getDmd_id()+"";
+        Observable<HttpResult> result= ServiceApi.getInstance().getServiceContract().cancelDemand(token,dmd_id);
         result.map(new ResultFilter())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

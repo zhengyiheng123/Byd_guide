@@ -1,6 +1,7 @@
 package com.example.asus.xyd_order.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.CategoryBean;
 import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
+import com.example.asus.xyd_order.net.result.RegionsBean;
 import com.example.asus.xyd_order.net.result.RestaurantBean;
 import com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout;
 import com.example.asus.xyd_order.ui.MyListView;
@@ -89,6 +91,7 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
     //正在刷新
     public boolean isrefreshing;
     private String region_id;
+    private ImageView iv_img;
     //    private TextView tv_empty;
 
     @Override
@@ -153,6 +156,9 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
                     }
                 });
                 break;
+            case R.id.iv_img:
+                startActivity(new Intent(getApplicationContext(),CantingActivity.class));
+                break;
         }
     }
 
@@ -170,9 +176,6 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
         iv_back.setOnClickListener(v -> {onBackPressed();});
     }
 
-    private void initAllCategoryPop() {
-        popWindow=null;
-    }
 
     private void setBg(TextView tv, RelativeLayout rl) {
         tv.setTextColor(getResources().getColor(R.color.tool_bar_color));
@@ -189,7 +192,7 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
     public int getData() throws Exception {
         builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         cate_id= getIntent().getStringExtra("cate_id");
-        CityListBean.RegionsBean cityBean=APP.getApplication().getCityBean();
+        RegionsBean cityBean=APP.getApplication().getCityBean();
         if (cityBean!=null){
             region_id = cityBean.getRegion_id()+"";
         }else {
@@ -216,7 +219,9 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
         rl_shaixuan = (RelativeLayout) findViewById(R.id.rl_shaixuan);
         rl_all= (RelativeLayout) findViewById(R.id.rl_all);
         rl_auto= (RelativeLayout) findViewById(R.id.rl_auto);
-
+        iv_img = (ImageView) findViewById(R.id.iv_img);
+        iv_img.setVisibility(View.VISIBLE);
+        iv_img.setImageResource(R.mipmap.icon_zhongcan_search);
         //设置全部分类为选中状态
         setBg(tv_allcategory,rl_all);
         //初始化下方listview
@@ -243,6 +248,7 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
         refresh.setOnLoadListener(this);
         refresh.setOnRefreshListener(this);
         lv_zhongcan.setOnItemClickListener(onItemClickListener);
+        iv_img.setOnClickListener(this);
     }
 
     @Override
@@ -325,8 +331,16 @@ public class ZhongCanActivity extends BaseActivity implements RefreshLayout.OnLo
                         }
                         if (isrefreshing){
                             zhongcanList.clear();
-                            zhongcanList.addAll(bean.getRestaurants());
-                            adapter.notifyDataSetChanged();
+                            if (bean.getRestaurants().size()<=10){
+                                zhongcanList.addAll(bean.getRestaurants());
+                                adapter.notifyDataSetChanged();
+                                refresh.onLoadFinish();
+                            }else
+                                {
+                                    zhongcanList.addAll(bean.getRestaurants());
+                                    adapter.notifyDataSetChanged();
+                                }
+
                         }else {
                             zhongcanList.addAll(bean.getRestaurants());
                             adapter.notifyDataSetChanged();

@@ -26,6 +26,7 @@ import com.example.asus.xyd_order.holder.PopAllCategoryHolder;
 import com.example.asus.xyd_order.mode.City;
 import com.example.asus.xyd_order.net.result.CategoryBean;
 import com.example.asus.xyd_order.net.result.CityListBean;
+import com.example.asus.xyd_order.net.result.RegionsBean;
 import com.example.asus.xyd_order.net.result.YearAndMonth;
 import com.example.asus.xyd_order.ui.FilterButton;
 import com.example.asus.xyd_order.ui.FlowLayout;
@@ -132,7 +133,7 @@ public SelectPopWindow getMonth(List<YearAndMonth> mlist){
     /**
      * 城市选择弹出框
      */
-    public SelectPopWindow getCountry(List<CityListBean.RegionsBean> mlist){
+    public SelectPopWindow getCountry(List<RegionsBean> mlist){
         popWindow=null;
         popWindow=new SelectPopWindow(activity,pop_month);
         lv_pop_orderbymonth.setAdapter(new BaseArrayAdapter<>(activity, ()->{return new CountryHolder();},mlist));
@@ -150,7 +151,7 @@ public SelectPopWindow getMonth(List<YearAndMonth> mlist){
     }
 
     public interface CountryItemClick {
-        void onItemClick(CityListBean.RegionsBean bean);
+        void onItemClick(RegionsBean bean);
     }
 
     private AllCategoryInterface allCategoryInterface;

@@ -5,6 +5,7 @@ import android.support.annotation.IdRes;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +31,7 @@ import com.example.asus.xyd_order.net.result.ZhongcanOrderSuccessBean;
 import com.example.asus.xyd_order.ui.MyExpandListView;
 import com.example.asus.xyd_order.ui.MyListView;
 import com.example.asus.xyd_order.utils.ActivityFactory;
+import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 import com.example.asus.xyd_order.utils.ToastUtils;
 
 import org.json.JSONArray;
@@ -68,6 +70,7 @@ public class AttractionsOrderActivity extends BaseActivity {
     private int groupCount;
     private int nomalCount;
     private EditText et_user_name,et_user_phone,et_group_num;
+    private CheckBox cb_check;
 
     //取票方式
     private String post_type="";
@@ -127,6 +130,10 @@ public class AttractionsOrderActivity extends BaseActivity {
     }
     //提交参数
     private void allright() {
+        if (!cb_check.isChecked()){
+            ToastUtils.showShort(context,"请同意免责声明");
+            return;
+        }
         if (TextUtils.isEmpty(et_group_num.getText().toString())){
             toastShow("请填写团号");
             return;
@@ -258,6 +265,7 @@ public class AttractionsOrderActivity extends BaseActivity {
      * 初始化所有空间
      */
     private void inalizeView() {
+        cb_check= (CheckBox) findViewById(R.id.cb_check);
         btn_order_now = (TextView) findViewById(R.id.btn_order_now);
         tv_group_count= (TextView) findViewById(R.id.tv_group_count);
         tv_nomal_count= (TextView) findViewById(R.id.tv_nomal_count);
@@ -277,7 +285,9 @@ public class AttractionsOrderActivity extends BaseActivity {
         String curDate=formatter.format(date);
 
         et_user_name = (EditText) findViewById(R.id.et_user_name);
+        et_user_name.setText((String)SharedPreferenceUtils.getParam(context,LoginActivity.USER_NAME,""));
         et_user_phone= (EditText) findViewById(R.id.et_user_phone);
+        et_user_phone.setText((String)SharedPreferenceUtils.getParam(context,LoginActivity.USER_MOBILE,""));
         et_group_num= (EditText) findViewById(R.id.et_group_num);
         et_group_num.setText(curDate);
         ll_address = (LinearLayout) findViewById(R.id.ll_address);

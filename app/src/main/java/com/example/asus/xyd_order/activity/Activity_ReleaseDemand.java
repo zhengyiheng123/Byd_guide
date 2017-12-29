@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
@@ -57,15 +59,16 @@ import rx.schedulers.Schedulers;
  * Created by Zheng on 2017/3/13.
  */
 public class Activity_ReleaseDemand extends BaseActivity {
-    private EditText et_phonenum,et_tuan_num,et_lvxingshe,et_details,et_route_details,et_total_money,et_name;
+    private EditText et_phonenum,et_tuan_num,et_lvxingshe,et_details,et_route_details,et_total_money,et_name,tv_seats;
     private TextView tv_commit,tv_paytype,tv_dmd_area,tv_team_type,tv_service_content,tv_level,tv_start,tv_end,tv_target_country,tv_file;
     private TextView tv_date;
+    private RadioGroup rg_service_type;
     private CheckBox cb_check;
     private OptionPicker picker;
     private LinearLayout mLlContainer;
     private MultipartBody.Builder builder;
     private int group_type;
-    private int service_type;
+    private int service_type=1;
     private int level_req=0;
     private int dmd_area;
     private int pay_type;
@@ -78,12 +81,13 @@ public class Activity_ReleaseDemand extends BaseActivity {
     private ImageView iv_img_hos;
     private TimePickerView pvTime;
     //开始时间
-    private String startTime;
+    private String startTime="";
     //结束时间
-    private String endTime;
+    private String endTime="";
 
     public static String COUNTRY_NAME="Country_Name";
     public static String COUNTRY_ID="country_id";
+
     @Override
     public void myOnclick(View view) {
         switch (view.getId()){
@@ -237,7 +241,6 @@ public class Activity_ReleaseDemand extends BaseActivity {
         //工作种类设置默认值
         tv_service_content= (TextView) findViewById(R.id.tv_service_content);
         tv_service_content.setText(serviceList.get(0));
-        service_type=1;
         //服务人员级别默认值
         tv_level= (TextView) findViewById(R.id.tv_level);
         tv_level.setText("无限制");
@@ -266,6 +269,7 @@ public class Activity_ReleaseDemand extends BaseActivity {
         et_name= (EditText) findViewById(R.id.et_name);
         et_name.setText((String) SharedPreferenceUtils.getParam(context,LoginActivity.USER_NAME,""));
         et_phonenum = (EditText) findViewById(R.id.et_phonenum);
+        et_phonenum.setText((String)SharedPreferenceUtils.getParam(context,LoginActivity.USER_MOBILE,""));
         //获取当前时间
         Date date=new Date(System.currentTimeMillis());
         SimpleDateFormat    formatter    =   new    SimpleDateFormat    ("yyyyMMdd");
@@ -279,12 +283,13 @@ public class Activity_ReleaseDemand extends BaseActivity {
         tv_team_type.setText(teamList.get(1));
         group_type=2;
         et_details= (EditText) findViewById(R.id.et_details);
+        tv_seats= (EditText) findViewById(R.id.tv_seats);
         et_total_money= (EditText) findViewById(R.id.et_total_money);
         et_route_details= (EditText) findViewById(R.id.et_route_details);
         iv_img_hos = (ImageView) findViewById(R.id.iv_img_hos);
 
         cb_check= (CheckBox) findViewById(R.id.cb_check);
-
+        rg_service_type= (RadioGroup) findViewById(R.id.rg_service_type);
     }
 
 
@@ -302,6 +307,22 @@ public class Activity_ReleaseDemand extends BaseActivity {
         tv_dmd_area.setOnClickListener(this);
         tv_commit.setOnClickListener(this);
         iv_img_hos.setOnClickListener(this);
+        rg_service_type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+                if (i ==R.id.rb_guide){
+                    service_type = 1;
+                }else if (i == R.id.rb_cars){
+                    service_type = 2;
+                }else if (i == R.id.rb_translate){
+                    service_type =3;
+                }else if (i == R.id.cb_nine){
+                    service_type =4;
+                }else if(i == R.id.rb_other){
+                    service_type = 5;
+                }
+            }
+        });
     }
 
 
@@ -358,7 +379,7 @@ public class Activity_ReleaseDemand extends BaseActivity {
                     .addFormDataPart("group_num",et_tuan_num.getText().toString())
                     .addFormDataPart("service_type",service_type+"")
                     .addFormDataPart("target_country",countryId)
-
+                    .addFormDataPart("people_number",tv_seats.getText().toString())
                     .addFormDataPart("level_req",level_req+"")
                     .addFormDataPart("dmd_area",dmd_area+"")
                     .addFormDataPart("start_time", startTime)

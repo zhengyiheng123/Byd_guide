@@ -1,6 +1,7 @@
 package com.example.asus.xyd_order.fragment;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,6 +16,7 @@ import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.HttpResult;
 import com.example.asus.xyd_order.net.result.MyDemandBean;
+import com.example.asus.xyd_order.refresh.widget.swipetorefresh.RefreshLayout;
 import com.example.asus.xyd_order.utils.SharedPreferenceUtils;
 
 import java.util.ArrayList;
@@ -29,13 +31,14 @@ import rx.schedulers.Schedulers;
  * Created by Zheng on 2017/7/6.
  */
 
-public class GetedFragment_Geted extends BaseFragment {
+public class GetedFragment_Geted extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
     ListView lv_common;
 
     private List<MyDemandBean.DemandsBean> mList=new ArrayList<>();
     private BaseArrayAdapter adapter;
 
     public static GetedFragment_Geted instance;
+    private RefreshLayout refresh;
 
     @Override
     public void myOnclick(View view) {
@@ -46,11 +49,12 @@ public class GetedFragment_Geted extends BaseFragment {
     public void onResume() {
         super.onResume();
         instance=this;
-        getNetData();
+        onRefresh();
     }
 
     @Override
     public void initView(View view) {
+        refresh = (RefreshLayout) view.findViewById(R.id.refresh);
         lv_common= (ListView) view.findViewById(R.id.lv_common);
         TextView tv_empty= (TextView) view.findViewById(R.id.tv_empty);
         lv_common.setEmptyView(tv_empty);
@@ -60,7 +64,8 @@ public class GetedFragment_Geted extends BaseFragment {
                 return new OrdersGetedHolder(getActivity());
             }
         },mList);
-        lv_common.setAdapter(adapter);
+        refresh.setAdapter(adapter,lv_common);
+        refresh.setOnRefreshListener(this);
     }
 
     @Override
@@ -100,13 +105,15 @@ public class GetedFragment_Geted extends BaseFragment {
                 .subscribe(new Subscriber<MyDemandBean>() {
                     @Override
                     public void onCompleted() {
-dismissDialog();
+                        dismissDialog();
+                        refresh.setRefreshing(false);
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         dismissDialog();
                         toastShow(e.getMessage());
+                        refresh.setRefreshing(false);
                     }
 
                     @Override
@@ -116,5 +123,10 @@ dismissDialog();
                         adapter.notifyDataSetChanged();
                     }
                 });
+    }
+
+    @Override
+    public void onRefresh() {
+        getNetData();
     }
 }

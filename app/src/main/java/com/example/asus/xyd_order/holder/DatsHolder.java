@@ -14,6 +14,8 @@ import com.example.asus.xyd_order.net.result.Calender;
 import com.example.asus.xyd_order.utils.Myutils;
 import com.example.asus.xyd_order.utils.StringUtils;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 /**
  * Created by Zheng on 2017/7/21.
  */
@@ -55,6 +57,7 @@ public class DatsHolder extends BaseViewHolder<Calender.CalendarBean.NodesBean> 
             case R.id.rl_item:
                 Intent intent=new Intent(context, Activity_Route_List.class);
                 intent.putExtra("stamp",bean.getStamp());
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
                 break;
         }

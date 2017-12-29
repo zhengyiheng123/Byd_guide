@@ -21,6 +21,7 @@ import com.example.asus.xyd_order.net.Filter.ResultFilter;
 import com.example.asus.xyd_order.net.ServiceApi;
 import com.example.asus.xyd_order.net.result.CityListBean;
 import com.example.asus.xyd_order.net.result.HttpResult;
+import com.example.asus.xyd_order.net.result.RegionsBean;
 import com.example.asus.xyd_order.net.result.TuishuiBean;
 import com.example.asus.xyd_order.selectcity.SelectCityActivity;
 import com.example.asus.xyd_order.ui.SelectPopWindow;
@@ -40,7 +41,7 @@ import rx.schedulers.Schedulers;
  * Created by Zheng on 2017/3/6.
  */
 public class DrawBackActivity extends BaseActivity {
-    private List<CityListBean.RegionsBean> countryList=new ArrayList<>();
+    private List<RegionsBean> countryList=new ArrayList<>();
     private ImageView iv_back;
     private TextView tv_submit,tv_month,tv_port_name,tv_details;
     private CategoryControl control;
@@ -94,7 +95,7 @@ public class DrawBackActivity extends BaseActivity {
         control = new CategoryControl(DrawBackActivity.this);
         control.setCountryItemClick(new CategoryControl.CountryItemClick() {
             @Override
-            public void onItemClick(CityListBean.RegionsBean bean) {
+            public void onItemClick(RegionsBean bean) {
 //                toastShow(bean.getRegion_name()+", "+bean.getRegion_id());
                 popWindow.dismiss();
                 tv_month.setText(bean.getRegion_name());

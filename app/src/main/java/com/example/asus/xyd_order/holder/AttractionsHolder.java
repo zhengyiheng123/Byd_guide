@@ -35,7 +35,13 @@ public class AttractionsHolder extends BaseViewHolder<JingdianBean.ScenesBean> {
         Glide.with(context).load(BaseApi.getBaseUrl()+s.getLogo_path()).into(iv_img);
         tv_name.setText(s.getScene_name());
         tv_peer.setText("门票："+s.getAvg_cost()+"/人起");
-        tv_distance_of_you.setText(s.getDistance()+"米");
+        if (s.getDistance() !=null){
+            if (Double.valueOf(s.getDistance()) /1000 ==0){
+                tv_distance_of_you.setVisibility(View.GONE);
+            }
+            tv_distance_of_you.setText(Double.valueOf(s.getDistance()) /1000+"千米");
+        }
+
         if (s.getIs_bookable() == 0){
             tv_range.setText("窗口售票，无需购买");
         }else {
